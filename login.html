@@ -9,23 +9,23 @@
 <style>
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 40%,#E50000 0%,#B00000 60%,#7A0000 100%);color:#FFFFFF;font-family:'Plus Jakarta Sans',system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(20px,4vh,40px);padding:24px;overflow-x:hidden}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 38%,#3A0507 0%,#120203 45%,#000000 100%);color:#FFFFFF;font-family:'Plus Jakarta Sans',system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(20px,4vh,40px);padding:24px;overflow-x:hidden}
 .brand-logo{display:flex;align-items:center;gap:clamp(6px,1.5vw,14px)}
 .brand-icon{width:clamp(110px,22vw,190px);height:auto;flex:none;filter:drop-shadow(0 6px 0 rgba(0,0,0,.18))}
 .brand-text{display:flex;flex-direction:column;line-height:.82;font-family:'Kaushan Script',cursive}
 .brand-text .art{font-size:clamp(64px,13vw,124px);color:#FFFFFF;text-shadow:0 6px 0 rgba(0,0,0,.18)}
-.brand-text .som{font-size:clamp(42px,8.5vw,80px);color:#0A0A0A;margin-left:clamp(26px,5vw,52px);margin-top:clamp(-4px,-.5vw,0px)}
-
-.card{width:100%;max-width:400px;padding:32px 30px;border-radius:28px;background:rgba(0,0,0,0.26);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,0.18);box-shadow:0 30px 70px -24px rgba(0,0,0,0.55),inset 0 1px 0 rgba(255,255,255,0.14);display:flex;flex-direction:column;gap:20px}
+.brand-text .som{font-size:clamp(42px,8.5vw,80px);color:#E50000;margin-left:clamp(26px,5vw,52px);margin-top:clamp(-4px,-.5vw,0px)}
+.card{width:100%;max-width:400px;padding:32px 30px;border-radius:28px;background:rgba(255,255,255,0.045);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,0.1);box-shadow:0 30px 70px -24px rgba(0,0,0,0.9),0 0 60px -20px rgba(229,0,0,0.35),inset 0 1px 0 rgba(255,255,255,0.08);display:flex;flex-direction:column;gap:20px}
 h1{margin:0;font-size:24px;font-weight:800;letter-spacing:-0.02em}
-p.sub{margin:6px 0 0;font-size:14px;color:#FFE3E3}
+p.sub{margin:6px 0 0;font-size:14px;color:#A1A1AA}
 form{display:flex;flex-direction:column;gap:16px}
-label{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:600;color:#FFFFFF}
-input{height:50px;padding:0 16px;border-radius:14px;border:1px solid rgba(255,255,255,0.28);background:rgba(0,0,0,0.28);color:#FFFFFF;font:inherit;font-size:15px;outline:none;transition:border-color .2s ease,box-shadow .2s ease,background .2s ease}
-input:focus{border-color:#FFFFFF;background:rgba(0,0,0,0.38);box-shadow:0 0 0 4px rgba(255,255,255,0.22)}
-button{height:52px;margin-top:6px;border:0;border-radius:999px;background:#0A0A0A;color:#FFFFFF;font:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:transform .2s ease,box-shadow .25s ease,background .2s ease}
-button:hover{transform:translateY(-2px);background:#000000;box-shadow:0 14px 30px -10px rgba(0,0,0,0.7)}
-.erro{display:none;padding:12px 14px;border-radius:14px;background:rgba(0,0,0,0.38);border:1px solid rgba(255,255,255,0.3);color:#FFFFFF;font-size:14px;font-weight:600}
+label{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:600;color:#D4D4D8}
+input{height:50px;padding:0 16px;border-radius:14px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.05);color:#FFFFFF;font:inherit;font-size:15px;outline:none;transition:border-color .2s ease,box-shadow .2s ease,background .2s ease}
+input:focus{border-color:#E50000;background:rgba(255,255,255,0.07);box-shadow:0 0 0 4px rgba(229,0,0,0.25)}
+input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{-webkit-text-fill-color:#FFFFFF;-webkit-box-shadow:0 0 0 1000px #1A1A1D inset;caret-color:#FFFFFF;transition:background-color 9999s ease}
+button{height:52px;margin-top:6px;border:0;border-radius:999px;background:linear-gradient(135deg,#E50000,#8B0000);color:#FFFFFF;font:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:transform .2s ease,box-shadow .25s ease,background .2s ease}
+button:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(229,0,0,0.75)}
+.erro{display:none;padding:12px 14px;border-radius:14px;background:rgba(229,0,0,0.14);border:1px solid rgba(229,0,0,0.4);color:#FFC2C2;font-size:14px;font-weight:600}
 .erro.show{display:block}
 </style>
 </head>
