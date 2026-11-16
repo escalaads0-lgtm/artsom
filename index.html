@@ -131,6 +131,22 @@ input{color-scheme:dark}
 
 .theme-opt{transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
 .theme-opt:hover{transform:translateY(-3px)}
+
+/* ---------- celular e tablet ---------- */
+@media (max-width: 860px){
+.app-root{padding:16px 12px 104px !important}
+.side-wrap{position:fixed !important;left:10px;right:10px;bottom:max(10px, env(safe-area-inset-bottom));min-height:0 !important;flex:none !important;z-index:150 !important}
+.side-wrap .sidebar,.side-wrap .sidebar:hover,.side-wrap .sidebar:has(:focus-visible){position:relative !important;width:auto !important;flex-direction:row !important;align-items:center !important;gap:6px !important;padding:8px !important;border-radius:24px !important;overflow-x:auto !important;overflow-y:hidden !important;scrollbar-width:none;-webkit-overflow-scrolling:touch;box-shadow:0 16px 40px -10px rgba(0,0,0,0.85) !important}
+.side-wrap .sidebar::-webkit-scrollbar{display:none}
+.side-wrap .side-logo,.side-wrap .side-divider{display:none !important}
+.side-wrap .nav-label{display:none !important}
+.side-wrap .nav-btn{width:48px !important;height:48px !important;flex:0 0 48px !important;padding:0 !important;justify-content:center !important}
+.side-wrap .nav-btn:hover{transform:none}
+h1{font-size:28px !important}
+.cal-day{min-height:56px !important;padding:7px 5px !important;border-radius:14px !important}
+.cal-day span{font-size:15px}
+div[aria-hidden="true"][style*="min-height: 78px"]{min-height:56px !important}
+}
 /* ---------- modo claro ---------- */
 .app-root{transition:background .4s ease,color .4s ease}
 .theme-light{background:#F3F3F5 !important;color:#18181B !important}
@@ -211,9 +227,9 @@ html.intro body{overflow:hidden}
 
 <div style="position: relative; max-width: 1400px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start">
 
-<div style="flex: 0 0 76px; position: relative; z-index: 20; align-self: stretch; min-height: 640px">
+<div class="side-wrap" style="flex: 0 0 76px; position: relative; z-index: 20; align-self: stretch; min-height: 640px">
 <nav class="sidebar" aria-label="Menu principal" style="position: absolute; top: 0; left: 0; overflow: hidden; box-sizing: border-box; padding: 18px 15px; border-radius: 30px; background: linear-gradient(180deg, #18181B 0%, #1C0A0C 100%); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 20px 50px -16px rgba(0,0,0,0.8); display: flex; flex-direction: column; align-items: stretch; gap: 10px">
-<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding-left: 1px">
+<div class="side-logo" style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding-left: 1px">
 <div data-logo-slot="1" style="width: 44px; height: 44px; flex: none; border-radius: 14px; background: linear-gradient(135deg, #FF2E2E, #C40000); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 24px rgba(229,0,0,0.6)">
 <svg width="30" height="25" viewBox="0 0 120 100" aria-hidden="true"><g transform="translate(16 0) skewX(-10)"><path d="M4 37 L20 33 L20 67 L4 63 Z" fill="#FFFFFF"></path><path d="M25 32 L52 11 L52 89 L25 68 Z" fill="#FFFFFF"></path><path d="M64 37 Q71 50 64 63" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none"></path><path d="M77 26 Q90 50 77 74" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none"></path><path d="M90 15 Q110 50 90 85" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none"></path></g></svg>
 </div>
@@ -235,7 +251,7 @@ html.intro body{overflow:hidden}
 </button>
 </sc-if>
 </sc-for>
-<div style="height: 1px; width: 100%; background: rgba(255,255,255,0.1); margin: 8px 0"></div>
+<div class="side-divider" style="height: 1px; width: 100%; background: rgba(255,255,255,0.1); margin: 8px 0"></div>
 <sc-for list="{{ sysNav }}" as="n" hint-placeholder-count="4">
 <sc-if value="{{ n.active }}" hint-placeholder-val="{{ false }}">
 <button class="nav-btn active" onClick="{{ n.pick }}" aria-label="{{ n.label }}" aria-current="page" style="width: 100%; height: 46px; flex: none; border: 0; border-radius: 16px; background: #E50000; color: #FFFFFF; box-shadow: 0 8px 22px -8px rgba(229,0,0,0.8); display: flex; align-items: center; gap: 14px; padding: 0 13px; box-sizing: border-box; cursor: pointer">
@@ -1695,6 +1711,7 @@ mount();
     var icon = overlay.querySelector('.brand-icon');
     var text = overlay.querySelector('.brand-text');
     var slot = document.querySelector('[data-logo-slot] svg');
+    if (!slot || slot.getBoundingClientRect().width === 0) slot = document.querySelector('nav .nav-btn.active svg');
     function done(){
       overlay.remove();
       document.documentElement.classList.remove('intro');
