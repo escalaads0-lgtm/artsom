@@ -999,16 +999,16 @@ mount();
 (function(){
   if (!document.documentElement.classList.contains('intro')) return;
   // Grade de tempo da animação (ms). Tudo parte do mesmo relógio, então os trechos se sobrepõem sem trancos.
-  var HOLD = 250;
+  var HOLD = 60;
   var T = {
-    textOut: [HOLD + 0,   HOLD + 380],   // "ArtSom" desaparece
-    iconFly: [HOLD + 200, HOLD + 1150],  // ícone sobe para o topo da barra lateral
-    reveal:  [HOLD + 560, HOLD + 1450],  // vermelho se fecha para dentro do ícone
-    appIn:   [HOLD + 560, HOLD + 1300]   // dashboard aparece
+    textOut: [HOLD + 0,   HOLD + 300],   // "ArtSom" desaparece
+    iconFly: [HOLD + 90,  HOLD + 820],   // ícone sobe para o topo da barra lateral
+    reveal:  [HOLD + 300, HOLD + 960],   // fundo se fecha para dentro do ícone
+    appIn:   [HOLD + 320, HOLD + 900]    // dashboard aparece
   };
-  var EASE_IN_OUT = 'cubic-bezier(.65,0,.35,1)';
+  var EASE_IN_OUT = 'cubic-bezier(.5,0,.15,1)';
   var EASE_OUT = 'cubic-bezier(.22,1,.36,1)';
-  var EASE_REVEAL = 'cubic-bezier(.76,0,.24,1)';
+  var EASE_REVEAL = 'cubic-bezier(.7,0,.2,1)';
   function opts(r, easing){ return { delay: r[0], duration: r[1] - r[0], easing: easing, fill: 'both' }; }
 
   function run(){
@@ -1044,11 +1044,13 @@ mount();
     var anims = [
       text.animate([
         { opacity: 1, transform: 'translateX(0)', filter: 'blur(0px)' },
-        { opacity: 0, transform: 'translateX(32px)', filter: 'blur(6px)' }
+        { opacity: 0, transform: 'translateX(26px) scale(.96)', filter: 'blur(8px)' }
       ], opts(T.textOut, EASE_OUT)),
       fly.animate([
-        { transform: 'translate(0px,0px) scale(1)', filter: 'drop-shadow(0 6px 0 rgba(0,0,0,.18))' },
-        { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')', filter: 'drop-shadow(0 0 0 rgba(0,0,0,0))' }
+        { transform: 'translate(0px,0px) scale(1) rotate(0deg)', filter: 'drop-shadow(0 6px 0 rgba(0,0,0,.18))', offset: 0 },
+        { transform: 'translate(' + (dx*0.5) + 'px,' + (dy*0.42) + 'px) scale(' + ((1+s)/2) + ') rotate(-6deg)', offset: 0.5 },
+        { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + (s*1.14) + ') rotate(2deg)', offset: 0.86 },
+        { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ') rotate(0deg)', filter: 'drop-shadow(0 0 0 rgba(0,0,0,0))', offset: 1 }
       ], opts(T.iconFly, EASE_IN_OUT)),
       overlay.animate([
         { clipPath: 'circle(' + R + 'px at ' + cx + 'px ' + cy + 'px)' },
@@ -1058,7 +1060,7 @@ mount();
     ];
     anims[1].finished.then(function(){
       slot.style.opacity = '';
-      fly.animate([{opacity:1},{opacity:0}], {duration:160, easing:'linear', fill:'forwards'}).finished.then(function(){ fly.remove(); });
+      fly.animate([{opacity:1},{opacity:0}], {duration:120, easing:'linear', fill:'forwards'}).finished.then(function(){ fly.remove(); });
     });
     Promise.all(anims.map(function(x){ return x.finished; })).then(done);
   }

@@ -49,6 +49,13 @@ button:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(229,0,
 </main>
 <script>
 if (new URLSearchParams(location.search).get('erro')) document.getElementById('erro').classList.add('show');
+// Entrada suave da tela
+(function () {
+  if (!document.body.animate || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var out = 'cubic-bezier(.22,1,.36,1)';
+  document.querySelector('.brand-logo').animate([{opacity:0,transform:'translateY(-14px) scale(.97)',filter:'blur(6px)'},{opacity:1,transform:'none',filter:'blur(0px)'}], {duration:560, easing:out, fill:'backwards'});
+  document.querySelector('.card').animate([{opacity:0,transform:'translateY(22px) scale(.98)',filter:'blur(6px)'},{opacity:1,transform:'none',filter:'blur(0px)'}], {delay:90, duration:560, easing:out, fill:'backwards'});
+})();
 // Ao entrar: o cartão some e a logo desliza para o centro da tela,
 // exatamente onde a animação de abertura do dashboard começa.
 var form = document.getElementById('form');
@@ -57,11 +64,18 @@ form.addEventListener('submit', function (e) {
   e.preventDefault();
   var card = document.querySelector('.card');
   var logo = document.querySelector('.brand-logo');
+  var btn = form.querySelector('button');
   var r = logo.getBoundingClientRect();
   var dy = innerHeight / 2 - (r.top + r.height / 2);
-  var ease = 'cubic-bezier(.65,0,.35,1)';
-  card.animate([{opacity:1,transform:'translateY(0) scale(1)'},{opacity:0,transform:'translateY(24px) scale(.97)'}], {duration:320, easing:'cubic-bezier(.4,0,1,1)', fill:'forwards'});
-  logo.animate([{transform:'translateY(0)'},{transform:'translateY(' + dy + 'px)'}], {delay:120, duration:480, easing:ease, fill:'forwards'})
+  btn.animate([{transform:'scale(1)'},{transform:'scale(.96)'},{transform:'scale(1)'}], {duration:220, easing:'cubic-bezier(.4,0,.2,1)'});
+  card.animate([
+    {opacity:1, transform:'translateY(0) scale(1)', filter:'blur(0px)'},
+    {opacity:0, transform:'translateY(18px) scale(.96)', filter:'blur(8px)'}
+  ], {delay:60, duration:300, easing:'cubic-bezier(.4,0,.2,1)', fill:'forwards'});
+  logo.animate([
+    {transform:'translateY(0) scale(1)'},
+    {transform:'translateY(' + dy + 'px) scale(1.03)'}
+  ], {delay:90, duration:420, easing:'cubic-bezier(.22,1,.36,1)', fill:'forwards'})
     .finished.then(function(){ form.submit(); });
 });
 </script>
