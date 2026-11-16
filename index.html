@@ -32,9 +32,159 @@ a{color:#FF2E2E}a:hover{color:#FF5C5C}
 .day{transition:background .2s ease,transform .2s ease}
 .day:hover{transform:translateY(-3px)}
 button{font-family:inherit}
-.screen{animation:screenIn .5s cubic-bezier(.22,1,.36,1) both}
-@keyframes screenIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion: reduce){.screen{animation:none}}
+@keyframes rise{from{opacity:0;transform:translateY(34px) scale(.97);filter:blur(12px)}to{opacity:1;transform:none;filter:blur(0px)}}
+@keyframes pop{0%{opacity:0;transform:translateY(16px) scale(.8);filter:blur(8px)}70%{opacity:1;filter:blur(0px)}100%{opacity:1;transform:none;filter:blur(0px)}}
+@keyframes grow{from{opacity:0;transform:scaleY(0)}to{opacity:1;transform:scaleY(1)}}
+@keyframes fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.screen{--base:0ms}
+.screen ~ .screen{--base:140ms}
+.screen > *:nth-child(1){--d:calc(var(--base) + 0ms)}
+.screen > *:nth-child(2){--d:calc(var(--base) + 110ms)}
+.screen > *:nth-child(3){--d:calc(var(--base) + 220ms)}
+.screen > *:nth-child(4){--d:calc(var(--base) + 330ms)}
+.screen > *:nth-child(5){--d:calc(var(--base) + 440ms)}
+.screen > *:nth-child(6){--d:calc(var(--base) + 550ms)}
+.screen > *:nth-child(7){--d:calc(var(--base) + 660ms)}
+.screen > *:nth-child(8){--d:calc(var(--base) + 770ms)}
+.screen *:nth-child(1){--r:0}
+.screen *:nth-child(2){--r:1}
+.screen *:nth-child(3){--r:2}
+.screen *:nth-child(4){--r:3}
+.screen *:nth-child(5){--r:4}
+.screen *:nth-child(6){--r:5}
+.screen *:nth-child(7){--r:6}
+.screen *:nth-child(8){--r:7}
+.screen *:nth-child(9){--r:8}
+.screen *:nth-child(10){--r:9}
+.screen *:nth-child(11){--r:10}
+.screen *:nth-child(12){--r:11}
+.screen *:nth-child(13){--r:12}
+.screen *:nth-child(14){--r:13}
+.screen *:nth-child(15){--r:14}
+.screen *:nth-child(16){--r:15}
+.screen *:nth-child(17){--r:16}
+.screen *:nth-child(18){--r:17}
+.screen *:nth-child(19){--r:18}
+.screen *:nth-child(20){--r:19}
+.screen *:nth-child(21){--r:20}
+.screen *:nth-child(22){--r:21}
+.screen *:nth-child(23){--r:22}
+.screen *:nth-child(24){--r:23}
+.screen *:nth-child(25){--r:24}
+.screen *:nth-child(26){--r:25}
+.screen *:nth-child(27){--r:26}
+.screen *:nth-child(28){--r:27}
+.screen *:nth-child(29){--r:28}
+.screen *:nth-child(30){--r:29}
+.screen *:nth-child(31){--r:30}
+.screen *:nth-child(32){--r:31}
+.screen *:nth-child(33){--r:32}
+.screen *:nth-child(34){--r:33}
+.screen *:nth-child(35){--r:34}
+.screen *:nth-child(36){--r:35}
+.screen *:nth-child(37){--r:36}
+.screen *:nth-child(38){--r:37}
+.screen *:nth-child(39){--r:38}
+.screen *:nth-child(40){--r:39}
+.screen *:nth-child(41){--r:40}
+.screen *:nth-child(42){--r:41}
+.glass.screen,.screen .glass,.screen .lift,.screen .anim{animation:rise .8s cubic-bezier(.22,1,.36,1) backwards;animation-delay:calc(var(--d,0ms) + var(--r,0) * 85ms)}
+.glass.screen{animation-delay:var(--base)}
+.screen .row-hover{animation:rise .65s cubic-bezier(.22,1,.36,1) backwards;animation-delay:calc(var(--d,0ms) + 220ms + var(--r,0) * 55ms)}
+.screen .btn,.screen .pill{animation:pop .6s cubic-bezier(.34,1.56,.64,1) backwards;animation-delay:calc(var(--d,0ms) + 320ms + var(--r,0) * 70ms)}
+.screen .cal-day{animation:pop .55s cubic-bezier(.34,1.4,.64,1) backwards;animation-delay:calc(var(--d,0ms) + 200ms + var(--r,0) * 14ms)}
+.screen .bar{transform-origin:bottom;animation:grow .9s cubic-bezier(.22,1,.36,1) backwards;animation-delay:calc(var(--d,0ms) + 380ms + var(--r,0) * 60ms)}
+.screen .fillbar{transform-origin:left;animation:fill 1.1s cubic-bezier(.22,1,.36,1) backwards;animation-delay:calc(var(--d,0ms) + 450ms)}
+.no-anim .screen,.no-anim .screen *{animation:none !important}
+@media (prefers-reduced-motion: reduce){.screen,.screen *{animation:none !important}}
+.cal-day{transition:transform .2s ease,box-shadow .25s ease,background .2s ease}
+.cal-day:hover{transform:translateY(-3px);box-shadow:0 10px 22px -10px rgba(229,0,0,0.6)}
+.icon-btn{transition:background .2s ease,color .2s ease,transform .2s ease}
+.icon-btn:hover{transform:scale(1.08);background:rgba(255,255,255,0.12)}
+input{color-scheme:dark}
+.chip-radio{position:relative;display:inline-flex}
+.chip-radio input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.chip-radio span{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#D4D4D8;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease,transform .2s ease}
+.chip-radio span:hover{transform:translateY(-2px)}
+.chip-radio input:checked + span{background:#E50000;border-color:#E50000;color:#FFFFFF;box-shadow:0 6px 16px -6px rgba(229,0,0,0.8)}
+.chip-radio input:checked + span i{background:#FFFFFF !important}
+.chip-radio input:focus-visible + span{outline:2px solid #FF5C5C;outline-offset:2px}
+.receive-btn{transition:background .2s ease,color .2s ease,border-color .2s ease,transform .2s ease}
+.receive-btn:hover{background:#16A34A !important;border-color:#16A34A !important;color:#FFFFFF !important;transform:translateY(-2px)}
+.receive-btn:hover .rb-label{font-size:0}
+.receive-btn:hover .rb-label::after{content:"Marcar recebido";font-size:12px}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-backdrop{animation:fadeIn .3s ease both}
+.modal-card{animation:rise .55s cubic-bezier(.22,1,.36,1) both}
+.modal-card > *{animation:rise .55s cubic-bezier(.22,1,.36,1) backwards;animation-delay:calc(90ms + var(--r,0) * 50ms)}
+.modal-card > *:nth-child(1){--r:0}
+.modal-card > *:nth-child(2){--r:1}
+.modal-card > *:nth-child(3){--r:2}
+.modal-card > *:nth-child(4){--r:3}
+.modal-card > *:nth-child(5){--r:4}
+.modal-card > *:nth-child(6){--r:5}
+.modal-card > *:nth-child(7){--r:6}
+.modal-card > *:nth-child(8){--r:7}
+.modal-card > *:nth-child(9){--r:8}
+.modal-card > *:nth-child(10){--r:9}
+.modal-card > *:nth-child(11){--r:10}
+
+.theme-opt{transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.theme-opt:hover{transform:translateY(-3px)}
+/* ---------- modo claro ---------- */
+.app-root{transition:background .4s ease,color .4s ease}
+.theme-light{background:#F3F3F5 !important;color:#18181B !important}
+.theme-light > div[aria-hidden]{opacity:.10 !important}
+.theme-light .glass{background:rgba(255,255,255,0.86);border-color:rgba(24,24,27,0.07);box-shadow:0 10px 30px -14px rgba(24,24,27,0.18),inset 0 1px 0 #FFFFFF}
+.theme-light .glass:hover{border-color:rgba(229,0,0,0.3);box-shadow:0 22px 44px -18px rgba(196,0,0,0.28)}
+.theme-light .row-hover:hover{background:rgba(24,24,27,0.045)}
+.theme-light .modal-card{background:#FFFFFF !important;border-color:rgba(24,24,27,0.08) !important;box-shadow:0 40px 80px -30px rgba(24,24,27,0.45) !important}
+.theme-light .modal-backdrop{background:rgba(24,24,27,0.35) !important}
+.theme-light input{color-scheme:light}
+.theme-light .chip-radio span{border-color:rgba(24,24,27,0.14);background:rgba(24,24,27,0.03);color:#3F3F46}
+.theme-light .chip-radio input:checked + span{background:#E50000;border-color:#E50000;color:#FFFFFF}
+.theme-light .icon-btn:hover{background:rgba(24,24,27,0.08)}
+.theme-light [style*="color: #FAFAFA"]:not(.lift *):not(nav *){color:#18181B !important}
+.theme-light [style*="color: #F4F4F5"]:not(.lift *):not(nav *){color:#27272A !important}
+.theme-light [style*="color: #E4E4E7"]:not(.lift *):not(nav *){color:#27272A !important}
+.theme-light [style*="color: #D4D4D8"]:not(.lift *):not(nav *){color:#3F3F46 !important}
+.theme-light [style*="color: #A1A1AA"]:not(.lift *):not(nav *){color:#52525B !important}
+.theme-light [style*="color: #8B8B94"]:not(.lift *):not(nav *){color:#6B6B74 !important}
+.theme-light [style*="color: #4ADE80"]:not(.lift *):not(nav *){color:#15803D !important}
+.theme-light [style*="color: #FF5C5C"]:not(.lift *):not(nav *){color:#C40000 !important}
+.theme-light [style*="color: #FF2E2E"]:not(.lift *):not(nav *){color:#C40000 !important}
+.theme-light [style*="color: #FFC2C2"]:not(.lift *):not(nav *){color:#B00000 !important}
+.theme-light [style*="color: #FACC15"]:not(.lift *):not(nav *){color:#A16207 !important}
+.theme-light [style*="color: #60A5FA"]:not(.lift *):not(nav *){color:#1D4ED8 !important}
+.theme-light [style*="background: rgba(255,255,255,0.0"]:not(.lift *):not(nav *){background:rgba(24,24,27,0.045) !important}
+.theme-light [style*="background: rgba(255,255,255,0.1"]:not(.lift *):not(nav *){background:rgba(24,24,27,0.09) !important}
+.theme-light [style*="1px solid rgba(255,255,255,0."]:not(.lift *):not(nav *){border-color:rgba(24,24,27,0.1) !important}
+.theme-light [style*="2px solid rgba(255,255,255,0."]:not(.lift *):not(nav *){border-color:rgba(24,24,27,0.18) !important}
+.theme-light [style*="1px dashed rgba(255,255,255,0."]:not(.lift *):not(nav *){border-color:rgba(24,24,27,0.18) !important}
+.theme-light [style*="border-bottom: 1px solid rgba(255,255,255,0."]:not(.lift *):not(nav *){border-bottom-color:rgba(24,24,27,0.07) !important}
+.theme-light [style*="background-image: linear-gradient(rgba(255,255,255,0.06)"]:not(.lift *):not(nav *){background-image:linear-gradient(rgba(24,24,27,0.08) 1px, transparent 1px) !important}
+.theme-light .bar[style*="#E4E4E7"]{background:linear-gradient(180deg,#A1A1AA,#52525B) !important}
+.theme-light [style*="background: linear-gradient(90deg, #E4E4E7, #71717A)"]{background:linear-gradient(90deg,#A1A1AA,#52525B) !important}
+.theme-light [style*="color: rgb(250, 250, 250)"]:not(.lift *):not(nav *){color:#18181B !important}
+.theme-light [style*="color: rgb(244, 244, 245)"]:not(.lift *):not(nav *){color:#27272A !important}
+.theme-light [style*="color: rgb(228, 228, 231)"]:not(.lift *):not(nav *){color:#27272A !important}
+.theme-light [style*="color: rgb(212, 212, 216)"]:not(.lift *):not(nav *){color:#3F3F46 !important}
+.theme-light [style*="color: rgb(161, 161, 170)"]:not(.lift *):not(nav *){color:#52525B !important}
+.theme-light [style*="color: rgb(139, 139, 148)"]:not(.lift *):not(nav *){color:#6B6B74 !important}
+.theme-light [style*="color: rgb(74, 222, 128)"]:not(.lift *):not(nav *){color:#15803D !important}
+.theme-light [style*="color: rgb(255, 92, 92)"]:not(.lift *):not(nav *){color:#C40000 !important}
+.theme-light [style*="color: rgb(255, 46, 46)"]:not(.lift *):not(nav *){color:#C40000 !important}
+.theme-light [style*="color: rgb(255, 194, 194)"]:not(.lift *):not(nav *){color:#B00000 !important}
+.theme-light [style*="color: rgb(250, 204, 21)"]:not(.lift *):not(nav *){color:#A16207 !important}
+.theme-light [style*="color: rgb(96, 165, 250)"]:not(.lift *):not(nav *){color:#1D4ED8 !important}
+.theme-light [style*="background: rgba(255, 255, 255, 0.0"]:not(.lift *):not(nav *),.theme-light [style*="background-color: rgba(255, 255, 255, 0.0"]:not(.lift *):not(nav *){background:rgba(24,24,27,0.045) !important}
+.theme-light [style*="background: rgba(255, 255, 255, 0.1"]:not(.lift *):not(nav *){background:rgba(24,24,27,0.09) !important}
+.theme-light [style*="solid rgba(255, 255, 255, 0."]:not(.lift *):not(nav *){border-color:rgba(24,24,27,0.1) !important}
+.theme-light input:not(.lift *):not(nav *){color:#18181B !important;-webkit-text-fill-color:#18181B}
+.theme-light input:not(.lift *):not(nav *)::placeholder{color:#8B8B94;-webkit-text-fill-color:#8B8B94}
+.theme-light .receive-btn:not(.lift *):not(nav *){color:#A16207}
+
+input:focus{border-color:#E50000 !important;box-shadow:0 0 0 4px rgba(229,0,0,0.22)}
 input::placeholder{color:#8B8B94}
 </style>
 <script>if(new URLSearchParams(location.search).get('entrar')==='1'){document.documentElement.classList.add('intro');history.replaceState(null,'','/');}</script>
@@ -54,7 +204,7 @@ html.intro body{overflow:hidden}
 <body>
 <div id="app"></div>
 <template id="tpl">
-<div style="position: relative; overflow: hidden; min-height: 100vh; box-sizing: border-box; padding: 28px 24px; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #FAFAFA; background: #09090B">
+<div class="app-root {{ themeClass }}" style="position: relative; overflow: hidden; min-height: 100vh; box-sizing: border-box; padding: 28px 24px; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #FAFAFA; background: #09090B">
 <div aria-hidden="true" style="position: absolute; top: -160px; left: 22%; width: 560px; height: 560px; border-radius: 50%; background: #C40000; filter: blur(150px); opacity: 0.22"></div>
 <div aria-hidden="true" style="position: absolute; top: 520px; right: -120px; width: 520px; height: 520px; border-radius: 50%; background: #B00000; filter: blur(150px); opacity: 0.2"></div>
 <div aria-hidden="true" style="position: absolute; bottom: -180px; left: -120px; width: 480px; height: 480px; border-radius: 50%; background: #5C0000; filter: blur(130px); opacity: 0.35"></div>
@@ -113,88 +263,63 @@ html.intro body{overflow:hidden}
 <sc-if value="{{ screens.overview }}" hint-placeholder-val="{{ true }}">
 <div class="screen" style="display: flex; flex-direction: column; gap: 22px">
 
-<div style="display: flex; flex-wrap: wrap; gap: 22px">
-<section class="lift" style="flex: 2 1 520px; position: relative; overflow: hidden; box-sizing: border-box; padding: 34px 36px; border-radius: 30px; background: linear-gradient(135deg, #1A0508 0%, #5C0000 55%, #C40000 100%); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 20px 50px -18px rgba(196,0,0,0.55)">
-<div aria-hidden="true" style="position: absolute; right: -60px; top: -80px; width: 300px; height: 300px; border-radius: 50%; background: #FF2E2E; filter: blur(70px); opacity: 0.45"></div>
-<div aria-hidden="true" style="position: absolute; right: 40px; bottom: -40px; width: 180px; height: 180px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.18)"></div>
-<div style="position: relative; display: flex; flex-wrap: wrap; gap: 28px; justify-content: space-between; align-items: flex-end">
-<div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 14px">
-<span style="align-self: flex-start; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22); color: #FFC2C2">Novembro · 2026</span>
-<h1 style="margin: 0; font-size: 38px; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em">Seu dinheiro, <span style="font-style: italic; color: #FF5C5C">sob controle</span></h1>
-<p style="margin: 0; font-size: 15px; line-height: 1.55; color: #E4E4E7; max-width: 420px">Acompanhe entradas, saídas e metas em um só lugar e veja para onde cada real está indo.</p>
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px">
-<button class="btn" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: #FFFFFF; color: #B00000; font-size: 14px; font-weight: 700; cursor: pointer" onClick="{{ go.sales }}">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>Nova venda</button>
-<button class="btn" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; background: rgba(255,255,255,0.08); color: #FFFFFF; font-size: 14px; font-weight: 600; cursor: pointer" onClick="{{ go.reports }}">Ver relatório</button>
-</div>
-</div>
-<div style="flex: 0 1 auto; display: flex; flex-direction: column; gap: 6px; padding: 20px 24px; border-radius: 22px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(14px)">
+<div style="display: flex; flex-wrap: wrap; gap: 22px; align-items: stretch">
+<section class="lift" style="flex: 1.5 1 400px; position: relative; overflow: hidden; box-sizing: border-box; padding: 24px 26px; border-radius: 28px; background: linear-gradient(135deg, #1A0508 0%, #5C0000 55%, #C40000 100%); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 20px 50px -18px rgba(196,0,0,0.55); display: flex; flex-direction: column; gap: 16px">
+<div aria-hidden="true" style="position: absolute; right: -60px; top: -80px; width: 260px; height: 260px; border-radius: 50%; background: #FF2E2E; filter: blur(70px); opacity: 0.45"></div>
+<div aria-hidden="true" style="position: absolute; right: 30px; bottom: -60px; width: 170px; height: 170px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.16)"></div>
+<span style="position: relative; align-self: flex-start; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22); color: #FFC2C2">Novembro · 2026</span>
+<h1 style="position: relative; margin: 0; font-size: 28px; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em">Seu dinheiro, <span style="font-style: italic; color: #FF5C5C">sob controle</span></h1>
+<div style="position: relative; display: flex; flex-direction: column; gap: 4px">
 <span style="font-size: 13px; color: #FFC2C2">Saldo total</span>
-<span style="font-size: 34px; font-weight: 800; letter-spacing: -0.02em">R$ 48.320,90</span>
-<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #4ADE80">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg>+8,2% em relação a outubro</span>
+<span style="font-size: 38px; font-weight: 800; letter-spacing: -0.03em; line-height: 1">R$ 48.320,90</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #4ADE80"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg>+8,2% em relação a outubro</span>
 </div>
+<div style="position: relative; display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto">
+<button class="btn" onClick="{{ newSale }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border: 0; border-radius: 999px; background: #FFFFFF; color: #B00000; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>Nova venda</button>
+<button class="btn" onClick="{{ go.reports }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; background: rgba(255,255,255,0.08); color: #FFFFFF; font-size: 14px; font-weight: 600; cursor: pointer">Ver relatório</button>
 </div>
 </section>
 
-<section class="glass" style="flex: 1 1 320px; box-sizing: border-box; padding: 26px; border-radius: 30px; display: flex; flex-direction: column; gap: 18px">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<h2 style="margin: 0; font-size: 20px; font-weight: 700">Novembro, 2026</h2>
-<div style="display: flex; gap: 6px">
-<button aria-label="Semana anterior" style="width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #F4F4F5; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
-<button aria-label="Próxima semana" style="width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #F4F4F5; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+<section class="glass" style="flex: 1 1 300px; box-sizing: border-box; padding: 22px; border-radius: 28px; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 700">Resumo do mês</h2>
+<span style="font-size: 12px; color: #A1A1AA">Novembro</span>
 </div>
-</div>
-<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px">
-<sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
-<sc-if value="{{ d.today }}" hint-placeholder-val="{{ false }}">
-<div class="day" style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 0; border-radius: 16px; background: linear-gradient(180deg, #E50000, #8B0000); color: #FFFFFF; box-shadow: 0 10px 22px -8px rgba(229,0,0,0.7)">
-<span style="font-size: 11px; font-weight: 600; color: #FFC2C2">{{ d.wd }}</span>
-<span style="font-size: 17px; font-weight: 700">{{ d.n }}</span>
-<span style="width: 5px; height: 5px; border-radius: 50%; background: #FFFFFF"></span>
-</div>
-</sc-if>
-<sc-if value="{{ d.other }}" hint-placeholder-val="{{ true }}">
-<div class="day" style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 0; border-radius: 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06)">
-<span style="font-size: 11px; font-weight: 600; color: #8B8B94">{{ d.wd }}</span>
-<span style="font-size: 17px; font-weight: 700; color: #FAFAFA">{{ d.n }}</span>
-<span style="width: 5px; height: 5px; border-radius: 50%; background: {{ d.dot }}"></span>
-</div>
-</sc-if>
-</sc-for>
-</div>
-<div style="display: flex; flex-direction: column; gap: 4px">
-<span style="font-size: 13px; font-weight: 700; color: #A1A1AA; text-transform: uppercase; letter-spacing: 0.06em">Próximas contas</span>
-<sc-for list="{{ bills }}" as="b" hint-placeholder-count="3">
-<div class="row-hover" style="display: flex; align-items: center; gap: 12px; padding: 10px 8px; border-radius: 14px">
-<div style="width: 40px; height: 40px; flex: none; border-radius: 12px; background: rgba(229,0,0,0.16); color: #FF5C5C; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1">
-<span style="font-size: 15px; font-weight: 800">{{ b.day }}</span>
-<span style="font-size: 9px; font-weight: 700">NOV</span>
-</div>
-<span style="flex: 1; font-size: 14px; font-weight: 600">{{ b.name }}</span>
-<span style="font-size: 14px; font-weight: 700; color: #FAFAFA">{{ b.value }}</span>
-</div>
-</sc-for>
-</div>
-</section>
-</div>
-
-<div style="display: flex; flex-wrap: wrap; gap: 22px">
 <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
-<section class="glass" style="flex: 1 1 220px; box-sizing: border-box; padding: 22px 24px; border-radius: 26px; display: flex; flex-direction: column; gap: 14px">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<span style="font-size: 14px; font-weight: 600; color: #A1A1AA">{{ k.label }}</span>
-<span style="width: 38px; height: 38px; border-radius: 12px; background: {{ k.chip }}; color: {{ k.chipInk }}; display: flex; align-items: center; justify-content: center">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ k.icon1 }}"></path><path d="{{ k.icon2 }}"></path></svg>
-</span>
+<div class="row-hover" style="display: flex; align-items: center; gap: 12px; padding: 9px 8px; border-radius: 14px">
+<span style="width: 38px; height: 38px; flex: none; border-radius: 12px; background: {{ k.chip }}; color: {{ k.chipInk }}; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ k.icon }}"></path></svg></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px">
+<span style="flex: 1; min-width: 0; font-size: 12.5px; color: #A1A1AA; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ k.label }}</span>
+<span style="font-size: 15px; font-weight: 800; letter-spacing: -0.01em; white-space: nowrap">{{ k.value }}</span>
 </div>
-<span style="font-size: 28px; font-weight: 800; letter-spacing: -0.02em">{{ k.value }}</span>
-<div style="height: 6px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden">
-<div style="height: 100%; width: {{ k.pct }}%; border-radius: 999px; background: {{ k.bar }}"></div>
+<div style="height: 5px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden"><div class="fillbar" style="height: 100%; width: {{ k.pct }}%; border-radius: 999px; background: {{ k.bar }}"></div></div>
+<span style="font-size: 11.5px; font-weight: 600; color: {{ k.noteInk }}">{{ k.note }}</span>
 </div>
-<span style="font-size: 13px; font-weight: 600; color: {{ k.noteInk }}">{{ k.note }}</span>
-</section>
+</div>
 </sc-for>
+</section>
+
+<section class="glass" style="flex: 1 1 300px; box-sizing: border-box; padding: 22px; border-radius: 28px; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 700">A seguir</h2>
+<button class="pill" onClick="{{ go.agenda }}" style="min-height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #D4D4D8; font-size: 12px; font-weight: 700; cursor: pointer">Abrir agenda</button>
+</div>
+<sc-for list="{{ nextUp }}" as="u" hint-placeholder-count="4">
+<div class="row-hover" style="display: flex; align-items: center; gap: 12px; padding: 9px 8px; border-radius: 14px">
+<div style="width: 44px; height: 44px; flex: none; border-radius: 13px; background: {{ u.chip }}; color: {{ u.color }}; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1">
+<span style="font-size: 16px; font-weight: 800">{{ u.n }}</span>
+<span style="font-size: 9px; font-weight: 700; text-transform: uppercase">{{ u.mon }}</span>
+</div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ u.title }}</span>
+<span style="font-size: 12px; color: #8B8B94">{{ u.sub }}</span>
+</div>
+<span style="font-size: 13px; font-weight: 800; color: {{ u.ink }}; white-space: nowrap">{{ u.value }}</span>
+</div>
+</sc-for>
+<button class="btn" onClick="{{ go.today }}" style="min-height: 42px; margin-top: auto; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 13px; font-weight: 700; cursor: pointer">Ver o que acontece hoje</button>
+</section>
 </div>
 
 <div style="display: flex; flex-wrap: wrap; gap: 22px">
@@ -248,7 +373,7 @@ html.intro body{overflow:hidden}
 <span style="font-size: 15px; font-weight: 800; color: #FF2E2E">{{ g.pct }}%</span>
 </div>
 <div style="height: 10px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden">
-<div style="height: 100%; width: {{ g.pct }}%; border-radius: 999px; background: linear-gradient(90deg, #FF2E2E, #C40000); box-shadow: 0 0 12px rgba(229,0,0,0.6)"></div>
+<div class="fillbar" style="height: 100%; width: {{ g.pct }}%; border-radius: 999px; background: linear-gradient(90deg, #FF2E2E, #C40000); box-shadow: 0 0 12px rgba(229,0,0,0.6)"></div>
 </div>
 <span style="font-size: 12px; font-weight: 500; color: #A1A1AA">{{ g.saved }} de {{ g.target }}</span>
 </div>
@@ -269,7 +394,7 @@ html.intro body{overflow:hidden}
 <span style="font-weight: 700">{{ c.value }} <span style="font-weight: 500; color: #8B8B94">· {{ c.pct }}%</span></span>
 </div>
 <div style="height: 8px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden">
-<div style="height: 100%; width: {{ c.w }}%; border-radius: 999px; background: {{ c.color }}"></div>
+<div class="fillbar" style="height: 100%; width: {{ c.w }}%; border-radius: 999px; background: {{ c.color }}"></div>
 </div>
 </div>
 </sc-for>
@@ -341,21 +466,250 @@ html.intro body{overflow:hidden}
 
 </div>
 </sc-if>
-<sc-if value="{{ screens.sales }}" hint-placeholder-val="{{ false }}">
+<sc-if value="{{ screens.today }}" hint-placeholder-val="{{ false }}">
 <div class="screen" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; padding: 8px 4px 0">
-<div style="display: flex; flex-direction: column; gap: 6px">
+<div class="anim" style="display: flex; flex-direction: column; gap: 6px">
 <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FF5C5C">{{ page.eyebrow }}</span>
 <h1 style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.02em">{{ page.title }}</h1>
 <p style="margin: 0; font-size: 15px; color: #A1A1AA">{{ page.sub }}</p>
 </div>
 <sc-if value="{{ page.hasAction }}" hint-placeholder-val="{{ true }}">
-<button class="btn" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
+<button class="btn" onClick="{{ page.onAction }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
+</sc-if>
+</div>
+<div class="screen" style="display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; flex-wrap: wrap; gap: 22px">
+<section class="lift" style="flex: 2 1 460px; position: relative; overflow: hidden; box-sizing: border-box; padding: 30px 32px; border-radius: 30px; background: linear-gradient(135deg, #1A0508 0%, #5C0000 50%, #C40000 100%); border: 1px solid rgba(255,255,255,0.08); color: #FFFFFF; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 20px 50px -18px rgba(196,0,0,0.55)">
+<div aria-hidden="true" style="position: absolute; right: -80px; top: -90px; width: 320px; height: 320px; border-radius: 50%; background: #FF2E2E; filter: blur(80px); opacity: 0.4"></div>
+<div aria-hidden="true" style="position: absolute; right: 30px; bottom: -70px; width: 220px; height: 220px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.14)"></div>
+<div aria-hidden="true" style="position: absolute; right: 70px; bottom: -30px; width: 140px; height: 140px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1)"></div>
+<sc-if value="{{ nextAppt.has }}" hint-placeholder-val="{{ true }}">
+<div style="position: relative; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #FFC2C2">Próximo atendimento</span>
+<span style="display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22); font-size: 13px; font-weight: 700"><span style="width: 8px; height: 8px; border-radius: 50%; background: #4ADE80; box-shadow: 0 0 10px #4ADE80"></span>{{ nextAppt.when }}</span>
+</div>
+<div style="position: relative; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 22px">
+<span style="font-size: 72px; line-height: 0.9; font-weight: 800; letter-spacing: -0.04em">{{ nextAppt.time }}</span>
+<div style="display: flex; flex-direction: column; gap: 4px; padding-bottom: 4px">
+<span style="font-size: 24px; font-weight: 800">{{ nextAppt.client }}</span>
+<span style="font-size: 15px; color: #FFE3E3">{{ nextAppt.service }}</span>
+</div>
+</div>
+<div style="position: relative; display: flex; flex-wrap: wrap; gap: 10px">
+<span style="padding: 8px 14px; border-radius: 999px; background: rgba(0,0,0,0.25); font-size: 13px; font-weight: 600">{{ nextAppt.dateLabel }}</span>
+<span style="padding: 8px 14px; border-radius: 999px; background: rgba(0,0,0,0.25); font-size: 13px; font-weight: 600">{{ nextAppt.phone }}</span>
+<sc-if value="{{ nextAppt.hasValue }}" hint-placeholder-val="{{ true }}"><span style="padding: 8px 14px; border-radius: 999px; background: rgba(34,197,94,0.2); border: 1px solid rgba(74,222,128,0.4); color: #4ADE80; font-size: 13px; font-weight: 700">{{ nextAppt.value }}</span></sc-if>
+</div>
+</sc-if>
+<div style="position: relative; display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto">
+<button class="btn" onClick="{{ go.agenda }}" style="min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: #FFFFFF; color: #B00000; font-size: 14px; font-weight: 700; cursor: pointer">Abrir agenda</button>
+<button class="btn" onClick="{{ go.agenda }}" style="min-height: 46px; padding: 0 20px; border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; background: rgba(255,255,255,0.08); color: #FFFFFF; font-size: 14px; font-weight: 600; cursor: pointer">Registrar cliente</button>
+</div>
+</section>
+<div style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 14px">
+<sc-for list="{{ todayStats }}" as="k" hint-placeholder-count="3">
+<div class="anim" style="flex: 1; padding: 18px 20px; border-radius: 22px; background: {{ k.bg }}; border: 1px solid {{ k.border }}; display: flex; align-items: center; gap: 14px">
+<span style="width: 46px; height: 46px; flex: none; border-radius: 15px; background: {{ k.chip }}; color: {{ k.ink }}; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ k.icon }}"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 13px; color: #A1A1AA">{{ k.label }}</span>
+<span style="font-size: 22px; font-weight: 800; color: {{ k.ink }}">{{ k.value }}</span>
+<span style="font-size: 12px; color: #8B8B94">{{ k.note }}</span>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start">
+<section class="glass" style="flex: 3 1 480px; box-sizing: border-box; padding: 26px 28px; border-radius: 30px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Linha do tempo de hoje</h2>
+<span style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: rgba(229,0,0,0.14); color: #FFC2C2; font-size: 13px; font-weight: 700"><span style="width: 8px; height: 8px; border-radius: 50%; background: #FF2E2E; box-shadow: 0 0 10px #FF2E2E"></span>Agora · {{ nowLabel }}</span>
+</div>
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{ timeline }}" as="t" hint-placeholder-count="6">
+<sc-if value="{{ t.isMarker }}" hint-placeholder-val="{{ false }}">
+<div class="anim" style="display: flex; align-items: center; gap: 12px; margin: 6px 0">
+<span style="width: 62px; flex: none; text-align: right; font-size: 12px; font-weight: 800; color: #FF2E2E">{{ nowLabel }}</span>
+<span style="width: 14px; height: 14px; flex: none; border-radius: 50%; background: #FF2E2E; box-shadow: 0 0 0 5px rgba(229,0,0,0.25), 0 0 18px #FF2E2E"></span>
+<span style="flex: 1; height: 2px; background: linear-gradient(90deg, #FF2E2E, rgba(229,0,0,0))"></span>
+</div>
+</sc-if>
+<sc-if value="{{ t.isItem }}" hint-placeholder-val="{{ true }}">
+<div class="row-hover" style="display: flex; align-items: stretch; gap: 12px; opacity: {{ t.opacity }}; border-radius: 16px">
+<span style="width: 62px; flex: none; text-align: right; padding-top: 14px; font-size: 14px; font-weight: 800; color: #E4E4E7">{{ t.time }}</span>
+<div style="width: 14px; flex: none; display: flex; flex-direction: column; align-items: center">
+<span style="width: 2px; height: 14px; background: rgba(255,255,255,0.1)"></span>
+<span style="width: 12px; height: 12px; flex: none; border-radius: 50%; background: {{ t.dot }}; box-shadow: 0 0 12px {{ t.dot }}"></span>
+<span style="width: 2px; flex: 1; background: rgba(255,255,255,0.1)"></span>
+</div>
+<div style="flex: 1; min-width: 0; margin: 4px 0; padding: 12px 14px; border-radius: 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+<div style="flex: 1 1 180px; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 15px; font-weight: 700">{{ t.title }}</span>
+<span style="font-size: 12px; color: #A1A1AA">{{ t.sub }}</span>
+</div>
+<sc-if value="{{ t.hasValue }}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; font-weight: 800; color: #4ADE80">{{ t.value }}</span></sc-if>
+<span style="padding: 5px 10px; border-radius: 999px; background: {{ t.chip }}; color: {{ t.tagInk }}; font-size: 11px; font-weight: 700">{{ t.tag }}</span>
+</div>
+</div>
+</sc-if>
+</sc-for>
+</div>
+</section>
+
+<section class="glass" style="flex: 2 1 340px; box-sizing: border-box; padding: 26px; border-radius: 30px; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Próximos dias</h2>
+<sc-for list="{{ upcoming }}" as="g" hint-placeholder-count="4">
+<div class="row-hover" style="display: flex; gap: 14px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06)">
+<div style="width: 54px; flex: none; padding: 8px 0; border-radius: 16px; background: rgba(229,0,0,0.14); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; align-self: flex-start">
+<span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #FF5C5C">{{ g.wd }}</span>
+<span style="font-size: 22px; font-weight: 800; line-height: 1">{{ g.n }}</span>
+</div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; font-weight: 700; color: #D4D4D8">{{ g.label }}</span>
+<sc-for list="{{ g.items }}" as="e" hint-placeholder-count="2">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="width: 4px; align-self: stretch; min-height: 30px; border-radius: 4px; background: {{ e.color }}"></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px">
+<span style="font-size: 14px; font-weight: 700">{{ e.title }}</span>
+<span style="font-size: 12px; color: #8B8B94; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ e.sub }}</span>
+</div>
+<span style="font-size: 13px; font-weight: 800; color: {{ e.ink }}; white-space: nowrap">{{ e.right }}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</section>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ screens.agenda }}" hint-placeholder-val="{{ false }}">
+<div class="screen" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; padding: 8px 4px 0">
+<div class="anim" style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FF5C5C">{{ page.eyebrow }}</span>
+<h1 style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.02em">{{ page.title }}</h1>
+<p style="margin: 0; font-size: 15px; color: #A1A1AA">{{ page.sub }}</p>
+</div>
+<sc-if value="{{ page.hasAction }}" hint-placeholder-val="{{ true }}">
+<button class="btn" onClick="{{ page.onAction }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
+</sc-if>
+</div>
+<div class="screen" style="display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start">
+<section class="glass" style="flex: 3 1 520px; box-sizing: border-box; padding: 26px 28px; border-radius: 30px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.02em">{{ cal.title }}</h2>
+<span style="font-size: 13px; color: #A1A1AA">{{ cal.summary }}</span>
+</div>
+<div style="display: flex; gap: 8px; align-items: center">
+<button class="pill" onClick="{{ cal.today }}" style="min-height: 38px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(229,0,0,0.5); background: rgba(229,0,0,0.12); color: #FFC2C2; font-size: 13px; font-weight: 700; cursor: pointer">Hoje</button>
+<button class="icon-btn" onClick="{{ cal.prev }}" aria-label="Mês anterior" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #F4F4F5; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+<button class="icon-btn" onClick="{{ cal.next }}" aria-label="Próximo mês" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #F4F4F5; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7"><span style="text-align: center; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #8B8B94; padding: 4px 0">{{ w }}</span></sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{ cal.cells }}" as="d" hint-placeholder-count="35">
+<sc-if value="{{ d.blank }}" hint-placeholder-val="{{ false }}"><div aria-hidden="true" style="min-height: 78px"></div></sc-if>
+<sc-if value="{{ d.real }}" hint-placeholder-val="{{ true }}">
+<button class="cal-day" onClick="{{ d.pick }}" aria-label="{{ d.aria }}" aria-pressed="{{ d.pressed }}" style="min-height: 78px; padding: 10px 8px; box-sizing: border-box; border-radius: 18px; border: 1px solid {{ d.border }}; background: {{ d.bg }}; color: {{ d.ink }}; box-shadow: {{ d.shadow }}; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 6px; cursor: pointer; text-align: left">
+<span style="font-size: 17px; font-weight: 800">{{ d.n }}</span>
+<span style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px; min-height: 8px">
+<sc-for list="{{ d.dots }}" as="dot" hint-placeholder-count="2"><span style="width: 7px; height: 7px; border-radius: 50%; background: {{ dot.color }}; box-shadow: 0 0 8px {{ dot.color }}"></span></sc-for>
+<sc-if value="{{ d.more }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10px; font-weight: 700; opacity: .8">+{{ d.more }}</span></sc-if>
+</span>
+</button>
+</sc-if>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 18px; font-size: 12px; color: #A1A1AA">
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #FF2E2E"></span>Agendado</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #4ADE80"></span>Concluído</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 14px; height: 14px; border-radius: 5px; border: 1px solid rgba(229,0,0,0.7)"></span>Hoje</span>
+</div>
+</section>
+
+<section class="glass" style="flex: 2 1 360px; box-sizing: border-box; padding: 26px; border-radius: 30px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FF5C5C">Dia selecionado</span>
+<h2 style="margin: 0; font-size: 22px; font-weight: 800">{{ sel.label }}</h2>
+</div>
+<span style="padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,0.06); font-size: 12px; font-weight: 700; white-space: nowrap">{{ sel.countLabel }}</span>
+</div>
+<sc-if value="{{ sel.empty }}" hint-placeholder-val="{{ false }}">
+<div class="anim" style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 26px 16px; border-radius: 20px; border: 1px dashed rgba(255,255,255,0.14); text-align: center; color: #A1A1AA">
+<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FF5C5C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4 M16 2v4 M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z M3 10h18 M12 14v4 M10 16h4"></path></svg>
+<span style="font-size: 14px">Dia livre. Adicione um compromisso abaixo.</span>
+</div>
+</sc-if>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{ sel.appts }}" as="a" hint-placeholder-count="3">
+<div class="row-hover" style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); opacity: {{ a.opacity }}">
+<div style="width: 62px; flex: none; padding: 8px 0; border-radius: 14px; background: {{ a.badgeBg }}; color: {{ a.badgeInk }}; text-align: center; font-size: 14px; font-weight: 800">{{ a.time }}</div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 15px; font-weight: 700; text-decoration: {{ a.deco }}">{{ a.title }}</span>
+<span style="font-size: 12px; color: #A1A1AA; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ a.detail }}</span>
+<span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 12px; color: #8B8B94"><span style="padding: 3px 8px; border-radius: 999px; background: {{ a.chip }}; color: {{ a.tagInk }}; font-weight: 700">{{ a.tag }}</span><sc-if value="{{ a.hasPhone }}" hint-placeholder-val="{{ true }}"><span>{{ a.phone }}</span></sc-if><sc-if value="{{ a.hasValue }}" hint-placeholder-val="{{ true }}"><strong style="color: {{ a.valueInk }}">{{ a.value }}</strong></sc-if></span>
+</div>
+<button class="icon-btn" onClick="{{ a.toggle }}" aria-label="{{ a.toggleLabel }}" style="width: 36px; height: 36px; flex: none; border-radius: 50%; border: 1px solid {{ a.checkBorder }}; background: {{ a.checkBg }}; color: {{ a.checkInk }}; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button>
+<sc-if value="{{ a.canRemove }}" hint-placeholder-val="{{ true }}"><button class="icon-btn" onClick="{{ a.remove }}" aria-label="Remover agendamento" style="width: 36px; height: 36px; flex: none; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: #A1A1AA; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18 M6 6l12 12"></path></svg></button></sc-if>
+</div>
+</sc-for>
+</div>
+<div style="height: 1px; background: rgba(255,255,255,0.08)"></div>
+<form onSubmit="{{ addEvent }}" class="anim" style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="width: 34px; height: 34px; border-radius: 11px; background: linear-gradient(135deg, #FF2E2E, #C40000); display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14 M5 12h14"></path></svg></span>
+<h3 style="margin: 0; font-size: 17px; font-weight: 800">Novo compromisso em {{ sel.short }}</h3>
+</div>
+<div role="radiogroup" aria-label="Tipo" style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{ typeOptions }}" as="o" hint-placeholder-count="4"><label class="chip-radio"><input type="radio" name="type" value="{{ o.value }}" checked="{{ o.checked }}"><span><i style="width: 8px; height: 8px; border-radius: 50%; background: {{ o.color }}; display: inline-block"></i>{{ o.label }}</span></label></sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<label style="flex: 1 1 100%; display: flex; flex-direction: column; gap: 7px; font-size: 12px; font-weight: 600; color: #D4D4D8">Nome ou descrição
+<input name="title" type="text" placeholder="Ex.: João Silva ou Conta de água" required style="height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #FAFAFA; font: inherit; font-size: 14px; outline: none; transition: border-color .2s ease, box-shadow .2s ease">
+</label>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<label style="flex: 1 1 160px; display: flex; flex-direction: column; gap: 7px; font-size: 12px; font-weight: 600; color: #D4D4D8">Detalhe
+<input name="detail" type="text" placeholder="Serviço, fornecedor, produto…" style="height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #FAFAFA; font: inherit; font-size: 14px; outline: none; transition: border-color .2s ease, box-shadow .2s ease">
+</label>
+<label style="flex: 1 1 160px; display: flex; flex-direction: column; gap: 7px; font-size: 12px; font-weight: 600; color: #D4D4D8">Telefone
+<input name="phone" type="tel" placeholder="(00) 0 0000-0000" style="height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #FAFAFA; font: inherit; font-size: 14px; outline: none; transition: border-color .2s ease, box-shadow .2s ease">
+</label>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<label style="flex: 1 1 160px; display: flex; flex-direction: column; gap: 7px; font-size: 12px; font-weight: 600; color: #D4D4D8">Horário
+<input name="time" type="time" placeholder="" style="height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #FAFAFA; font: inherit; font-size: 14px; outline: none; transition: border-color .2s ease, box-shadow .2s ease">
+</label>
+<label style="flex: 1 1 160px; display: flex; flex-direction: column; gap: 7px; font-size: 12px; font-weight: 600; color: #D4D4D8">Valor (R$)
+<input name="value" type="text" placeholder="Ex.: 450,00" inputmode="decimal" style="height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #FAFAFA; font: inherit; font-size: 14px; outline: none; transition: border-color .2s ease, box-shadow .2s ease">
+</label>
+</div>
+<button class="btn" type="submit" style="min-height: 48px; margin-top: 4px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer">Adicionar à agenda</button>
+</form>
+</section>
+</div>
+</sc-if>
+<sc-if value="{{ screens.sales }}" hint-placeholder-val="{{ false }}">
+<div class="screen" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; padding: 8px 4px 0">
+<div class="anim" style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FF5C5C">{{ page.eyebrow }}</span>
+<h1 style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.02em">{{ page.title }}</h1>
+<p style="margin: 0; font-size: 15px; color: #A1A1AA">{{ page.sub }}</p>
+</div>
+<sc-if value="{{ page.hasAction }}" hint-placeholder-val="{{ true }}">
+<button class="btn" onClick="{{ page.onAction }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
 </sc-if>
 </div>
 <div class="screen" style="display: flex; flex-direction: column; gap: 22px">
 <div style="display: flex; flex-wrap: wrap; gap: 14px">
 <sc-for list="{{ salesStats }}" as="k" hint-placeholder-count="4">
-<div style="flex: 1 1 190px; padding: 18px 20px; border-radius: 20px; background: {{ k.bg }}; border: 1px solid {{ k.border }}; display: flex; flex-direction: column; gap: 6px">
+<div class="anim" style="flex: 1 1 190px; padding: 18px 20px; border-radius: 20px; background: {{ k.bg }}; border: 1px solid {{ k.border }}; display: flex; flex-direction: column; gap: 6px">
 <span style="font-size: 13px; color: #A1A1AA">{{ k.label }}</span>
 <span style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: {{ k.ink }}">{{ k.value }}</span>
 <span style="font-size: 12px; color: #8B8B94">{{ k.note }}</span>
@@ -389,7 +743,10 @@ html.intro body{overflow:hidden}
 <span style="font-size: 12px; color: #8B8B94">{{ v.client }} · {{ v.date }}</span>
 </div>
 <span style="flex: 0 1 120px; font-size: 13px; color: #A1A1AA">{{ v.method }}</span>
-<span style="flex: 0 0 100px"><span style="display: inline-block; padding: 5px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: {{ v.statusBg }}; color: {{ v.statusInk }}">{{ v.status }}</span></span>
+<span style="flex: 0 0 130px">
+<sc-if value="{{ v.isOpen }}" hint-placeholder-val="{{ false }}"><button class="pill receive-btn" onClick="{{ v.receive }}" title="Marcar como recebido" style="display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid rgba(250,204,21,0.45); background: rgba(250,204,21,0.12); color: #FACC15; font-size: 12px; font-weight: 700; cursor: pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20z M12 6v6l4 2"></path></svg><span class="rb-label">A receber</span></button></sc-if>
+<sc-if value="{{ v.isPaid }}" hint-placeholder-val="{{ true }}"><span style="display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: 999px; background: rgba(34,197,94,0.15); color: #4ADE80; font-size: 12px; font-weight: 700"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Recebido</span></sc-if>
+</span>
 <span style="flex: 0 0 120px; text-align: right; font-size: 15px; font-weight: 800; color: #4ADE80">{{ v.value }}</span>
 </div>
 </sc-for>
@@ -399,19 +756,19 @@ html.intro body{overflow:hidden}
 </sc-if>
 <sc-if value="{{ screens.bills }}" hint-placeholder-val="{{ false }}">
 <div class="screen" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; padding: 8px 4px 0">
-<div style="display: flex; flex-direction: column; gap: 6px">
+<div class="anim" style="display: flex; flex-direction: column; gap: 6px">
 <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FF5C5C">{{ page.eyebrow }}</span>
 <h1 style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.02em">{{ page.title }}</h1>
 <p style="margin: 0; font-size: 15px; color: #A1A1AA">{{ page.sub }}</p>
 </div>
 <sc-if value="{{ page.hasAction }}" hint-placeholder-val="{{ true }}">
-<button class="btn" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
+<button class="btn" onClick="{{ page.onAction }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
 </sc-if>
 </div>
 <div class="screen" style="display: flex; flex-direction: column; gap: 22px">
 <div style="display: flex; flex-wrap: wrap; gap: 14px">
 <sc-for list="{{ billStats }}" as="k" hint-placeholder-count="4">
-<div style="flex: 1 1 190px; padding: 18px 20px; border-radius: 20px; background: {{ k.bg }}; border: 1px solid {{ k.border }}; display: flex; flex-direction: column; gap: 6px">
+<div class="anim" style="flex: 1 1 190px; padding: 18px 20px; border-radius: 20px; background: {{ k.bg }}; border: 1px solid {{ k.border }}; display: flex; flex-direction: column; gap: 6px">
 <span style="font-size: 13px; color: #A1A1AA">{{ k.label }}</span>
 <span style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: {{ k.ink }}">{{ k.value }}</span>
 <span style="font-size: 12px; color: #8B8B94">{{ k.note }}</span>
@@ -458,16 +815,36 @@ html.intro body{overflow:hidden}
 </sc-if>
 <sc-if value="{{ screens.reports }}" hint-placeholder-val="{{ false }}">
 <div class="screen" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; padding: 8px 4px 0">
-<div style="display: flex; flex-direction: column; gap: 6px">
+<div class="anim" style="display: flex; flex-direction: column; gap: 6px">
 <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FF5C5C">{{ page.eyebrow }}</span>
 <h1 style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.02em">{{ page.title }}</h1>
 <p style="margin: 0; font-size: 15px; color: #A1A1AA">{{ page.sub }}</p>
 </div>
 <sc-if value="{{ page.hasAction }}" hint-placeholder-val="{{ true }}">
-<button class="btn" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
+<button class="btn" onClick="{{ page.onAction }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
 </sc-if>
 </div>
 <div class="screen" style="display: flex; flex-direction: column; gap: 22px">
+<section class="glass" style="box-sizing: border-box; padding: 24px 26px; border-radius: 28px; display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: space-between">
+<div style="flex: 1 1 260px; display: flex; align-items: center; gap: 14px">
+<span style="width: 50px; height: 50px; flex: none; border-radius: 16px; background: linear-gradient(135deg, #FF2E2E, #8B0000); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 24px -10px rgba(229,0,0,0.8)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M7 10l5 5 5-5 M12 15V3"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 3px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Exportar relatório</h2>
+<span style="font-size: 13px; color: #A1A1AA">Baixa uma planilha com vendas, contas, compras e recebimentos do período. Abre no Excel e no Google Planilhas.</span>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{ exports }}" as="x" hint-placeholder-count="4">
+<button class="btn" onClick="{{ x.run }}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 120px; padding: 11px 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #FAFAFA; cursor: pointer; text-align: left">
+<span style="font-size: 14px; font-weight: 800">{{ x.label }}</span>
+<span style="font-size: 11px; color: #A1A1AA">{{ x.desc }}</span>
+</button>
+</sc-for>
+</div>
+<sc-if value="{{ hasExport }}" hint-placeholder-val="{{ false }}">
+<div class="anim" role="status" style="flex: 1 1 100%; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 14px; background: rgba(34,197,94,0.1); border: 1px solid rgba(74,222,128,0.3); color: #4ADE80; font-size: 13px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>{{ lastExport }}</div>
+</sc-if>
+</section>
 <div style="display: flex; flex-wrap: wrap; gap: 22px">
 <sc-for list="{{ reportStats }}" as="r" hint-placeholder-count="4">
 <section class="glass" style="flex: 1 1 220px; box-sizing: border-box; padding: 22px 24px; border-radius: 26px; display: flex; flex-direction: column; gap: 8px">
@@ -527,7 +904,7 @@ html.intro body{overflow:hidden}
 <span style="font-weight: 700">{{ c.value }} <span style="font-weight: 500; color: #8B8B94">· {{ c.pct }}%</span></span>
 </div>
 <div style="height: 8px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden">
-<div style="height: 100%; width: {{ c.w }}%; border-radius: 999px; background: {{ c.color }}"></div>
+<div class="fillbar" style="height: 100%; width: {{ c.w }}%; border-radius: 999px; background: {{ c.color }}"></div>
 </div>
 </div>
 </sc-for>
@@ -537,13 +914,13 @@ html.intro body{overflow:hidden}
 </sc-if>
 <sc-if value="{{ screens.goals }}" hint-placeholder-val="{{ false }}">
 <div class="screen" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; padding: 8px 4px 0">
-<div style="display: flex; flex-direction: column; gap: 6px">
+<div class="anim" style="display: flex; flex-direction: column; gap: 6px">
 <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FF5C5C">{{ page.eyebrow }}</span>
 <h1 style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.02em">{{ page.title }}</h1>
 <p style="margin: 0; font-size: 15px; color: #A1A1AA">{{ page.sub }}</p>
 </div>
 <sc-if value="{{ page.hasAction }}" hint-placeholder-val="{{ true }}">
-<button class="btn" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
+<button class="btn" onClick="{{ page.onAction }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
 </sc-if>
 </div>
 <div class="screen" style="display: flex; flex-wrap: wrap; gap: 22px">
@@ -557,7 +934,7 @@ html.intro body{overflow:hidden}
 <span style="font-size: 26px; font-weight: 800; color: {{ g.ink }}">{{ g.pct }}%</span>
 </div>
 <div style="height: 12px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden">
-<div style="height: 100%; width: {{ g.pct }}%; border-radius: 999px; background: {{ g.bar }}"></div>
+<div class="fillbar" style="height: 100%; width: {{ g.pct }}%; border-radius: 999px; background: {{ g.bar }}"></div>
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 6px 12px; justify-content: space-between; font-size: 13px">
 <span style="color: #D4D4D8"><strong style="color: #FAFAFA">{{ g.saved }}</strong> de {{ g.target }}</span>
@@ -569,13 +946,13 @@ html.intro body{overflow:hidden}
 </sc-if>
 <sc-if value="{{ screens.notifs }}" hint-placeholder-val="{{ false }}">
 <div class="screen" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; padding: 8px 4px 0">
-<div style="display: flex; flex-direction: column; gap: 6px">
+<div class="anim" style="display: flex; flex-direction: column; gap: 6px">
 <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FF5C5C">{{ page.eyebrow }}</span>
 <h1 style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.02em">{{ page.title }}</h1>
 <p style="margin: 0; font-size: 15px; color: #A1A1AA">{{ page.sub }}</p>
 </div>
 <sc-if value="{{ page.hasAction }}" hint-placeholder-val="{{ true }}">
-<button class="btn" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
+<button class="btn" onClick="{{ page.onAction }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
 </sc-if>
 </div>
 <section class="glass screen" style="box-sizing: border-box; padding: 26px 28px; border-radius: 30px; display: flex; flex-direction: column; gap: 14px">
@@ -600,16 +977,40 @@ html.intro body{overflow:hidden}
 </sc-if>
 <sc-if value="{{ screens.settings }}" hint-placeholder-val="{{ false }}">
 <div class="screen" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; padding: 8px 4px 0">
-<div style="display: flex; flex-direction: column; gap: 6px">
+<div class="anim" style="display: flex; flex-direction: column; gap: 6px">
 <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FF5C5C">{{ page.eyebrow }}</span>
 <h1 style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.02em">{{ page.title }}</h1>
 <p style="margin: 0; font-size: 15px; color: #A1A1AA">{{ page.sub }}</p>
 </div>
 <sc-if value="{{ page.hasAction }}" hint-placeholder-val="{{ true }}">
-<button class="btn" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
+<button class="btn" onClick="{{ page.onAction }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
 </sc-if>
 </div>
 <div class="screen" style="display: flex; flex-wrap: wrap; gap: 22px">
+<section class="glass" style="flex: 1 1 100%; box-sizing: border-box; padding: 26px 28px; border-radius: 30px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Aparência</h2>
+<span style="font-size: 13px; color: #A1A1AA">Escolha o modo escuro ou o modo claro. A escolha fica salva neste navegador.</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<sc-for list="{{ themes }}" as="t" hint-placeholder-count="2">
+<button onClick="{{ t.pick }}" aria-pressed="{{ t.pressed }}" class="theme-opt" style="flex: 1 1 240px; max-width: 380px; box-sizing: border-box; padding: 14px; border-radius: 22px; border: 2px solid {{ t.ring }}; box-shadow: {{ t.ringShadow }}; background: rgba(255,255,255,0.03); color: #FAFAFA; cursor: pointer; display: flex; flex-direction: column; gap: 12px; text-align: left">
+<div aria-hidden="true" style="height: 116px; box-sizing: border-box; border-radius: 14px; background: {{ t.bg }}; border: 1px solid {{ t.line }}; padding: 12px; display: flex; gap: 8px">
+<div style="width: 22px; border-radius: 8px; background: #1C0A0C"></div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 8px">
+<div style="height: 34px; border-radius: 9px; background: linear-gradient(135deg, #5C0000, #E50000)"></div>
+<div style="flex: 1; display: flex; gap: 8px"><div style="flex: 1; border-radius: 9px; background: {{ t.card }}; border: 1px solid {{ t.line }}"></div><div style="flex: 1; border-radius: 9px; background: {{ t.card }}; border: 1px solid {{ t.line }}"></div></div>
+</div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 800">{{ t.label }}</span><span style="font-size: 12px; color: #A1A1AA">{{ t.desc }}</span></div>
+<sc-if value="{{ t.active }}" hint-placeholder-val="{{ true }}"><span style="width: 26px; height: 26px; border-radius: 50%; background: #E50000; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+<sc-if value="{{ t.inactive }}" hint-placeholder-val="{{ false }}"><span style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2)"></span></sc-if>
+</div>
+</button>
+</sc-for>
+</div>
+</section>
 <section class="glass" style="flex: 2 1 420px; box-sizing: border-box; padding: 28px; border-radius: 30px; display: flex; flex-direction: column; gap: 20px">
 <h2 style="margin: 0; font-size: 20px; font-weight: 700">Perfil</h2>
 <div style="display: flex; flex-wrap: wrap; gap: 16px">
@@ -643,6 +1044,39 @@ html.intro body{overflow:hidden}
 </sc-if>
 </main>
 </div>
+<sc-if value="{{ modal.open }}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box">
+<div class="modal-backdrop" onClick="{{ modal.close }}" style="position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px)"></div>
+<form class="modal-card" onSubmit="{{ modal.submit }}" style="position: relative; width: 100%; max-width: 520px; max-height: 90vh; overflow: auto; box-sizing: border-box; padding: 28px; border-radius: 28px; background: #141416; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 40px 80px -30px rgba(0,0,0,0.9), 0 0 60px -20px rgba(229,0,0,0.35); display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.02em">{{ modal.title }}</h2>
+<span style="font-size: 13px; color: #A1A1AA">{{ modal.sub }}</span>
+</div>
+<button type="button" class="icon-btn" onClick="{{ modal.close }}" aria-label="Fechar" style="width: 38px; height: 38px; flex: none; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #D4D4D8; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18 M6 6l12 12"></path></svg></button>
+</div>
+<sc-for list="{{ modal.fields }}" as="f" hint-placeholder-count="4">
+<sc-if value="{{ f.isInput }}" hint-placeholder-val="{{ true }}">
+<label style="display: flex; flex-direction: column; gap: 7px; font-size: 12px; font-weight: 600; color: #D4D4D8">{{ f.label }}
+<input name="{{ f.name }}" type="{{ f.type }}" placeholder="{{ f.placeholder }}" required="{{ f.required }}" inputmode="{{ f.inputmode }}" style="height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #FAFAFA; font: inherit; font-size: 14px; outline: none">
+</label>
+</sc-if>
+<sc-if value="{{ f.isChoice }}" hint-placeholder-val="{{ false }}">
+<div role="radiogroup" aria-label="{{ f.label }}" style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 600; color: #D4D4D8">{{ f.label }}</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{ f.options }}" as="o" hint-placeholder-count="3"><label class="chip-radio"><input type="radio" name="{{ f.name }}" value="{{ o.value }}" checked="{{ o.checked }}"><span>{{ o.label }}</span></label></sc-for>
+</div>
+</div>
+</sc-if>
+</sc-for>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; margin-top: 6px">
+<button type="button" onClick="{{ modal.close }}" style="min-height: 46px; padding: 0 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: transparent; color: #D4D4D8; font-size: 14px; font-weight: 600; cursor: pointer">Cancelar</button>
+<button type="submit" class="btn" style="min-height: 46px; padding: 0 22px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer">{{ modal.submitLabel }}</button>
+</div>
+</form>
+</div>
+</sc-if>
 </div>
 </template>
 <script>
@@ -651,123 +1085,456 @@ class DCLogic { constructor(props){ this.props = props || {}; this.state = {}; }
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { view: 'overview', period: 'mes', filter: 'todas', salesFilter: 'todas', billFilter: 'todas', paid: {}, read: false, prefs: { alerts: true, weekly: true, hide: false, round: false } };
+    var theme = 'dark';
+    try { theme = window.localStorage.getItem('artsom-theme') || 'dark'; } catch (e) {}
+    var E = function (id, type, date, time, title, detail, phone, value, done) {
+      return { id: id, type: type, date: date, time: time, title: title, detail: detail, phone: phone, value: value, done: !!done };
+    };
+    this.state = {
+      view: 'overview', theme: theme, period: 'mes', filter: 'todas', salesFilter: 'todas', billFilter: 'todas',
+      paid: {}, received: {}, extraSales: [], extraBills: [], extraGoals: [], read: false,
+      prefs: { alerts: true, weekly: true, hide: false, round: false },
+      calY: 2026, calM: 10, sel: '2026-11-16', modal: null, lastExport: '',
+      events: [
+        E('e1', 'cliente', '2026-11-12', '10:00', 'Marcos P.', 'Kit 2 vias + tweeters', '(35) 9 9711-2034', 760, true),
+        E('e2', 'cliente', '2026-11-13', '15:00', 'Diego R.', 'Subwoofer 12" + caixa', '(35) 9 9845-1120', 1350, true),
+        E('e3', 'cliente', '2026-11-16', '09:00', 'Rafael M.', 'Instalação de som completo — Gol 2018', '(35) 9 9812-4471', 2850, true),
+        E('e4', 'cliente', '2026-11-16', '11:30', 'Juliana S.', 'Central multimídia 9"', '(35) 9 9733-0098', 1490, true),
+        E('e5', 'receber', '2026-11-16', '15:00', 'Juliana S. — parcela 1/6', 'Central multimídia', '', 248.33, false),
+        E('e6', 'cliente', '2026-11-16', '14:00', 'Carlos A.', 'Alto-falantes 6x9 — Onix', '(35) 9 9920-5512', 520, false),
+        E('e7', 'cliente', '2026-11-16', '16:30', 'Bruno T.', 'Revisão do amplificador', '(35) 9 9654-7788', 180, false),
+        E('e8', 'compra', '2026-11-16', '17:00', 'Chegada de mercadoria', 'Fornecedor de alto-falantes', '', 0, false),
+        E('e9', 'cliente', '2026-11-17', '09:30', 'Fernanda L.', 'Câmera de ré + sensor', '(35) 9 9877-3321', 640, false),
+        E('e10', 'compra', '2026-11-17', '10:00', 'Comprar cabos de força 4mm', 'Distribuidora — 50 metros', '', 380, false),
+        E('e11', 'cliente', '2026-11-17', '15:00', 'Gustavo H.', 'Orçamento de som automotivo', '(35) 9 9102-6654', 0, false),
+        E('e12', 'cliente', '2026-11-18', '10:00', 'Patrícia N.', 'Alarme e trava elétrica', '(35) 9 9588-4410', 690, false),
+        E('e13', 'receber', '2026-11-18', '', 'Diego R. — parcela 1/3', 'Subwoofer + caixa', '', 450, false),
+        E('e14', 'cliente', '2026-11-19', '08:30', 'Thiago V.', 'Insulfilm + som', '(35) 9 9233-8890', 1200, false),
+        E('e15', 'cliente', '2026-11-19', '13:00', 'Ana C.', 'Central multimídia', '(35) 9 9471-2205', 1490, false),
+        E('e16', 'cliente', '2026-11-19', '17:30', 'Leandro B.', 'Módulo 1200W', '(35) 9 9366-1029', 1100, false),
+        E('e17', 'cliente', '2026-11-20', '11:00', 'Roberta F.', 'Kit completo — Hilux', '(35) 9 9845-7731', 4200, false),
+        E('e18', 'receber', '2026-11-20', '', 'Patrícia N. — boleto', 'Alarme e trava', '', 690, false),
+        E('e19', 'compra', '2026-11-21', '', 'Repor tweeters e alto-falantes', 'Estoque baixo', '', 1250, false),
+        E('e20', 'cliente', '2026-11-23', '09:00', 'Paulo S.', 'Subwoofer duplo', '(35) 9 9510-6672', 1800, false),
+        E('e21', 'cliente', '2026-11-23', '14:30', 'Camila R.', 'Alto-falantes', '(35) 9 9677-4483', 520, false),
+        E('e22', 'compra', '2026-11-24', '', 'Fita, terminais e conectores', 'Material de instalação', '', 160, false),
+        E('e23', 'cliente', '2026-11-25', '10:30', 'Eduardo M.', 'Caixa selada sob medida', '(35) 9 9188-2290', 650, false),
+        E('e24', 'receber', '2026-11-26', '', 'Juliana S. — parcela 2/6', 'Central multimídia', '', 248.33, false),
+        E('e25', 'cliente', '2026-11-27', '09:00', 'Vinícius A.', 'Som completo — Strada', '(35) 9 9733-5518', 3100, false),
+        E('e26', 'cliente', '2026-11-27', '16:00', 'Larissa T.', 'Câmera de ré', '(35) 9 9402-7713', 420, false),
+        E('e27', 'cliente', '2026-12-02', '10:00', 'Henrique G.', 'Multimídia + câmera', '(35) 9 9590-3348', 1890, false)
+      ]
+    };
   }
   renderVals() {
-    var brl = function (v) { return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); };
     var self = this;
-    var period = this.state.period;
-    var filter = this.state.filter;
+    var st = this.state;
+    var brl = function (v) { return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); };
+    var num = function (v) { return v.toFixed(2).replace('.', ','); };
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    var iso = function (y, m, d) { return y + '-' + pad(m + 1) + '-' + pad(d); };
+    var parse = function (s) { var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); };
+    var isoOf = function (dt) { return iso(dt.getFullYear(), dt.getMonth(), dt.getDate()); };
+    var toMin = function (t) { if (!t) return -1; var p = t.split(':'); return +p[0] * 60 + +p[1]; };
+    var money = function (s) {
+      s = String(s || '').replace(/[^\d,.-]/g, '');
+      if (s.indexOf(',') > -1) s = s.replace(/\./g, '').replace(',', '.');
+      var v = parseFloat(s); return isNaN(v) ? 0 : v;
+    };
+    var MONTHS = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+    var MON = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+    var WD = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    var WDS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    var TODAY = '2026-11-16';
+    var todayD = parse(TODAY);
+    var shortDate = function (s) { var d = parse(s); return d.getDate() + ' ' + MON[d.getMonth()]; };
+    var now = new Date();
+    var nowMin = now.getHours() * 60 + now.getMinutes();
+    var nowLabel = pad(now.getHours()) + ':' + pad(now.getMinutes());
+    var view = st.view;
+    var go = function (id) { return function () { self.setState({ view: id, modal: null }); try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {} }; };
+    var openModal = function (kind, toView) { return function () { var ns = { modal: kind }; if (toView) ns.view = toView; self.setState(ns); }; };
 
+    // ---------- gráfico ----------
+    var period = st.period;
     var monthly = [
-      { label: 'Jun', r: 15200, d: 10400 },
-      { label: 'Jul', r: 16100, d: 11250 },
-      { label: 'Ago', r: 14800, d: 9900 },
-      { label: 'Set', r: 17300, d: 10800 },
-      { label: 'Out', r: 17950, d: 10120 },
-      { label: 'Nov', r: 18450, d: 9872.35 }
+      { label: 'Jun', r: 15200, d: 10400 }, { label: 'Jul', r: 16100, d: 11250 }, { label: 'Ago', r: 14800, d: 9900 },
+      { label: 'Set', r: 17300, d: 10800 }, { label: 'Out', r: 17950, d: 10120 }, { label: 'Nov', r: 18450, d: 9872.35 }
     ];
     var weekly = [
-      { label: 'Seg', r: 1200, d: 640 },
-      { label: 'Ter', r: 450, d: 980 },
-      { label: 'Qua', r: 2100, d: 420 },
-      { label: 'Qui', r: 800, d: 1250 },
-      { label: 'Sex', r: 1500, d: 760 },
-      { label: 'Sáb', r: 300, d: 890 },
-      { label: 'Dom', r: 0, d: 310 }
+      { label: 'Seg', r: 1200, d: 640 }, { label: 'Ter', r: 450, d: 980 }, { label: 'Qua', r: 2100, d: 420 }, { label: 'Qui', r: 800, d: 1250 },
+      { label: 'Sex', r: 1500, d: 760 }, { label: 'Sáb', r: 300, d: 890 }, { label: 'Dom', r: 0, d: 310 }
     ];
     var data = period === 'mes' ? monthly : weekly;
-    var max = 0;
-    data.forEach(function (x) { max = Math.max(max, x.r, x.d); });
+    var max = 0; data.forEach(function (x) { max = Math.max(max, x.r, x.d); });
     var inSum = 0, outSum = 0;
     var bars = data.map(function (x) {
       inSum += x.r; outSum += x.d;
-      return {
-        label: x.label,
-        rh: Math.max(4, Math.round(x.r / max * 180)),
-        dh: Math.max(4, Math.round(x.d / max * 180)),
-        rTxt: brl(x.r),
-        dTxt: brl(x.d)
-      };
+      return { label: x.label, rh: Math.max(4, Math.round(x.r / max * 180)), dh: Math.max(4, Math.round(x.d / max * 180)), rTxt: brl(x.r), dTxt: brl(x.d) };
     });
-
     var periods = [{ id: 'semana', label: 'Semanal' }, { id: 'mes', label: 'Mensal' }].map(function (p) {
       return { label: p.label, active: p.id === period, inactive: p.id !== period, pick: function () { self.setState({ period: p.id }); } };
     });
 
+    // ---------- transações da visão geral ----------
+    var filter = st.filter;
     var allTx = [
-      { name: 'Cliente Studio Aurora', cat: 'Serviços', date: '14 nov', v: 4500, isIn: true },
-      { name: 'Supermercado', cat: 'Alimentação', date: '13 nov', v: -486.9, isIn: false },
-      { name: 'Projeto freelance', cat: 'Serviços', date: '12 nov', v: 1250, isIn: true },
+      { name: 'Instalação de som completo', cat: 'Vendas', date: '16 nov', v: 2850, isIn: true },
+      { name: 'Fornecedor de alto-falantes', cat: 'Estoque', date: '14 nov', v: -3480, isIn: false },
+      { name: 'Módulo amplificador 800W', cat: 'Vendas', date: '14 nov', v: 980, isIn: true },
       { name: 'Combustível', cat: 'Transporte', date: '11 nov', v: -280, isIn: false },
-      { name: 'Aluguel do escritório', cat: 'Moradia', date: '10 nov', v: -2200, isIn: false },
-      { name: 'Assinatura de software', cat: 'Ferramentas', date: '09 nov', v: -129.9, isIn: false },
+      { name: 'Aluguel da loja', cat: 'Contas fixas', date: '10 nov', v: -2200, isIn: false },
+      { name: 'Contador', cat: 'Contas fixas', date: '12 nov', v: -450, isIn: false },
       { name: 'Rendimento investimentos', cat: 'Investimentos', date: '08 nov', v: 312.45, isIn: true }
     ];
-    var txs = allTx.filter(function (t) {
-      if (filter === 'entradas') return t.isIn;
-      if (filter === 'saidas') return !t.isIn;
-      return true;
-    }).slice(0, 6).map(function (t) {
-      return {
-        name: t.name, cat: t.cat, date: t.date,
-        isIn: t.isIn, isOut: !t.isIn,
-        value: (t.isIn ? '+ ' : '− ') + brl(Math.abs(t.v)),
-        ink: t.isIn ? '#4ADE80' : '#D4D4D8'
-      };
+    var txs = allTx.filter(function (t) { return filter === 'entradas' ? t.isIn : filter === 'saidas' ? !t.isIn : true; }).slice(0, 6).map(function (t) {
+      return { name: t.name, cat: t.cat, date: t.date, isIn: t.isIn, isOut: !t.isIn, value: (t.isIn ? '+ ' : '− ') + brl(Math.abs(t.v)), ink: t.isIn ? '#4ADE80' : '#D4D4D8' };
     });
     var filters = [{ id: 'todas', label: 'Todas' }, { id: 'entradas', label: 'Entradas' }, { id: 'saidas', label: 'Saídas' }].map(function (f) {
       return { label: f.label, active: f.id === filter, inactive: f.id !== filter, pick: function () { self.setState({ filter: f.id }); } };
     });
 
+    // ---------- categorias ----------
     var catRaw = [
-      { name: 'Moradia', v: 3200, color: '#C40000' },
-      { name: 'Alimentação', v: 2140, color: '#E50000' },
-      { name: 'Outros', v: 1852.35, color: '#71717A' },
-      { name: 'Transporte', v: 1180, color: '#FF2E2E' },
-      { name: 'Lazer', v: 860, color: '#A1A1AA' },
-      { name: 'Saúde', v: 640, color: '#FF5C5C' }
+      { name: 'Estoque e fornecedores', v: 4660, color: '#C40000' }, { name: 'Aluguel', v: 2200, color: '#E50000' },
+      { name: 'Contas fixas', v: 1053.7, color: '#71717A' }, { name: 'Transporte', v: 560, color: '#FF2E2E' },
+      { name: 'Ferramentas', v: 340, color: '#A1A1AA' }, { name: 'Outros', v: 1058.65, color: '#FF5C5C' }
     ];
     var catTotal = catRaw.reduce(function (a, c) { return a + c.v; }, 0);
     var catMax = catRaw[0].v;
-    var cats = catRaw.map(function (c) {
-      return { name: c.name, value: brl(c.v), pct: Math.round(c.v / catTotal * 100), w: Math.round(c.v / catMax * 100), color: c.color };
+    var cats = catRaw.map(function (c) { return { name: c.name, value: brl(c.v), pct: Math.round(c.v / catTotal * 100), w: Math.round(c.v / catMax * 100), color: c.color }; });
+
+    // ---------- metas ----------
+    var goalsBase = [
+      { name: 'Reserva de emergência', saved: 21600, target: 30000, due: 'mar 2027', monthly: 1500 },
+      { name: 'Viagem de férias', saved: 5400, target: 12000, due: 'jul 2027', monthly: 800 },
+      { name: 'Carro novo', saved: 14000, target: 50000, due: 'dez 2028', monthly: 1200 },
+      { name: 'Equipamentos da loja', saved: 7800, target: 9000, due: 'jan 2027', monthly: 600 },
+      { name: 'Reforma da fachada', saved: 2100, target: 15000, due: 'set 2027', monthly: 900 }
+    ].concat(st.extraGoals);
+    var goalsAll = goalsBase.map(function (g) {
+      var pct = g.target ? Math.min(100, Math.round(g.saved / g.target * 100)) : 0;
+      var hi = pct >= 50;
+      return { name: g.name, due: g.due || 'sem prazo', pct: pct, saved: brl(g.saved), target: brl(g.target), monthly: brl(g.monthly || 0),
+        ink: hi ? '#4ADE80' : '#FF5C5C', bar: hi ? 'linear-gradient(90deg, #4ADE80, #16A34A)' : 'linear-gradient(90deg, #FF5C5C, #C40000)' };
     });
+    var goals = goalsAll.slice(0, 3);
 
-    var goals = [
-      { name: 'Reserva de emergência', saved: 21600, target: 30000 },
-      { name: 'Viagem de férias', saved: 5400, target: 12000 },
-      { name: 'Carro novo', saved: 14000, target: 50000 }
-    ].map(function (g) {
-      return { name: g.name, pct: Math.round(g.saved / g.target * 100), saved: brl(g.saved), target: brl(g.target) };
-    });
-
-    var wds = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-    var days = wds.map(function (w, i) {
-      var n = 15 + i;
-      return { wd: w, n: n, today: n === 16, other: n !== 16, dot: n === 19 || n === 18 ? '#E50000' : 'transparent' };
-    });
-
-    var bills = [
-      { day: '18', name: 'Internet', value: 'R$ 129,90' },
-      { day: '19', name: 'Fornecedor de cabos', value: 'R$ 1.180,00' },
-      { day: '25', name: 'Energia elétrica', value: 'R$ 287,40' }
-    ];
-
+    // ---------- resumo do mês ----------
     var kpis = [
-      { label: 'Receitas do mês', value: 'R$ 18.450,00', pct: 82, note: '+2,8% vs. outubro', noteInk: '#4ADE80', chip: 'rgba(34,197,94,0.15)', chipInk: '#4ADE80', bar: 'linear-gradient(90deg, #4ADE80, #16A34A)', icon1: 'M17 7 7 17', icon2: 'M17 17H7V7' },
-      { label: 'Despesas do mês', value: 'R$ 9.872,35', pct: 54, note: '−2,4% vs. outubro', noteInk: '#D4D4D8', chip: 'rgba(255,255,255,0.07)', chipInk: '#E4E4E7', bar: 'linear-gradient(90deg, #E4E4E7, #71717A)', icon1: 'M7 17 17 7', icon2: 'M7 7h10v10' },
-      { label: 'Economia do mês', value: 'R$ 8.577,65', pct: 46, note: '46% da receita guardada', noteInk: '#4ADE80', chip: 'rgba(34,197,94,0.15)', chipInk: '#4ADE80', bar: 'linear-gradient(90deg, #86EFAC, #22C55E)', icon1: 'M22 7 13.5 15.5 8.5 10.5 2 17', icon2: 'M16 7h6v6' },
-      { label: 'Investido', value: 'R$ 26.140,00', pct: 64, note: 'Rendeu R$ 312,45 no mês', noteInk: '#4ADE80', chip: 'rgba(34,197,94,0.15)', chipInk: '#4ADE80', bar: 'linear-gradient(90deg, #4ADE80, #15803D)', icon1: 'M3 3v18h18', icon2: 'M7 14l4-4 4 4 5-5' }
+      { label: 'Receitas do mês', value: 'R$ 18.450,00', pct: 82, note: '+2,8% vs. outubro', noteInk: '#4ADE80', chip: 'rgba(34,197,94,0.15)', chipInk: '#4ADE80', bar: 'linear-gradient(90deg, #4ADE80, #16A34A)', icon: 'M17 7 7 17 M17 17H7V7' },
+      { label: 'Despesas do mês', value: 'R$ 9.872,35', pct: 54, note: '−2,4% vs. outubro', noteInk: '#D4D4D8', chip: 'rgba(255,255,255,0.07)', chipInk: '#E4E4E7', bar: 'linear-gradient(90deg, #E4E4E7, #71717A)', icon: 'M7 17 17 7 M7 7h10v10' },
+      { label: 'Economia do mês', value: 'R$ 8.577,65', pct: 46, note: '46% da receita guardada', noteInk: '#4ADE80', chip: 'rgba(34,197,94,0.15)', chipInk: '#4ADE80', bar: 'linear-gradient(90deg, #86EFAC, #22C55E)', icon: 'M22 7 13.5 15.5 8.5 10.5 2 17 M16 7h6v6' },
+      { label: 'Investido', value: 'R$ 26.140,00', pct: 64, note: 'Rendeu R$ 312,45 no mês', noteInk: '#4ADE80', chip: 'rgba(34,197,94,0.15)', chipInk: '#4ADE80', bar: 'linear-gradient(90deg, #4ADE80, #15803D)', icon: 'M3 3v18h18 M7 14l4-4 4 4 5-5' }
     ];
 
+    // ---------- tiles ----------
+    var greenTile = { bg: 'rgba(74,222,128,0.08)', border: 'rgba(74,222,128,0.22)', ink: '#4ADE80' };
+    var plainTile = { bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)', ink: '#FAFAFA' };
+    var redTile = { bg: 'rgba(229,0,0,0.1)', border: 'rgba(229,0,0,0.28)', ink: '#FF5C5C' };
+    var tile = function (t, label, value, note, icon, chip) { return { label: label, value: value, note: note, bg: t.bg, border: t.border, ink: t.ink, icon: icon || '', chip: chip || 'rgba(255,255,255,0.06)' }; };
+
+    // ---------- vendas ----------
+    var sf = st.salesFilter;
+    var salesBase = [
+      { id: 's1', item: 'Instalação de som completo', client: 'Rafael M.', date: '2026-11-16', method: 'Pix', v: 2850, paid: true },
+      { id: 's2', item: 'Central multimídia 9"', client: 'Juliana S.', date: '2026-11-15', method: 'Crédito 6x', v: 1490, paid: false },
+      { id: 's3', item: 'Par de alto-falantes 6x9', client: 'Carlos A.', date: '2026-11-15', method: 'Débito', v: 520, paid: true },
+      { id: 's4', item: 'Módulo amplificador 800W', client: 'Bruno T.', date: '2026-11-14', method: 'Pix', v: 980, paid: true },
+      { id: 's5', item: 'Subwoofer 12" + caixa', client: 'Diego R.', date: '2026-11-13', method: 'Crédito 3x', v: 1350, paid: false },
+      { id: 's6', item: 'Câmera de ré + instalação', client: 'Fernanda L.', date: '2026-11-12', method: 'Dinheiro', v: 420, paid: true },
+      { id: 's7', item: 'Kit 2 vias + tweeters', client: 'Marcos P.', date: '2026-11-11', method: 'Pix', v: 760, paid: true },
+      { id: 's8', item: 'Alarme e trava elétrica', client: 'Patrícia N.', date: '2026-11-10', method: 'Boleto', v: 690, paid: false }
+    ];
+    var salesRaw = st.extraSales.concat(salesBase).map(function (x) { return Object.assign({}, x, { paid: x.paid || !!st.received[x.id] }); });
+    var salesTotal = salesRaw.reduce(function (a, x) { return a + x.v; }, 0);
+    var salesOpen = salesRaw.filter(function (x) { return !x.paid; }).reduce(function (a, x) { return a + x.v; }, 0);
+    var sales = salesRaw.filter(function (x) { return sf === 'pagas' ? x.paid : sf === 'receber' ? !x.paid : true; }).map(function (x) {
+      return { item: x.item, client: x.client, date: shortDate(x.date), method: x.method, value: '+ ' + brl(x.v), isOpen: !x.paid, isPaid: x.paid,
+        receive: function () { var r = Object.assign({}, self.state.received); r[x.id] = true; self.setState({ received: r }); } };
+    });
+    var salesFilters = [{ id: 'todas', label: 'Todas' }, { id: 'pagas', label: 'Recebidas' }, { id: 'receber', label: 'A receber' }].map(function (f) {
+      return { label: f.label, active: f.id === sf, inactive: f.id !== sf, pick: function () { self.setState({ salesFilter: f.id }); } };
+    });
+    var salesStats = [
+      tile(greenTile, 'Vendido no mês', brl(salesTotal), '+12% vs. outubro'),
+      tile(plainTile, 'Número de vendas', String(salesRaw.length), 'Em novembro'),
+      tile(greenTile, 'Ticket médio', brl(salesTotal / salesRaw.length), 'Por venda'),
+      tile(plainTile, 'A receber', brl(salesOpen), salesOpen ? 'Toque em "A receber" quando o dinheiro cair' : 'Tudo recebido')
+    ];
+
+    // ---------- contas e gastos ----------
+    var bf = st.billFilter;
+    var IC = {
+      water: 'M12 2.7 6.3 9.4a7 7 0 1 0 11.4 0z', power: 'M13 2 3 14h9l-1 8 10-12h-9z',
+      net: 'M5 12.6a10 10 0 0 1 14 0 M8.5 16.1a5 5 0 0 1 7 0 M2 9a15 15 0 0 1 20 0 M12 20h.01',
+      home: 'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z M9 21v-7h6v7', box: 'M21 8 12 3 3 8v8l9 5 9-5z M3 8l9 5 9-5 M12 13v8',
+      doc: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M9 13h6 M9 17h6',
+      fuel: 'M3 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18 M3 22h12 M15 12h2a2 2 0 0 1 2 2v3a2 2 0 0 0 4 0V9l-3-3 M7 7h4',
+      tool: 'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z',
+      cart: 'M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L22 7H6 M9 21h.01 M18 21h.01'
+    };
+    var billsBase = [
+      { id: 'agua', name: 'Conta de água', kind: 'Conta fixa', fixed: true, date: '2026-11-10', v: 186.4, paid: true, icon: IC.water },
+      { id: 'aluguel', name: 'Aluguel da loja', kind: 'Conta fixa', fixed: true, date: '2026-11-10', v: 2200, paid: true, icon: IC.home },
+      { id: 'contador', name: 'Contador', kind: 'Conta fixa', fixed: true, date: '2026-11-12', v: 450, paid: true, icon: IC.doc },
+      { id: 'fornpecas', name: 'Fornecedor de alto-falantes', kind: 'Fornecedor', fixed: false, date: '2026-11-14', v: 3480, paid: true, icon: IC.box },
+      { id: 'combust', name: 'Combustível', kind: 'Gasto', fixed: false, date: '2026-11-11', v: 280, paid: true, icon: IC.fuel },
+      { id: 'internet', name: 'Internet', kind: 'Conta fixa', fixed: true, date: '2026-11-18', v: 129.9, paid: false, icon: IC.net },
+      { id: 'forncabos', name: 'Fornecedor de cabos e conectores', kind: 'Fornecedor', fixed: false, date: '2026-11-19', v: 1180, paid: false, icon: IC.box },
+      { id: 'luz', name: 'Conta de luz', kind: 'Conta fixa', fixed: true, date: '2026-11-25', v: 287.4, paid: false, icon: IC.power },
+      { id: 'ferram', name: 'Manutenção de ferramentas', kind: 'Gasto', fixed: false, date: '2026-11-22', v: 340, paid: false, icon: IC.tool },
+      { id: 'limpeza', name: 'Material de limpeza', kind: 'Gasto', fixed: false, date: '2026-11-26', v: 96.5, paid: false, icon: IC.cart }
+    ].concat(st.extraBills);
+    var daysBetween = function (a, b) { return Math.round((parse(b) - parse(a)) / 86400000); };
+    var billsAll = billsBase.map(function (b) {
+      var isPaid = st.paid[b.id] !== undefined ? st.paid[b.id] : b.paid;
+      var late = !isPaid && b.date < TODAY;
+      var soon = !isPaid && !late && daysBetween(TODAY, b.date) <= 3;
+      var d = parse(b.date);
+      return {
+        id: b.id, name: b.name, kind: b.kind, fixed: b.fixed, date: b.date, day: d.getDate(), v: b.v, icon: b.icon || IC.doc,
+        isPaid: isPaid, canPay: !isPaid,
+        dateLabel: (isPaid ? 'Pago · venceu ' : 'Vence ') + d.getDate() + ' ' + MON[d.getMonth()],
+        value: brl(b.v), ink: isPaid ? '#A1A1AA' : '#FAFAFA',
+        status: isPaid ? 'Pago' : (late ? 'Vencida' : (soon ? 'Vence logo' : 'A vencer')),
+        statusBg: isPaid ? 'rgba(34,197,94,0.15)' : (late || soon ? 'rgba(229,0,0,0.16)' : 'rgba(255,255,255,0.08)'),
+        statusInk: isPaid ? '#4ADE80' : (late || soon ? '#FF5C5C' : '#D4D4D8'),
+        chip: b.fixed ? 'rgba(229,0,0,0.14)' : 'rgba(255,255,255,0.07)', chipInk: b.fixed ? '#FF5C5C' : '#D4D4D8',
+        pay: function () { var np = Object.assign({}, self.state.paid); np[b.id] = true; self.setState({ paid: np }); },
+        togglePaid: function () { var np = Object.assign({}, self.state.paid); np[b.id] = !isPaid; self.setState({ paid: np }); }
+      };
+    });
+    var bills = billsAll.filter(function (b) {
+      return bf === 'fixas' ? b.fixed : bf === 'gastos' ? !b.fixed : bf === 'pendentes' ? !b.isPaid : true;
+    }).sort(function (a, b) { return (a.isPaid - b.isPaid) || (a.date < b.date ? -1 : a.date > b.date ? 1 : 0); });
+    var billFilters = [{ id: 'todas', label: 'Todas' }, { id: 'fixas', label: 'Fixas' }, { id: 'gastos', label: 'Gastos e fornecedores' }, { id: 'pendentes', label: 'A pagar' }].map(function (f) {
+      return { label: f.label, active: f.id === bf, inactive: f.id !== bf, pick: function () { self.setState({ billFilter: f.id }); } };
+    });
+    var billsTotal = billsAll.reduce(function (a, b) { return a + b.v; }, 0);
+    var billsPaid = billsAll.filter(function (b) { return b.isPaid; }).reduce(function (a, b) { return a + b.v; }, 0);
+    var pending = billsAll.filter(function (b) { return !b.isPaid; }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+    var billStats = [
+      tile(plainTile, 'Total do mês', brl(billsTotal), billsAll.length + ' contas e gastos'),
+      tile(greenTile, 'Já pago', brl(billsPaid), Math.round(billsPaid / billsTotal * 100) + '% do total'),
+      tile(redTile, 'Falta pagar', brl(billsTotal - billsPaid), pending.length + ' pendentes'),
+      tile(plainTile, 'Próximo vencimento', pending.length ? 'Dia ' + pending[0].day : '—', pending.length ? pending[0].name : 'Tudo pago')
+    ];
+
+    // ---------- agenda: eventos ----------
+    var TYPES = {
+      cliente: { label: 'Cliente', color: '#FF2E2E', chip: 'rgba(229,0,0,0.16)', sign: '+ ' },
+      conta: { label: 'Conta a vencer', color: '#FACC15', chip: 'rgba(250,204,21,0.16)', sign: '− ' },
+      compra: { label: 'Comprar', color: '#60A5FA', chip: 'rgba(96,165,250,0.16)', sign: '− ' },
+      receber: { label: 'A receber', color: '#4ADE80', chip: 'rgba(34,197,94,0.16)', sign: '+ ' }
+    };
+    var evs = st.events.map(function (e) { return Object.assign({ src: 'event' }, e); }).concat(billsAll.map(function (b) {
+      return { id: 'bill-' + b.id, src: 'bill', bill: b, type: 'conta', date: b.date, time: '', title: b.name, detail: b.kind, phone: '', value: b.v, done: b.isPaid };
+    })).sort(function (a, b) { var ka = a.date + (a.time || '00:00'), kb = b.date + (b.time || '00:00'); return ka < kb ? -1 : ka > kb ? 1 : 0; });
+    var evView = function (e) {
+      var T = TYPES[e.type];
+      var isIn = e.type === 'cliente' || e.type === 'receber';
+      var doneLabel = e.type === 'conta' ? 'Pago' : e.type === 'receber' ? 'Recebido' : e.type === 'compra' ? 'Comprado' : 'Concluído';
+      return {
+        time: e.time || 'Dia', title: e.title, detail: e.detail || T.label, phone: e.phone || '', hasPhone: !!e.phone,
+        value: e.value ? T.sign + brl(e.value) : '', hasValue: !!e.value, valueInk: isIn ? '#4ADE80' : '#FAFAFA',
+        tag: e.done ? doneLabel : T.label, tagInk: e.done ? '#4ADE80' : T.color, chip: e.done ? 'rgba(34,197,94,0.14)' : T.chip, color: T.color,
+        badgeBg: T.chip, badgeInk: T.color, opacity: e.done ? 0.55 : 1, deco: e.done ? 'line-through' : 'none',
+        checkBg: e.done ? '#16A34A' : 'transparent', checkBorder: e.done ? '#16A34A' : 'rgba(255,255,255,0.18)', checkInk: e.done ? '#FFFFFF' : '#A1A1AA',
+        toggleLabel: e.done ? 'Desmarcar' : 'Marcar como ' + doneLabel.toLowerCase(),
+        canRemove: e.src === 'event',
+        toggle: function () {
+          if (e.src === 'bill') return e.bill.togglePaid();
+          self.setState({ events: self.state.events.map(function (x) { return x.id === e.id ? Object.assign({}, x, { done: !x.done }) : x; }) });
+        },
+        remove: function () { self.setState({ events: self.state.events.filter(function (x) { return x.id !== e.id; }) }); }
+      };
+    };
+
+    // calendário
+    var cy = st.calY, cm = st.calM, sel = st.sel;
+    var startW = new Date(cy, cm, 1).getDay();
+    var dim = new Date(cy, cm + 1, 0).getDate();
+    var cells = [];
+    for (var i = 0; i < startW; i++) cells.push({ blank: true, real: false });
+    for (var d = 1; d <= dim; d++) {
+      (function (d) {
+        var key = iso(cy, cm, d);
+        var list = evs.filter(function (e) { return e.date === key; });
+        var isSel = key === sel, isToday = key === TODAY, past = key < TODAY;
+        cells.push({
+          real: true, blank: false, n: d, pressed: isSel ? 'true' : 'false',
+          pick: function () { self.setState({ sel: key }); },
+          bg: isSel ? 'linear-gradient(160deg, #E50000, #8B0000)' : (isToday ? 'rgba(229,0,0,0.1)' : 'rgba(255,255,255,0.03)'),
+          border: isSel ? 'rgba(255,255,255,0.18)' : (isToday ? 'rgba(229,0,0,0.65)' : 'rgba(255,255,255,0.06)'),
+          ink: isSel ? '#FFFFFF' : (past ? '#71717A' : '#FAFAFA'),
+          shadow: isSel ? '0 14px 28px -12px rgba(229,0,0,0.85)' : 'none',
+          dots: list.slice(0, 4).map(function (e) { return { color: isSel ? '#FFFFFF' : (e.done ? '#71717A' : TYPES[e.type].color) }; }),
+          more: list.length > 4 ? list.length - 4 : 0,
+          aria: d + ' de ' + MONTHS[cm] + (list.length ? ', ' + list.length + ' compromissos' : '')
+        });
+      })(d);
+    }
+    while (cells.length % 7) cells.push({ blank: true, real: false });
+    var monthEvs = evs.filter(function (e) { return e.date.slice(0, 7) === iso(cy, cm, 1).slice(0, 7); });
+    var cal = {
+      title: MONTHS[cm].charAt(0).toUpperCase() + MONTHS[cm].slice(1) + ' ' + cy,
+      summary: monthEvs.filter(function (e) { return e.type === 'cliente'; }).length + ' clientes · ' + monthEvs.filter(function (e) { return e.type !== 'cliente'; }).length + ' contas, compras e recebimentos',
+      cells: cells,
+      prev: function () { var m = cm - 1, y = cy; if (m < 0) { m = 11; y--; } self.setState({ calM: m, calY: y }); },
+      next: function () { var m = cm + 1, y = cy; if (m > 11) { m = 0; y++; } self.setState({ calM: m, calY: y }); },
+      today: function () { self.setState({ calM: 10, calY: 2026, sel: TODAY }); }
+    };
+    var selD = parse(sel);
+    var selList = evs.filter(function (e) { return e.date === sel; }).map(evView);
+    var selInfo = {
+      label: WD[selD.getDay()] + ', ' + selD.getDate() + ' de ' + MONTHS[selD.getMonth()],
+      short: pad(selD.getDate()) + '/' + pad(selD.getMonth() + 1),
+      appts: selList, empty: selList.length === 0,
+      countLabel: selList.length ? selList.length + (selList.length > 1 ? ' compromissos' : ' compromisso') : 'Livre'
+    };
+    var typeOptions = ['cliente', 'conta', 'compra', 'receber'].map(function (t, i) { return { value: t, label: TYPES[t].label, color: TYPES[t].color, checked: i === 0 }; });
+    var addEvent = function (ev) {
+      if (ev && ev.preventDefault) ev.preventDefault();
+      var f = ev.currentTarget || ev.target;
+      var fd = new FormData(f);
+      var type = String(fd.get('type') || 'cliente');
+      var title = String(fd.get('title') || '').trim();
+      if (!title) return;
+      var v = money(fd.get('value'));
+      if (type === 'conta') {
+        self.setState({ extraBills: self.state.extraBills.concat([{ id: 'b' + Date.now(), name: title, kind: String(fd.get('detail') || '').trim() || 'Conta', fixed: false, date: self.state.sel, v: v, paid: false, icon: IC.doc }]) });
+      } else {
+        self.setState({ events: self.state.events.concat([{ id: 'n' + Date.now(), type: type, date: self.state.sel, time: String(fd.get('time') || ''), title: title, detail: String(fd.get('detail') || '').trim(), phone: String(fd.get('phone') || '').trim(), value: v, done: false }]) });
+      }
+      try { f.reset(); } catch (e) {}
+    };
+
+    // ---------- hoje ----------
+    var todayEvs = evs.filter(function (e) { return e.date === TODAY; }).sort(function (a, b) { return toMin(a.time) - toMin(b.time); });
+    var timeline = [];
+    var marked = false;
+    todayEvs.forEach(function (e) {
+      if (!marked && toMin(e.time) > nowMin) { timeline.push({ isMarker: true, isItem: false }); marked = true; }
+      var v = evView(e);
+      var past = e.time && toMin(e.time) <= nowMin;
+      timeline.push(Object.assign(v, { isMarker: false, isItem: true, time: e.time || 'Hoje', sub: (e.detail || '') + (e.phone ? ' · ' + e.phone : ''), dot: e.done ? '#71717A' : TYPES[e.type].color, opacity: e.done || past ? 0.55 : 1 }));
+    });
+    if (!marked) timeline.push({ isMarker: true, isItem: false });
+    var nextEv = evs.filter(function (e) { return e.type === 'cliente' && !e.done && (e.date > TODAY || (e.date === TODAY && toMin(e.time) > nowMin)); })[0];
+    var nextAppt = { has: !!nextEv };
+    if (nextEv) {
+      var nd = parse(nextEv.date);
+      var diffDays = daysBetween(TODAY, nextEv.date);
+      var mins = toMin(nextEv.time) - nowMin;
+      var when = diffDays === 0 ? (mins >= 60 ? 'em ' + Math.floor(mins / 60) + 'h ' + pad(mins % 60) + 'min' : 'em ' + mins + ' min') : diffDays === 1 ? 'Amanhã' : 'em ' + diffDays + ' dias';
+      nextAppt = { has: true, time: nextEv.time, client: nextEv.title, service: nextEv.detail, phone: nextEv.phone || 'Sem telefone', value: nextEv.value ? brl(nextEv.value) : '', hasValue: !!nextEv.value,
+        when: when, dateLabel: (diffDays === 0 ? 'Hoje' : diffDays === 1 ? 'Amanhã' : WD[nd.getDay()]) + ', ' + nd.getDate() + ' de ' + MONTHS[nd.getMonth()] };
+    }
+    var todayClients = todayEvs.filter(function (e) { return e.type === 'cliente'; });
+    var todayIn = todayEvs.filter(function (e) { return e.type === 'cliente' || e.type === 'receber'; }).reduce(function (a, e) { return a + (e.value || 0); }, 0);
+    var soonOut = evs.filter(function (e) { return (e.type === 'conta' || e.type === 'compra') && !e.done && e.date >= TODAY && daysBetween(TODAY, e.date) <= 3; });
+    var todayStats = [
+      tile(plainTile, 'Clientes hoje', String(todayClients.length), todayClients.filter(function (e) { return e.done; }).length + ' atendidos', 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 3a4 4 0 1 0 0 8a4 4 0 1 0 0-8z M22 21v-2a4 4 0 0 0-3-3.9 M16 3.1a4 4 0 0 1 0 7.8', 'rgba(229,0,0,0.16)'),
+      tile(greenTile, 'Previsto para entrar hoje', brl(todayIn), 'Atendimentos e recebimentos', 'M12 2v20 M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6', 'rgba(34,197,94,0.15)'),
+      tile(redTile, 'Pagar e comprar em 3 dias', brl(soonOut.reduce(function (a, e) { return a + (e.value || 0); }, 0)), soonOut.length + ' itens', 'M12 9v4 M12 17h.01 M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z', 'rgba(229,0,0,0.16)')
+    ];
+    var upcoming = [];
+    for (var k = 1; k <= 7; k++) {
+      var dd = new Date(todayD); dd.setDate(todayD.getDate() + k);
+      var key = isoOf(dd);
+      var list = evs.filter(function (e) { return e.date === key; });
+      if (!list.length) continue;
+      upcoming.push({ wd: WDS[dd.getDay()], n: dd.getDate(), label: k === 1 ? 'Amanhã' : WD[dd.getDay()] + ', ' + dd.getDate() + ' de ' + MONTHS[dd.getMonth()],
+        items: list.map(function (e) { var v = evView(e); return { title: (e.time ? e.time + ' · ' : '') + e.title, sub: v.tag + (e.detail ? ' · ' + e.detail : ''), right: v.value, ink: v.valueInk, color: e.done ? '#71717A' : TYPES[e.type].color }; }) });
+    }
+    var nextUp = evs.filter(function (e) { return !e.done && (e.date > TODAY || (e.date === TODAY && (toMin(e.time) < 0 || toMin(e.time) > nowMin))); }).slice(0, 4).map(function (e) {
+      var v = evView(e); var dt = parse(e.date);
+      return { n: dt.getDate(), mon: MON[dt.getMonth()], title: e.title, sub: v.tag + (e.time ? ' · ' + e.time : ''), value: v.value, ink: v.valueInk, color: TYPES[e.type].color, chip: TYPES[e.type].chip };
+    });
+    var todayLeft = todayEvs.filter(function (e) { return !e.done; }).length;
+
+    // ---------- relatórios: exportar ----------
+    var exportDefs = [
+      { id: 'diario', label: 'Diário', days: 1, desc: 'Somente hoje' },
+      { id: 'semanal', label: 'Semanal', days: 7, desc: 'Últimos 7 dias' },
+      { id: 'quinzenal', label: 'Quinzenal', days: 15, desc: 'Últimos 15 dias' },
+      { id: 'mensal', label: 'Mensal', days: 0, desc: 'Novembro inteiro' }
+    ];
+    var runExport = function (def) {
+      var end = TODAY, start;
+      if (def.days === 0) { start = '2026-11-01'; end = '2026-11-30'; }
+      else { var sd = new Date(todayD); sd.setDate(todayD.getDate() - def.days + 1); start = isoOf(sd); }
+      var inRange = function (s) { return s >= start && s <= end; };
+      var rows = [];
+      salesRaw.filter(function (x) { return inRange(x.date); }).forEach(function (x) { rows.push([x.date, 'Entrada', 'Venda', x.item + ' — ' + x.client, x.method, x.paid ? 'Recebido' : 'A receber', x.v]); });
+      billsAll.filter(function (b) { return inRange(b.date); }).forEach(function (b) { rows.push([b.date, 'Saída', b.kind, b.name, '', b.isPaid ? 'Pago' : 'A pagar', -b.v]); });
+      evs.filter(function (e) { return e.src === 'event' && (e.type === 'receber' || e.type === 'compra') && inRange(e.date); }).forEach(function (e) {
+        rows.push([e.date, e.type === 'receber' ? 'Entrada prevista' : 'Saída prevista', e.type === 'receber' ? 'A receber' : 'Compra', e.title, e.detail || '', e.done ? 'Concluído' : 'Pendente', e.type === 'receber' ? e.value : -e.value]);
+      });
+      rows.sort(function (a, b) { return a[0] < b[0] ? -1 : 1; });
+      var q = function (s) { s = String(s); return /[;"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+      var fmtD = function (s) { var p = s.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; };
+      var ins = rows.filter(function (r) { return r[6] > 0; }).reduce(function (a, r) { return a + r[6]; }, 0);
+      var outs = rows.filter(function (r) { return r[6] < 0; }).reduce(function (a, r) { return a + r[6]; }, 0);
+      var lines = ['ArtSom — Relatório ' + def.label.toLowerCase(), 'Período;' + fmtD(start) + ' a ' + fmtD(end), '',
+        'Data;Tipo;Categoria;Descrição;Pagamento;Situação;Valor (R$)'];
+      rows.forEach(function (r) { lines.push([fmtD(r[0]), r[1], r[2], r[3], r[4], r[5], num(r[6])].map(q).join(';')); });
+      lines.push('', 'Total de entradas;;;;;;' + num(ins), 'Total de saídas;;;;;;' + num(outs), 'Saldo do período;;;;;;' + num(ins + outs));
+      try {
+        var blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'relatorio-artsom-' + def.id + '-' + TODAY + '.csv';
+        document.body.appendChild(a); a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 800);
+        self.setState({ lastExport: 'Relatório ' + def.label.toLowerCase() + ' baixado · ' + rows.length + ' lançamentos · saldo ' + brl(ins + outs) });
+      } catch (e) { self.setState({ lastExport: 'Não foi possível baixar o arquivo neste navegador.' }); }
+    };
+    var exports = exportDefs.map(function (d) { return { label: d.label, desc: d.desc, run: function () { runExport(d); } }; });
+
+    // ---------- formulários (modal) ----------
+    var inp = function (name, label, ph, req, type, mode) { return { name: name, label: label, placeholder: ph, required: !!req, type: type || 'text', inputmode: mode || 'text', isInput: true, isChoice: false }; };
+    var choice = function (name, label, opts) { return { name: name, label: label, isInput: false, isChoice: true, options: opts.map(function (o, i) { return { value: o, label: o, checked: i === 0 }; }) }; };
+    var MODALS = {
+      sale: { title: 'Nova venda', sub: 'A venda entra na lista e nos totais na hora.', submitLabel: 'Registrar venda', fields: [
+        inp('client', 'Cliente', 'Ex.: João Silva', true), inp('item', 'Produto ou serviço', 'Ex.: Instalação de som', true),
+        inp('value', 'Valor (R$)', 'Ex.: 1.250,00', true, 'text', 'decimal'),
+        choice('method', 'Forma de pagamento', ['Pix', 'Débito', 'Crédito', 'Dinheiro', 'Boleto']),
+        choice('status', 'Situação', ['Recebido', 'A receber'])
+      ], save: function (fd) {
+        var s = { id: 'v' + Date.now(), client: String(fd.get('client')).trim(), item: String(fd.get('item')).trim(), date: TODAY, method: String(fd.get('method') || 'Pix'), v: money(fd.get('value')), paid: fd.get('status') !== 'A receber' };
+        self.setState({ extraSales: [s].concat(self.state.extraSales), modal: null, salesFilter: 'todas' });
+      } },
+      bill: { title: 'Nova conta', sub: 'Conta fixa, fornecedor ou gasto do mês.', submitLabel: 'Adicionar conta', fields: [
+        inp('name', 'Descrição', 'Ex.: Conta de água', true), inp('value', 'Valor (R$)', 'Ex.: 189,90', true, 'text', 'decimal'),
+        inp('date', 'Vencimento', '', true, 'date'),
+        choice('kind', 'Tipo', ['Conta fixa', 'Fornecedor', 'Gasto'])
+      ], save: function (fd) {
+        var kind = String(fd.get('kind') || 'Conta fixa');
+        var b = { id: 'b' + Date.now(), name: String(fd.get('name')).trim(), kind: kind, fixed: kind === 'Conta fixa', date: String(fd.get('date') || TODAY), v: money(fd.get('value')), paid: false, icon: kind === 'Fornecedor' ? IC.box : kind === 'Gasto' ? IC.cart : IC.doc };
+        self.setState({ extraBills: self.state.extraBills.concat([b]), modal: null, billFilter: 'todas' });
+      } },
+      goal: { title: 'Nova meta', sub: 'Defina o objetivo e quanto já tem guardado.', submitLabel: 'Criar meta', fields: [
+        inp('name', 'Nome da meta', 'Ex.: Novo letreiro da loja', true), inp('target', 'Valor da meta (R$)', 'Ex.: 8.000,00', true, 'text', 'decimal'),
+        inp('saved', 'Já guardado (R$)', 'Ex.: 1.500,00', false, 'text', 'decimal'), inp('monthly', 'Quanto guardar por mês (R$)', 'Ex.: 500,00', false, 'text', 'decimal'),
+        inp('due', 'Prazo', 'Ex.: jun 2027', false)
+      ], save: function (fd) {
+        var g = { name: String(fd.get('name')).trim(), target: money(fd.get('target')), saved: money(fd.get('saved')), monthly: money(fd.get('monthly')), due: String(fd.get('due') || '').trim() };
+        self.setState({ extraGoals: self.state.extraGoals.concat([g]), modal: null });
+      } }
+    };
+    var M = st.modal ? MODALS[st.modal] : null;
+    var modal = { open: !!M, title: M ? M.title : '', sub: M ? M.sub : '', submitLabel: M ? M.submitLabel : '', fields: M ? M.fields : [],
+      close: function () { self.setState({ modal: null }); },
+      submit: function (ev) { if (ev && ev.preventDefault) ev.preventDefault(); if (!M) return; M.save(new FormData(ev.currentTarget || ev.target)); } };
 
     // ---------- abas ----------
-    var view = this.state.view;
-    var go = function (id) { return function () { self.setState({ view: id }); if (typeof window !== 'undefined' && window.scrollTo) window.scrollTo({ top: 0, behavior: 'smooth' }); }; };
-    var unread = this.state.read ? 0 : 3;
+    var unread = st.read ? 0 : 3;
     var navDef = [
       { id: 'overview', label: 'Visão geral', d: 'M4.5 3h4a1.5 1.5 0 0 1 1.5 1.5v4A1.5 1.5 0 0 1 8.5 10h-4A1.5 1.5 0 0 1 3 8.5v-4A1.5 1.5 0 0 1 4.5 3z M15.5 3h4A1.5 1.5 0 0 1 21 4.5v4a1.5 1.5 0 0 1-1.5 1.5h-4A1.5 1.5 0 0 1 14 8.5v-4A1.5 1.5 0 0 1 15.5 3z M4.5 14h4a1.5 1.5 0 0 1 1.5 1.5v4A1.5 1.5 0 0 1 8.5 21h-4A1.5 1.5 0 0 1 3 19.5v-4A1.5 1.5 0 0 1 4.5 14z M15.5 14h4a1.5 1.5 0 0 1 1.5 1.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a1.5 1.5 0 0 1-1.5-1.5v-4a1.5 1.5 0 0 1 1.5-1.5z' },
+      { id: 'today', label: 'Hoje', d: 'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20z M12 6v6l4 2', badge: todayLeft },
+      { id: 'agenda', label: 'Agenda', d: 'M8 2v4 M16 2v4 M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z M3 10h18 M8 14h.01 M12 14h.01 M16 14h.01 M8 18h.01 M12 18h.01' },
       { id: 'sales', label: 'Vendas', d: 'M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z M3 6h18 M16 10a4 4 0 0 1-8 0' },
       { id: 'bills', label: 'Contas', d: 'M4 2v20l3-2 3 2 3-2 3 2 3-2 3 2V2l-3 2-3-2-3 2-3-2-3 2z M8 8h8 M8 12h8 M8 16h5' },
       { id: 'reports', label: 'Relatórios', d: 'M21.21 15.89A10 10 0 1 1 8 2.83 M22 12A10 10 0 0 0 12 2v10z' },
@@ -777,120 +1544,22 @@ class Component extends DCLogic {
       { id: 'notifs', label: 'Notificações', d: 'M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9 M10.3 21a1.94 1.94 0 0 0 3.4 0', badge: unread },
       { id: 'settings', label: 'Configurações', d: 'M21 4h-7 M10 4H3 M21 12h-9 M8 12H3 M21 20h-5 M12 20H3 M14 2v4 M8 10v4 M16 18v4' }
     ];
-    var mkNav = function (n) {
-      return { label: n.label, d: n.d, badge: n.badge || 0, active: n.id === view, inactive: n.id !== view, pick: go(n.id) };
-    };
+    var mkNav = function (n) { return { label: n.label, d: n.d, badge: n.badge || 0, active: n.id === view, inactive: n.id !== view, pick: go(n.id) }; };
+    var hour = now.getHours();
+    var greet = hour < 12 ? 'Bom dia!' : hour < 18 ? 'Boa tarde!' : 'Boa noite!';
     var pages = {
       overview: { eyebrow: '', title: '', sub: '' },
-      sales: { eyebrow: 'Vendas', title: 'Suas vendas', sub: 'Tudo o que foi vendido em novembro.', hasAction: true, action: 'Nova venda' },
-      bills: { eyebrow: 'Contas', title: 'Contas e gastos', sub: 'Contas fixas e gastos do mês em um só lugar.', hasAction: true, action: 'Nova conta' },
-      reports: { eyebrow: 'Relatórios', title: 'Desempenho financeiro', sub: 'Fluxo de caixa e para onde o dinheiro está indo.', hasAction: false },
-      goals: { eyebrow: 'Metas', title: 'Seus objetivos', sub: 'Acompanhe quanto falta para cada meta.', hasAction: true, action: 'Nova meta' },
+      today: { eyebrow: 'Hoje', title: WD[todayD.getDay()] + ', ' + todayD.getDate() + ' de ' + MONTHS[todayD.getMonth()], sub: greet + ' ' + (todayLeft ? 'Ainda há ' + todayLeft + ' compromissos para hoje.' : 'Tudo de hoje já foi resolvido.'), hasAction: true, action: 'Novo compromisso', onAction: go('agenda') },
+      agenda: { eyebrow: 'Agenda', title: 'Agenda', sub: 'Clientes, contas a vencer, compras e valores a receber. Toque em um dia para ver e registrar.', hasAction: false },
+      sales: { eyebrow: 'Vendas', title: 'Suas vendas', sub: 'Tudo o que foi vendido em novembro.', hasAction: true, action: 'Nova venda', onAction: openModal('sale') },
+      bills: { eyebrow: 'Contas', title: 'Contas e gastos', sub: 'Contas fixas e gastos do mês em um só lugar.', hasAction: true, action: 'Nova conta', onAction: openModal('bill') },
+      reports: { eyebrow: 'Relatórios', title: 'Desempenho financeiro', sub: 'Fluxo de caixa, para onde o dinheiro está indo e exportação.', hasAction: false },
+      goals: { eyebrow: 'Metas', title: 'Seus objetivos', sub: 'Acompanhe quanto falta para cada meta.', hasAction: true, action: 'Nova meta', onAction: openModal('goal') },
       notifs: { eyebrow: 'Notificações', title: 'Avisos', sub: unread ? 'Você tem ' + unread + ' avisos não lidos.' : 'Tudo em dia, nenhum aviso pendente.', hasAction: false },
-      settings: { eyebrow: 'Configurações', title: 'Ajustes da conta', sub: 'Dados da empresa e preferências do painel.', hasAction: false }
+      settings: { eyebrow: 'Configurações', title: 'Ajustes da conta', sub: 'Aparência, dados da empresa e preferências do painel.', hasAction: false }
     };
     var screens = {};
     Object.keys(pages).forEach(function (k) { screens[k] = k === view; });
-
-    // ---------- vendas ----------
-    var sf = this.state.salesFilter;
-    var salesRaw = [
-      { item: 'Instalação de som completo', client: 'Rafael M.', date: '16 nov', method: 'Pix', v: 2850, paid: true },
-      { item: 'Central multimídia 9"', client: 'Juliana S.', date: '15 nov', method: 'Cartão 6x', v: 1490, paid: false },
-      { item: 'Par de alto-falantes 6x9', client: 'Carlos A.', date: '15 nov', method: 'Débito', v: 520, paid: true },
-      { item: 'Módulo amplificador 800W', client: 'Bruno T.', date: '14 nov', method: 'Pix', v: 980, paid: true },
-      { item: 'Subwoofer 12" + caixa', client: 'Diego R.', date: '13 nov', method: 'Cartão 3x', v: 1350, paid: false },
-      { item: 'Câmera de ré + instalação', client: 'Fernanda L.', date: '12 nov', method: 'Dinheiro', v: 420, paid: true },
-      { item: 'Kit 2 vias + tweeters', client: 'Marcos P.', date: '11 nov', method: 'Pix', v: 760, paid: true },
-      { item: 'Alarme e trava elétrica', client: 'Patrícia N.', date: '10 nov', method: 'Boleto', v: 690, paid: false }
-    ];
-    var salesTotal = salesRaw.reduce(function (a, x) { return a + x.v; }, 0);
-    var salesOpen = salesRaw.filter(function (x) { return !x.paid; }).reduce(function (a, x) { return a + x.v; }, 0);
-    var sales = salesRaw.filter(function (x) {
-      if (sf === 'pagas') return x.paid;
-      if (sf === 'receber') return !x.paid;
-      return true;
-    }).map(function (x) {
-      return { item: x.item, client: x.client, date: x.date, method: x.method, value: '+ ' + brl(x.v),
-        status: x.paid ? 'Recebido' : 'A receber', statusBg: x.paid ? 'rgba(34,197,94,0.15)' : 'rgba(250,204,21,0.14)', statusInk: x.paid ? '#4ADE80' : '#FACC15' };
-    });
-    var salesFilters = [{ id: 'todas', label: 'Todas' }, { id: 'pagas', label: 'Recebidas' }, { id: 'receber', label: 'A receber' }].map(function (f) {
-      return { label: f.label, active: f.id === sf, inactive: f.id !== sf, pick: function () { self.setState({ salesFilter: f.id }); } };
-    });
-    var greenTile = { bg: 'rgba(74,222,128,0.08)', border: 'rgba(74,222,128,0.2)', ink: '#4ADE80' };
-    var plainTile = { bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)', ink: '#FAFAFA' };
-    var redTile = { bg: 'rgba(229,0,0,0.1)', border: 'rgba(229,0,0,0.28)', ink: '#FF5C5C' };
-    var tile = function (t, label, value, note) { return { label: label, value: value, note: note, bg: t.bg, border: t.border, ink: t.ink }; };
-    var salesStats = [
-      tile(greenTile, 'Vendido no mês', brl(salesTotal), '+12% vs. outubro'),
-      tile(plainTile, 'Número de vendas', String(salesRaw.length), 'Em novembro'),
-      tile(greenTile, 'Ticket médio', brl(salesTotal / salesRaw.length), 'Por venda'),
-      tile(plainTile, 'A receber', brl(salesOpen), 'Parcelados e boletos')
-    ];
-
-    // ---------- contas e gastos ----------
-    var bf = this.state.billFilter;
-    var paidMap = this.state.paid;
-    var IC = {
-      water: 'M12 2.7 6.3 9.4a7 7 0 1 0 11.4 0z',
-      power: 'M13 2 3 14h9l-1 8 10-12h-9z',
-      net: 'M5 12.6a10 10 0 0 1 14 0 M8.5 16.1a5 5 0 0 1 7 0 M2 9a15 15 0 0 1 20 0 M12 20h.01',
-      home: 'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z M9 21v-7h6v7',
-      box: 'M21 8 12 3 3 8v8l9 5 9-5z M3 8l9 5 9-5 M12 13v8',
-      doc: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M9 13h6 M9 17h6',
-      fuel: 'M3 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18 M3 22h12 M15 12h2a2 2 0 0 1 2 2v3a2 2 0 0 0 4 0V9l-3-3 M7 7h4',
-      tool: 'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z',
-      cart: 'M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L22 7H6 M9 21h.01 M18 21h.01'
-    };
-    var billsRaw = [
-      { id: 'agua', name: 'Conta de água', kind: 'Conta fixa', fixed: true, day: 10, v: 186.4, paid: true, icon: IC.water },
-      { id: 'aluguel', name: 'Aluguel da loja', kind: 'Conta fixa', fixed: true, day: 10, v: 2200, paid: true, icon: IC.home },
-      { id: 'contador', name: 'Contador', kind: 'Conta fixa', fixed: true, day: 12, v: 450, paid: true, icon: IC.doc },
-      { id: 'fornpecas', name: 'Fornecedor de alto-falantes', kind: 'Fornecedor', fixed: false, day: 14, v: 3480, paid: true, icon: IC.box },
-      { id: 'combust', name: 'Combustível', kind: 'Gasto', fixed: false, day: 11, v: 280, paid: true, icon: IC.fuel },
-      { id: 'internet', name: 'Internet', kind: 'Conta fixa', fixed: true, day: 18, v: 129.9, paid: false, icon: IC.net },
-      { id: 'forncabos', name: 'Fornecedor de cabos e conectores', kind: 'Fornecedor', fixed: false, day: 19, v: 1180, paid: false, icon: IC.box },
-      { id: 'luz', name: 'Conta de luz', kind: 'Conta fixa', fixed: true, day: 25, v: 287.4, paid: false, icon: IC.power },
-      { id: 'ferram', name: 'Manutenção de ferramentas', kind: 'Gasto', fixed: false, day: 22, v: 340, paid: false, icon: IC.tool },
-      { id: 'limpeza', name: 'Material de limpeza', kind: 'Gasto', fixed: false, day: 26, v: 96.5, paid: false, icon: IC.cart }
-    ];
-    var TODAY = 16;
-    var billsAll = billsRaw.map(function (b) {
-      var isPaid = b.paid || !!paidMap[b.id];
-      var late = !isPaid && b.day < TODAY;
-      var soon = !isPaid && !late && b.day - TODAY <= 3;
-      return {
-        id: b.id, name: b.name, kind: b.kind, fixed: b.fixed, day: b.day, v: b.v, icon: b.icon,
-        isPaid: isPaid, canPay: !isPaid,
-        dateLabel: (isPaid ? 'Pago · venceu dia ' : 'Vence dia ') + b.day,
-        value: brl(b.v),
-        ink: isPaid ? '#A1A1AA' : '#FAFAFA',
-        status: isPaid ? 'Pago' : (late ? 'Vencida' : (soon ? 'Vence logo' : 'A vencer')),
-        statusBg: isPaid ? 'rgba(34,197,94,0.15)' : (late || soon ? 'rgba(229,0,0,0.16)' : 'rgba(255,255,255,0.08)'),
-        statusInk: isPaid ? '#4ADE80' : (late || soon ? '#FF5C5C' : '#D4D4D8'),
-        chip: b.fixed ? 'rgba(229,0,0,0.14)' : 'rgba(255,255,255,0.07)',
-        chipInk: b.fixed ? '#FF5C5C' : '#D4D4D8',
-        pay: function () { var np = Object.assign({}, self.state.paid); np[b.id] = true; self.setState({ paid: np }); }
-      };
-    });
-    var bills = billsAll.filter(function (b) {
-      if (bf === 'fixas') return b.fixed;
-      if (bf === 'gastos') return !b.fixed;
-      if (bf === 'pendentes') return !b.isPaid;
-      return true;
-    }).sort(function (a, b) { return (a.isPaid - b.isPaid) || (a.day - b.day); });
-    var billFilters = [{ id: 'todas', label: 'Todas' }, { id: 'fixas', label: 'Fixas' }, { id: 'gastos', label: 'Gastos e fornecedores' }, { id: 'pendentes', label: 'A pagar' }].map(function (f) {
-      return { label: f.label, active: f.id === bf, inactive: f.id !== bf, pick: function () { self.setState({ billFilter: f.id }); } };
-    });
-    var billsTotal = billsAll.reduce(function (a, b) { return a + b.v; }, 0);
-    var billsPaid = billsAll.filter(function (b) { return b.isPaid; }).reduce(function (a, b) { return a + b.v; }, 0);
-    var pending = billsAll.filter(function (b) { return !b.isPaid; }).sort(function (a, b) { return a.day - b.day; });
-    var billStats = [
-      tile(plainTile, 'Total do mês', brl(billsTotal), billsAll.length + ' contas e gastos'),
-      tile(greenTile, 'Já pago', brl(billsPaid), Math.round(billsPaid / billsTotal * 100) + '% do total'),
-      tile(redTile, 'Falta pagar', brl(billsTotal - billsPaid), pending.length + ' pendentes'),
-      tile(plainTile, 'Próximo vencimento', pending.length ? 'Dia ' + pending[0].day : '—', pending.length ? pending[0].name : 'Tudo pago')
-    ];
 
     var reportStats = [
       { label: 'Receita média mensal', value: brl(16633.33), note: 'Últimos 6 meses', ink: '#4ADE80' },
@@ -899,77 +1568,55 @@ class Component extends DCLogic {
       { label: 'Taxa de economia', value: '37%', note: 'Média do semestre', ink: '#4ADE80' }
     ];
 
-    var goalsAll = [
-      { name: 'Reserva de emergência', saved: 21600, target: 30000, due: 'mar 2027', monthly: 1500 },
-      { name: 'Viagem de férias', saved: 5400, target: 12000, due: 'jul 2027', monthly: 800 },
-      { name: 'Carro novo', saved: 14000, target: 50000, due: 'dez 2028', monthly: 1200 },
-      { name: 'Equipamentos da loja', saved: 7800, target: 9000, due: 'jan 2027', monthly: 600 },
-      { name: 'Reforma da fachada', saved: 2100, target: 15000, due: 'set 2027', monthly: 900 }
-    ].map(function (g) {
-      var pct = Math.round(g.saved / g.target * 100);
-      var hi = pct >= 50;
-      return { name: g.name, due: g.due, pct: pct, saved: brl(g.saved), target: brl(g.target), monthly: brl(g.monthly), ink: hi ? '#4ADE80' : '#FF5C5C', bar: hi ? 'linear-gradient(90deg, #4ADE80, #16A34A)' : 'linear-gradient(90deg, #FF5C5C, #C40000)' };
-    });
-
-    var read = this.state.read;
+    var read = st.read;
     var notifs = [
       { title: 'Internet vence em 2 dias', text: 'A conta de internet (R$ 129,90) vence no dia 18.', time: 'Hoje, 09:12', kind: 'warn', unread: true },
-      { title: 'Pagamento recebido', text: 'Cliente Studio Aurora pagou R$ 4.500,00.', time: '14 nov', kind: 'good', unread: true },
+      { title: 'Pagamento recebido', text: 'Rafael M. pagou R$ 2.850,00 via Pix.', time: 'Hoje, 08:40', kind: 'good', unread: true },
       { title: 'Meta quase concluída', text: 'Equipamentos da loja já está em 87%. Faltam R$ 1.200,00.', time: '13 nov', kind: 'good', unread: true },
-      { title: 'Gasto acima do normal', text: 'Alimentação está 18% acima da média dos últimos meses.', time: '12 nov', kind: 'warn', unread: false },
+      { title: 'Gasto acima do normal', text: 'Estoque e fornecedores está 18% acima da média dos últimos meses.', time: '12 nov', kind: 'warn', unread: false },
       { title: 'Rendimento creditado', text: 'Seus investimentos renderam R$ 312,45 este mês.', time: '08 nov', kind: 'good', unread: false }
     ].map(function (n) {
       var good = n.kind === 'good';
-      return { title: n.title, text: n.text, time: n.time, unread: n.unread && !read,
-        bg: n.unread && !read ? 'rgba(255,255,255,0.04)' : 'transparent',
+      return { title: n.title, text: n.text, time: n.time, unread: n.unread && !read, bg: n.unread && !read ? 'rgba(255,255,255,0.04)' : 'transparent',
         chip: good ? 'rgba(34,197,94,0.15)' : 'rgba(229,0,0,0.16)', ink: good ? '#4ADE80' : '#FF5C5C',
         icon: good ? 'M20 6 9 17l-5-5' : 'M12 9v4 M12 17h.01 M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z' };
     });
 
-    var pf = this.state.prefs;
+    var pf = st.prefs;
     var prefs = [
-      { id: 'alerts', label: 'Alertas de contas a vencer' },
-      { id: 'weekly', label: 'Resumo semanal por e-mail' },
-      { id: 'hide', label: 'Ocultar valores ao abrir' },
-      { id: 'round', label: 'Arredondar centavos nos gráficos' }
+      { id: 'alerts', label: 'Alertas de contas a vencer' }, { id: 'weekly', label: 'Resumo semanal por e-mail' },
+      { id: 'hide', label: 'Ocultar valores ao abrir' }, { id: 'round', label: 'Arredondar centavos nos gráficos' }
     ].map(function (x) {
       var on = !!pf[x.id];
       return { label: x.label, pressed: on ? 'true' : 'false', track: on ? '#22C55E' : 'rgba(255,255,255,0.15)', knob: on ? 23 : 3,
         toggle: function () { var np = Object.assign({}, self.state.prefs); np[x.id] = !np[x.id]; self.setState({ prefs: np }); } };
     });
+    var themes = [
+      { id: 'dark', label: 'Escuro', desc: 'Preto com vermelho', bg: '#0B0B0D', card: '#1C1C20', line: '#3F3F46' },
+      { id: 'light', label: 'Claro', desc: 'Branco com vermelho', bg: '#F3F3F5', card: '#FFFFFF', line: '#D4D4D8' }
+    ].map(function (t) {
+      var on = st.theme === t.id;
+      return { label: t.label, desc: t.desc, bg: t.bg, card: t.card, line: t.line, pressed: on ? 'true' : 'false',
+        ring: on ? '#E50000' : 'rgba(255,255,255,0.12)', ringShadow: on ? '0 0 0 4px rgba(229,0,0,0.2)' : 'none', active: on, inactive: !on,
+        pick: function () { try { window.localStorage.setItem('artsom-theme', t.id); } catch (e) {} self.setState({ theme: t.id }); } };
+    });
+
     return {
-      bars: bars,
-      periods: periods,
-      inTotal: brl(inSum),
-      outTotal: brl(outSum),
+      themeClass: st.theme === 'light' ? 'theme-light' : 'theme-dark',
+      bars: bars, periods: periods, inTotal: brl(inSum), outTotal: brl(outSum),
       chartLabel: 'Gráfico de barras de entradas e saídas, ' + (period === 'mes' ? 'últimos 6 meses' : 'esta semana'),
-      txs: txs,
-      filters: filters,
-      cats: cats,
-      goals: goals,
-      days: days,
-      bills: bills,
-      kpis: kpis,
-      mainNav: navDef.map(mkNav),
-      sysNav: sysDef.map(mkNav),
-      page: pages[view],
-      screens: screens,
-      go: { reports: go('reports'), bills: go('bills'), sales: go('sales') },
-      sales: sales,
-      salesFilters: salesFilters,
-      salesStats: salesStats,
-      bills: bills,
-      billFilters: billFilters,
-      billStats: billStats,
-      billsNext: pending.slice(0, 3),
-      billsPendingCount: pending.length,
-      billsPendingTotal: brl(billsTotal - billsPaid),
-      billsPaidPct: Math.round(billsPaid / billsTotal * 100),
-      reportStats: reportStats,
-      goalsAll: goalsAll,
-      notifs: notifs,
-      markAllRead: function () { self.setState({ read: true }); },
-      prefs: prefs
+      txs: txs, filters: filters, cats: cats, goals: goals, kpis: kpis,
+      mainNav: navDef.map(mkNav), sysNav: sysDef.map(mkNav), page: pages[view], screens: screens,
+      go: { reports: go('reports'), bills: go('bills'), sales: go('sales'), agenda: go('agenda'), today: go('today') },
+      newSale: openModal('sale', 'sales'),
+      sales: sales, salesFilters: salesFilters, salesStats: salesStats,
+      bills: bills, billFilters: billFilters, billStats: billStats,
+      billsNext: pending.slice(0, 3), billsPendingCount: pending.length, billsPendingTotal: brl(billsTotal - billsPaid), billsPaidPct: Math.round(billsPaid / billsTotal * 100),
+      weekdays: WDS, cal: cal, sel: selInfo, addEvent: addEvent, typeOptions: typeOptions,
+      timeline: timeline, nowLabel: nowLabel, nextAppt: nextAppt, todayStats: todayStats, upcoming: upcoming, nextUp: nextUp,
+      reportStats: reportStats, exports: exports, lastExport: st.lastExport, hasExport: !!st.lastExport,
+      goalsAll: goalsAll, notifs: notifs, markAllRead: function () { self.setState({ read: true }); },
+      prefs: prefs, themes: themes, modal: modal
     };
   }
 }
@@ -1003,15 +1650,21 @@ function render(node, scope, out){
   var el = document.createElementNS(node.namespaceURI, node.localName);
   Array.prototype.forEach.call(node.attributes, function(a){
     if (a.name.indexOf('hint-') === 0) return;
-    if (a.name === 'onclick') { var fn = interp(a.value, scope); if (typeof fn === 'function') el.addEventListener('click', fn); return; }
-    el.setAttribute(a.name, String(interp(a.value, scope)));
+    if (a.name.length > 2 && a.name.indexOf('on') === 0) { var fn = interp(a.value, scope); if (typeof fn === 'function') el.addEventListener(a.name.slice(2), fn); return; }
+    var val = interp(a.value, scope);
+    if (val === false || val === null || val === undefined) return;
+    el.setAttribute(a.name, val === true ? '' : String(val));
   });
   Array.prototype.forEach.call(node.childNodes, function(c){ render(c, scope, el); });
   out.appendChild(el);
 }
 var comp = new Component({});
+var lastView = null;
 function mount(){
   var root = document.getElementById('app');
+  var v = comp.state.view;
+  root.classList.toggle('no-anim', lastView !== null && lastView === v);
+  lastView = v;
   var frag = document.createDocumentFragment();
   var scope = comp.renderVals();
   Array.prototype.forEach.call(document.getElementById('tpl').content.childNodes, function(c){ render(c, scope, frag); });
