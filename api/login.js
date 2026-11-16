@@ -64,7 +64,7 @@ export async function POST(request) {
 
   const exp = Date.now() + 7 * 24 * 60 * 60 * 1000;
   const token = exp + '.' + (await sign(secret, 'artsom:' + exp));
-  return redirect('/', `artsom_session=${token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=604800`);
+  return redirect('/?entrar=1', `artsom_session=${token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=604800`);
 }
 
 export function GET() {

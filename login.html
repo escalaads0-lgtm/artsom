@@ -3,46 +3,41 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Entrar · Dashboard Financeiro</title>
+<title>Entrar · ArtSom</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:#09090B;color:#FAFAFA;font-family:'Plus Jakarta Sans',system-ui,sans-serif;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden}
-.blob{position:absolute;border-radius:50%;pointer-events:none}
-.b1{top:-180px;left:15%;width:560px;height:560px;background:#C40000;filter:blur(150px);opacity:.28}
-.b2{bottom:-200px;right:-120px;width:520px;height:520px;background:#5C0000;filter:blur(140px);opacity:.45}
-.card{position:relative;width:100%;max-width:420px;padding:40px 36px;border-radius:30px;background:rgba(255,255,255,0.045);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,0.09);box-shadow:0 30px 70px -20px rgba(0,0,0,0.8),inset 0 1px 0 rgba(255,255,255,0.08);display:flex;flex-direction:column;gap:22px;transition:border-color .3s ease,box-shadow .3s ease}
-.card:hover{border-color:rgba(229,0,0,0.35);box-shadow:0 30px 70px -20px rgba(196,0,0,0.35),inset 0 1px 0 rgba(255,255,255,0.12)}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#FF2E2E,#C40000);display:flex;align-items:center;justify-content:center;box-shadow:0 0 28px rgba(229,0,0,0.6)}
-.brand span{font-size:20px;font-weight:800;letter-spacing:-0.01em}
-h1{margin:0;font-size:28px;font-weight:800;letter-spacing:-0.02em}
-p.sub{margin:6px 0 0;font-size:14px;color:#A1A1AA}
+html,body{height:100%}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 40%,#E50000 0%,#B00000 60%,#7A0000 100%);color:#FFFFFF;font-family:'Plus Jakarta Sans',system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(20px,4vh,40px);padding:24px;overflow-x:hidden}
+.brand-logo{display:flex;align-items:center;gap:clamp(6px,1.5vw,14px)}
+.brand-icon{width:clamp(110px,22vw,190px);height:auto;flex:none;filter:drop-shadow(0 6px 0 rgba(0,0,0,.18))}
+.brand-text{display:flex;flex-direction:column;line-height:.82;font-family:'Kaushan Script',cursive}
+.brand-text .art{font-size:clamp(64px,13vw,124px);color:#FFFFFF;text-shadow:0 6px 0 rgba(0,0,0,.18)}
+.brand-text .som{font-size:clamp(42px,8.5vw,80px);color:#0A0A0A;margin-left:clamp(26px,5vw,52px);margin-top:clamp(-4px,-.5vw,0px)}
+
+.card{width:100%;max-width:400px;padding:32px 30px;border-radius:28px;background:rgba(0,0,0,0.26);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,0.18);box-shadow:0 30px 70px -24px rgba(0,0,0,0.55),inset 0 1px 0 rgba(255,255,255,0.14);display:flex;flex-direction:column;gap:20px}
+h1{margin:0;font-size:24px;font-weight:800;letter-spacing:-0.02em}
+p.sub{margin:6px 0 0;font-size:14px;color:#FFE3E3}
 form{display:flex;flex-direction:column;gap:16px}
-label{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:600;color:#D4D4D8}
-input{height:50px;padding:0 16px;border-radius:14px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:#FAFAFA;font:inherit;font-size:15px;outline:none;transition:border-color .2s ease,box-shadow .2s ease}
-input:focus{border-color:#E50000;box-shadow:0 0 0 4px rgba(229,0,0,0.2)}
-button{height:52px;margin-top:6px;border:0;border-radius:999px;background:linear-gradient(135deg,#E50000,#8B0000);color:#FFFFFF;font:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:transform .2s ease,box-shadow .25s ease}
-button:hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px rgba(229,0,0,0.75)}
-.erro{display:none;padding:12px 14px;border-radius:14px;background:rgba(229,0,0,0.14);border:1px solid rgba(229,0,0,0.35);color:#FFC2C2;font-size:14px;font-weight:600}
+label{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:600;color:#FFFFFF}
+input{height:50px;padding:0 16px;border-radius:14px;border:1px solid rgba(255,255,255,0.28);background:rgba(0,0,0,0.28);color:#FFFFFF;font:inherit;font-size:15px;outline:none;transition:border-color .2s ease,box-shadow .2s ease,background .2s ease}
+input:focus{border-color:#FFFFFF;background:rgba(0,0,0,0.38);box-shadow:0 0 0 4px rgba(255,255,255,0.22)}
+button{height:52px;margin-top:6px;border:0;border-radius:999px;background:#0A0A0A;color:#FFFFFF;font:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:transform .2s ease,box-shadow .25s ease,background .2s ease}
+button:hover{transform:translateY(-2px);background:#000000;box-shadow:0 14px 30px -10px rgba(0,0,0,0.7)}
+.erro{display:none;padding:12px 14px;border-radius:14px;background:rgba(0,0,0,0.38);border:1px solid rgba(255,255,255,0.3);color:#FFFFFF;font-size:14px;font-weight:600}
 .erro.show{display:block}
 </style>
 </head>
 <body>
-<div class="blob b1" aria-hidden="true"></div>
-<div class="blob b2" aria-hidden="true"></div>
+<div class="brand-logo"><svg class="brand-icon" viewBox="0 0 120 100" aria-hidden="true"><g transform="translate(16 0) skewX(-10)"><path d="M4 37 L20 33 L20 67 L4 63 Z" fill="#FFFFFF"></path><path d="M25 32 L52 11 L52 89 L25 68 Z" fill="#FFFFFF"></path><path d="M64 37 Q71 50 64 63" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none"></path><path d="M77 26 Q90 50 77 74" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none"></path><path d="M90 15 Q110 50 90 85" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none"></path></g></svg><div class="brand-text"><span class="art">Art</span><span class="som">Som</span></div></div>
 <main class="card">
-  <div class="brand">
-    <div class="logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg></div>
-    <span>Finanças</span>
-  </div>
   <div>
     <h1>Bem-vindo de volta</h1>
     <p class="sub">Entre para acessar seu dashboard financeiro.</p>
   </div>
   <div class="erro" id="erro" role="alert">E-mail ou senha incorretos.</div>
-  <form method="post" action="/api/login">
+  <form id="form" method="post" action="/api/login">
     <label>E-mail
       <input type="email" name="email" autocomplete="username" required>
     </label>
@@ -54,6 +49,21 @@ button:hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px rgba(229,0,0
 </main>
 <script>
 if (new URLSearchParams(location.search).get('erro')) document.getElementById('erro').classList.add('show');
+// Ao entrar: o cartão some e a logo desliza para o centro da tela,
+// exatamente onde a animação de abertura do dashboard começa.
+var form = document.getElementById('form');
+form.addEventListener('submit', function (e) {
+  if (!document.body.animate || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  e.preventDefault();
+  var card = document.querySelector('.card');
+  var logo = document.querySelector('.brand-logo');
+  var r = logo.getBoundingClientRect();
+  var dy = innerHeight / 2 - (r.top + r.height / 2);
+  var ease = 'cubic-bezier(.65,0,.35,1)';
+  card.animate([{opacity:1,transform:'translateY(0) scale(1)'},{opacity:0,transform:'translateY(24px) scale(.97)'}], {duration:320, easing:'cubic-bezier(.4,0,1,1)', fill:'forwards'});
+  logo.animate([{transform:'translateY(0)'},{transform:'translateY(' + dy + 'px)'}], {delay:120, duration:480, easing:ease, fill:'forwards'})
+    .finished.then(function(){ form.submit(); });
+});
 </script>
 </body>
 </html>

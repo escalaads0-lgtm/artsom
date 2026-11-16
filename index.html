@@ -33,6 +33,19 @@ a{color:#FF2E2E}a:hover{color:#FF5C5C}
 .day:hover{transform:translateY(-3px)}
 button{font-family:inherit}
 </style>
+<script>if(new URLSearchParams(location.search).get('entrar')==='1'){document.documentElement.classList.add('intro');history.replaceState(null,'','/');}</script>
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&amp;display=swap" rel="stylesheet">
+<style>
+#intro{display:none}
+html.intro #intro{display:flex;position:fixed;inset:0;z-index:1000;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,#E50000 0%,#B00000 60%,#7A0000 100%)}
+html.intro body{overflow:hidden}
+.intro-fly{position:fixed;z-index:1001;transform-origin:0 0;pointer-events:none;margin:0}
+.brand-logo{display:flex;align-items:center;gap:clamp(6px,1.5vw,14px)}
+.brand-icon{width:clamp(110px,22vw,190px);height:auto;flex:none;filter:drop-shadow(0 6px 0 rgba(0,0,0,.18))}
+.brand-text{display:flex;flex-direction:column;line-height:.82;font-family:'Kaushan Script',cursive}
+.brand-text .art{font-size:clamp(64px,13vw,124px);color:#FFFFFF;text-shadow:0 6px 0 rgba(0,0,0,.18)}
+.brand-text .som{font-size:clamp(42px,8.5vw,80px);color:#0A0A0A;margin-left:clamp(26px,5vw,52px);margin-top:clamp(-4px,-.5vw,0px)}
+</style>
 </head>
 <body>
 <div id="app"></div>
@@ -47,10 +60,10 @@ button{font-family:inherit}
 <div style="flex: 0 0 76px; position: relative; z-index: 20; align-self: stretch; min-height: 640px">
 <nav class="sidebar" aria-label="Menu principal" style="position: absolute; top: 0; left: 0; overflow: hidden; box-sizing: border-box; padding: 18px 15px; border-radius: 30px; background: linear-gradient(180deg, #18181B 0%, #1C0A0C 100%); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 20px 50px -16px rgba(0,0,0,0.8); display: flex; flex-direction: column; align-items: stretch; gap: 10px">
 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding-left: 1px">
-<div style="width: 44px; height: 44px; flex: none; border-radius: 14px; background: linear-gradient(135deg, #FF2E2E, #C40000); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 24px rgba(229,0,0,0.6)">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
+<div data-logo-slot="1" style="width: 44px; height: 44px; flex: none; border-radius: 14px; background: linear-gradient(135deg, #FF2E2E, #C40000); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 24px rgba(229,0,0,0.6)">
+<svg width="30" height="25" viewBox="0 0 120 100" aria-hidden="true"><g transform="translate(16 0) skewX(-10)"><path d="M4 37 L20 33 L20 67 L4 63 Z" fill="#FFFFFF"></path><path d="M25 32 L52 11 L52 89 L25 68 Z" fill="#FFFFFF"></path><path d="M64 37 Q71 50 64 63" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none"></path><path d="M77 26 Q90 50 77 74" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none"></path><path d="M90 15 Q110 50 90 85" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none"></path></g></svg>
 </div>
-<span class="nav-label" style="font-size: 17px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.01em">Finanças</span>
+<span class="nav-label" style="font-size: 17px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.01em">ArtSom</span>
 </div>
 <button class="nav-btn active" aria-label="Visão geral" style="width: 100%; height: 46px; flex: none; border: 0; border-radius: 16px; background: #E50000; color: #FFFFFF; box-shadow: 0 8px 22px -8px rgba(229,0,0,0.8); display: flex; align-items: center; gap: 14px; padding: 0 13px; box-sizing: border-box; cursor: pointer">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
@@ -502,6 +515,78 @@ function mount(){
   root.replaceChildren(frag);
 }
 mount();
+</script>
+<div id="intro" aria-hidden="true"><div class="brand-logo"><svg class="brand-icon" viewBox="0 0 120 100" aria-hidden="true"><g transform="translate(16 0) skewX(-10)"><path d="M4 37 L20 33 L20 67 L4 63 Z" fill="#FFFFFF"></path><path d="M25 32 L52 11 L52 89 L25 68 Z" fill="#FFFFFF"></path><path d="M64 37 Q71 50 64 63" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none"></path><path d="M77 26 Q90 50 77 74" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none"></path><path d="M90 15 Q110 50 90 85" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none"></path></g></svg><div class="brand-text"><span class="art">Art</span><span class="som">Som</span></div></div></div>
+<script>
+(function(){
+  if (!document.documentElement.classList.contains('intro')) return;
+  // Grade de tempo da animação (ms). Tudo parte do mesmo relógio, então os trechos se sobrepõem sem trancos.
+  var HOLD = 250;
+  var T = {
+    textOut: [HOLD + 0,   HOLD + 380],   // "ArtSom" desaparece
+    iconFly: [HOLD + 200, HOLD + 1150],  // ícone sobe para o topo da barra lateral
+    reveal:  [HOLD + 560, HOLD + 1450],  // vermelho se fecha para dentro do ícone
+    appIn:   [HOLD + 560, HOLD + 1300]   // dashboard aparece
+  };
+  var EASE_IN_OUT = 'cubic-bezier(.65,0,.35,1)';
+  var EASE_OUT = 'cubic-bezier(.22,1,.36,1)';
+  var EASE_REVEAL = 'cubic-bezier(.76,0,.24,1)';
+  function opts(r, easing){ return { delay: r[0], duration: r[1] - r[0], easing: easing, fill: 'both' }; }
+
+  function run(){
+    var overlay = document.getElementById('intro');
+    var app = document.getElementById('app');
+    var icon = overlay.querySelector('.brand-icon');
+    var text = overlay.querySelector('.brand-text');
+    var slot = document.querySelector('[data-logo-slot] svg');
+    function done(){
+      overlay.remove();
+      document.documentElement.classList.remove('intro');
+      app.getAnimations().forEach(function(a){ a.cancel(); });
+      if (slot) slot.style.opacity = '';
+    }
+    if (!slot || !overlay.animate || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (overlay.animate) overlay.animate([{opacity:1},{opacity:0}], {duration:300, fill:'forwards'}).finished.then(done); else done();
+      return;
+    }
+    var a = icon.getBoundingClientRect();
+    var b = slot.getBoundingClientRect();
+    var fly = icon.cloneNode(true);
+    fly.classList.add('intro-fly');
+    fly.style.left = a.left + 'px'; fly.style.top = a.top + 'px';
+    fly.style.width = a.width + 'px'; fly.style.height = a.height + 'px';
+    document.body.appendChild(fly);
+    icon.style.visibility = 'hidden';
+    slot.style.opacity = '0';
+
+    var s = b.width / a.width, dx = b.left - a.left, dy = b.top - a.top;
+    var cx = b.left + b.width / 2, cy = b.top + b.height / 2;
+    var R = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy)) + 40;
+
+    var anims = [
+      text.animate([
+        { opacity: 1, transform: 'translateX(0)', filter: 'blur(0px)' },
+        { opacity: 0, transform: 'translateX(32px)', filter: 'blur(6px)' }
+      ], opts(T.textOut, EASE_OUT)),
+      fly.animate([
+        { transform: 'translate(0px,0px) scale(1)', filter: 'drop-shadow(0 6px 0 rgba(0,0,0,.18))' },
+        { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')', filter: 'drop-shadow(0 0 0 rgba(0,0,0,0))' }
+      ], opts(T.iconFly, EASE_IN_OUT)),
+      overlay.animate([
+        { clipPath: 'circle(' + R + 'px at ' + cx + 'px ' + cy + 'px)' },
+        { clipPath: 'circle(0px at ' + cx + 'px ' + cy + 'px)' }
+      ], opts(T.reveal, EASE_REVEAL)),
+      app.animate([{ opacity: 0 }, { opacity: 1 }], opts(T.appIn, EASE_OUT))
+    ];
+    anims[1].finished.then(function(){
+      slot.style.opacity = '';
+      fly.animate([{opacity:1},{opacity:0}], {duration:160, easing:'linear', fill:'forwards'}).finished.then(function(){ fly.remove(); });
+    });
+    Promise.all(anims.map(function(x){ return x.finished; })).then(done);
+  }
+  var start = function(){ requestAnimationFrame(function(){ requestAnimationFrame(run); }); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+})();
 </script>
 </body>
 </html>
