@@ -108,7 +108,7 @@ button{font-family:inherit}
 <div style="flex: 0 1 auto; display: flex; flex-direction: column; gap: 6px; padding: 20px 24px; border-radius: 22px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(14px)">
 <span style="font-size: 13px; color: #FFC2C2">Saldo total</span>
 <span style="font-size: 34px; font-weight: 800; letter-spacing: -0.02em">R$ 48.320,90</span>
-<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #FFC2C2">
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #4ADE80">
 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg>+8,2% em relação a outubro</span>
 </div>
 </div>
@@ -179,7 +179,7 @@ button{font-family:inherit}
 <div style="display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; align-items: center">
 <div style="display: flex; flex-direction: column; gap: 4px">
 <h2 style="margin: 0; font-size: 20px; font-weight: 700">Fluxo de caixa</h2>
-<span style="font-size: 13px; color: #A1A1AA">Entradas <strong style="color: #FF2E2E">{{ inTotal }}</strong> · Saídas <strong style="color: #D4D4D8">{{ outTotal }}</strong></span>
+<span style="font-size: 13px; color: #A1A1AA">Entradas <strong style="color: #4ADE80">{{ inTotal }}</strong> · Saídas <strong style="color: #D4D4D8">{{ outTotal }}</strong></span>
 </div>
 <div role="group" aria-label="Período" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08)">
 <sc-for list="{{ periods }}" as="p" hint-placeholder-count="2">
@@ -193,14 +193,14 @@ button{font-family:inherit}
 </div>
 </div>
 <div style="display: flex; gap: 18px; font-size: 12px; font-weight: 600; color: #A1A1AA">
-<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #E50000"></span>Entradas</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #22C55E"></span>Entradas</span>
 <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #A1A1AA"></span>Saídas</span>
 </div>
 <div role="img" aria-label="{{ chartLabel }}" style="display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; height: 220px; padding: 0 4px; border-bottom: 1px dashed rgba(255,255,255,0.18); background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 100% 55px">
 <sc-for list="{{ bars }}" as="b" hint-placeholder-count="6">
 <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: flex-end">
 <div style="display: flex; align-items: flex-end; gap: 5px; height: 190px">
-<div class="bar" title="Entradas: {{ b.rTxt }}" style="width: 16px; height: {{ b.rh }}px; border-radius: 8px 8px 4px 4px; background: linear-gradient(180deg, #FF2E2E, #C40000); box-shadow: 0 6px 16px -6px rgba(229,0,0,0.7)"></div>
+<div class="bar" title="Entradas: {{ b.rTxt }}" style="width: 16px; height: {{ b.rh }}px; border-radius: 8px 8px 4px 4px; background: linear-gradient(180deg, #4ADE80, #15803D); box-shadow: 0 6px 16px -6px rgba(34,197,94,0.6)"></div>
 <div class="bar" title="Saídas: {{ b.dTxt }}" style="width: 16px; height: {{ b.dh }}px; border-radius: 8px 8px 4px 4px; background: linear-gradient(180deg, #E4E4E7, #71717A)"></div>
 </div>
 </div>
@@ -270,7 +270,7 @@ button{font-family:inherit}
 <sc-for list="{{ txs }}" as="t" hint-placeholder-count="6">
 <div class="row-hover" style="display: flex; align-items: center; gap: 14px; padding: 11px 10px; border-radius: 16px">
 <sc-if value="{{ t.isIn }}" hint-placeholder-val="{{ true }}">
-<span style="width: 42px; height: 42px; flex: none; border-radius: 14px; background: rgba(229,0,0,0.16); color: #FF2E2E; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 7 7 17"></path><path d="M17 17H7V7"></path></svg></span>
+<span style="width: 42px; height: 42px; flex: none; border-radius: 14px; background: rgba(34,197,94,0.15); color: #4ADE80; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 7 7 17"></path><path d="M17 17H7V7"></path></svg></span>
 </sc-if>
 <sc-if value="{{ t.isOut }}" hint-placeholder-val="{{ false }}">
 <span style="width: 42px; height: 42px; flex: none; border-radius: 14px; background: rgba(255,255,255,0.07); color: #D4D4D8; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>
@@ -389,7 +389,7 @@ class Component extends DCLogic {
         name: t.name, cat: t.cat, date: t.date,
         isIn: t.isIn, isOut: !t.isIn,
         value: (t.isIn ? '+ ' : '− ') + brl(Math.abs(t.v)),
-        ink: t.isIn ? '#FF2E2E' : '#D4D4D8'
+        ink: t.isIn ? '#4ADE80' : '#D4D4D8'
       };
     });
     var filters = [{ id: 'todas', label: 'Todas' }, { id: 'entradas', label: 'Entradas' }, { id: 'saidas', label: 'Saídas' }].map(function (f) {
@@ -431,10 +431,10 @@ class Component extends DCLogic {
     ];
 
     var kpis = [
-      { label: 'Receitas do mês', value: 'R$ 18.450,00', pct: 82, note: '+2,8% vs. outubro', noteInk: '#FF2E2E', chip: 'rgba(229,0,0,0.16)', chipInk: '#FF2E2E', bar: 'linear-gradient(90deg, #FF2E2E, #C40000)', icon1: 'M17 7 7 17', icon2: 'M17 17H7V7' },
+      { label: 'Receitas do mês', value: 'R$ 18.450,00', pct: 82, note: '+2,8% vs. outubro', noteInk: '#4ADE80', chip: 'rgba(229,0,0,0.16)', chipInk: '#FF2E2E', bar: 'linear-gradient(90deg, #FF2E2E, #C40000)', icon1: 'M17 7 7 17', icon2: 'M17 17H7V7' },
       { label: 'Despesas do mês', value: 'R$ 9.872,35', pct: 54, note: '−2,4% vs. outubro', noteInk: '#D4D4D8', chip: 'rgba(255,255,255,0.07)', chipInk: '#E4E4E7', bar: 'linear-gradient(90deg, #E4E4E7, #71717A)', icon1: 'M7 17 17 7', icon2: 'M7 7h10v10' },
-      { label: 'Economia do mês', value: 'R$ 8.577,65', pct: 46, note: '46% da receita guardada', noteInk: '#FF2E2E', chip: 'rgba(229,0,0,0.16)', chipInk: '#FF5C5C', bar: 'linear-gradient(90deg, #FF5C5C, #E50000)', icon1: 'M22 7 13.5 15.5 8.5 10.5 2 17', icon2: 'M16 7h6v6' },
-      { label: 'Investido', value: 'R$ 26.140,00', pct: 64, note: 'Rendeu R$ 312,45 no mês', noteInk: '#A1A1AA', chip: 'rgba(255,255,255,0.07)', chipInk: '#E4E4E7', bar: 'linear-gradient(90deg, #FF2E2E, #5C0000)', icon1: 'M3 3v18h18', icon2: 'M7 14l4-4 4 4 5-5' }
+      { label: 'Economia do mês', value: 'R$ 8.577,65', pct: 46, note: '46% da receita guardada', noteInk: '#4ADE80', chip: 'rgba(229,0,0,0.16)', chipInk: '#FF5C5C', bar: 'linear-gradient(90deg, #FF5C5C, #E50000)', icon1: 'M22 7 13.5 15.5 8.5 10.5 2 17', icon2: 'M16 7h6v6' },
+      { label: 'Investido', value: 'R$ 26.140,00', pct: 64, note: 'Rendeu R$ 312,45 no mês', noteInk: '#4ADE80', chip: 'rgba(255,255,255,0.07)', chipInk: '#E4E4E7', bar: 'linear-gradient(90deg, #FF2E2E, #5C0000)', icon1: 'M3 3v18h18', icon2: 'M7 14l4-4 4 4 5-5' }
     ];
 
     return {
@@ -468,7 +468,7 @@ function interp(str, scope){
 function render(node, scope, out){
   if (node.nodeType === 3) { out.appendChild(document.createTextNode(interp(node.nodeValue, scope))); return; }
   if (node.nodeType !== 1) return;
-  var tag = node.tagName.toLowerCase();
+  var tag = node.localName;
   var kids = node.content ? node.content.childNodes : node.childNodes;
   if (tag === 'sc-for') {
     var list = get(node.getAttribute('list').replace(/[{}]/g,''), scope) || [];
