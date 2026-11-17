@@ -132,6 +132,15 @@ input{color-scheme:dark}
 .theme-opt{transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
 .theme-opt:hover{transform:translateY(-3px)}
 
+
+.scan-frame{position:absolute;inset:8% 5%;border:2px solid rgba(255,46,46,0.6);border-radius:14px;box-shadow:0 0 0 999px rgba(0,0,0,0.28)}
+.scan-line{position:absolute;left:6%;right:6%;top:10%;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,#FF2E2E,transparent);box-shadow:0 0 18px 4px rgba(255,46,46,0.7);animation:scanMove 1.6s cubic-bezier(.45,0,.55,1) infinite alternate}
+@keyframes scanMove{from{top:10%}to{top:88%}}
+.mic-orb{position:relative;width:104px;height:104px;border-radius:50%;border:0;background:radial-gradient(circle at 35% 30%,#FF5C5C,#C40000 60%,#7A0000);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 18px 40px -12px rgba(229,0,0,0.9);animation:breathe 1.6s ease-in-out infinite}
+.mic-orb::before,.mic-orb::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,46,46,0.65);animation:ring 1.8s ease-out infinite}
+.mic-orb::after{animation-delay:.9s}
+@keyframes ring{from{transform:scale(1);opacity:.9}to{transform:scale(1.9);opacity:0}}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 /* ---------- celular e tablet ---------- */
 @media (max-width: 860px){
 .app-root{padding:16px 12px 104px !important}
@@ -782,6 +791,21 @@ html.intro body{overflow:hidden}
 </sc-if>
 </div>
 <div class="screen" style="display: flex; flex-direction: column; gap: 22px">
+<section class="glass" style="box-sizing: border-box; padding: 22px 24px; border-radius: 28px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between">
+<div style="flex: 1 1 240px; display: flex; align-items: center; gap: 14px">
+<span style="width: 50px; height: 50px; flex: none; border-radius: 16px; background: linear-gradient(135deg, #FF2E2E, #8B0000); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 24px -10px rgba(229,0,0,0.8)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z M12 10a3.5 3.5 0 1 0 0 7a3.5 3.5 0 1 0 0-7z"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 3px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 700">Registrar conta rápido</h2>
+<span style="font-size: 13px; color: #A1A1AA">Tire uma foto do boleto ou fale o que precisa pagar. O painel preenche e você só confere.</span>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<label class="btn" style="display: inline-flex; align-items: center; gap: 8px; position: relative; min-height: 46px; padding: 0 18px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><input type="file" accept="image/*" capture="environment" aria-label="Tirar foto do boleto" onChange="{{ capture.onPhoto }}" style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z M12 10a3.5 3.5 0 1 0 0 7a3.5 3.5 0 1 0 0-7z"></path></svg>Foto do boleto</label>
+<label class="btn" style="display: inline-flex; align-items: center; gap: 8px; position: relative; min-height: 46px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); color: #FAFAFA; font-size: 14px; font-weight: 600; cursor: pointer"><input type="file" accept="image/*" aria-label="Enviar imagem do boleto" onChange="{{ capture.onPhoto }}" style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z M9 8a1.5 1.5 0 1 0 0 3a1.5 1.5 0 1 0 0-3z M21 15l-5-5L5 21"></path></svg>Enviar imagem</label>
+<button class="btn" onClick="{{ capture.voice }}" style="display: inline-flex; align-items: center; gap: 8px; position: relative; min-height: 46px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); color: #FAFAFA; font-size: 14px; font-weight: 600; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z M19 10v2a7 7 0 0 1-14 0v-2 M12 19v3"></path></svg>Falar</button>
+<button class="btn" onClick="{{ capture.manual }}" style="display: inline-flex; align-items: center; gap: 8px; position: relative; min-height: 46px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); color: #FAFAFA; font-size: 14px; font-weight: 600; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z M6 10h.01 M10 10h.01 M14 10h.01 M18 10h.01 M8 14h8"></path></svg>Digitar</button>
+</div>
+</section>
 <div style="display: flex; flex-wrap: wrap; gap: 14px">
 <sc-for list="{{ billStats }}" as="k" hint-placeholder-count="4">
 <div class="anim" style="flex: 1 1 190px; padding: 18px 20px; border-radius: 20px; background: {{ k.bg }}; border: 1px solid {{ k.border }}; display: flex; flex-direction: column; gap: 6px">
@@ -1071,10 +1095,16 @@ html.intro body{overflow:hidden}
 </div>
 <button type="button" class="icon-btn" onClick="{{ modal.close }}" aria-label="Fechar" style="width: 38px; height: 38px; flex: none; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #D4D4D8; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18 M6 6l12 12"></path></svg></button>
 </div>
+<sc-if value="{{ modal.hasNote }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 16px; background: rgba(34,197,94,0.1); border: 1px solid rgba(74,222,128,0.3); color: #4ADE80; font-size: 13px; font-weight: 600; line-height: 1.45">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M20 6 9 17l-5-5"></path></svg>
+<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0"><span>{{ modal.note }}</span><sc-if value="{{ modal.hasCode }}" hint-placeholder-val="{{ false }}"><span style="font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; font-weight: 500; color: #A1A1AA; word-break: break-all">{{ modal.noteCode }}</span></sc-if></div>
+</div>
+</sc-if>
 <sc-for list="{{ modal.fields }}" as="f" hint-placeholder-count="4">
 <sc-if value="{{ f.isInput }}" hint-placeholder-val="{{ true }}">
 <label style="display: flex; flex-direction: column; gap: 7px; font-size: 12px; font-weight: 600; color: #D4D4D8">{{ f.label }}
-<input name="{{ f.name }}" type="{{ f.type }}" placeholder="{{ f.placeholder }}" required="{{ f.required }}" inputmode="{{ f.inputmode }}" style="height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #FAFAFA; font: inherit; font-size: 14px; outline: none">
+<input name="{{ f.name }}" type="{{ f.type }}" placeholder="{{ f.placeholder }}" value="{{ f.value }}" required="{{ f.required }}" inputmode="{{ f.inputmode }}" style="height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #FAFAFA; font: inherit; font-size: 14px; outline: none">
 </label>
 </sc-if>
 <sc-if value="{{ f.isChoice }}" hint-placeholder-val="{{ false }}">
@@ -1093,10 +1123,228 @@ html.intro body{overflow:hidden}
 </form>
 </div>
 </sc-if>
+<sc-if value="{{ scan.open }}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; inset: 0; z-index: 210; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box">
+<div class="modal-backdrop" onClick="{{ scan.cancel }}" style="position: absolute; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px)"></div>
+<div class="modal-card" role="dialog" aria-label="{{ scan.title }}" style="position: relative; width: 100%; max-width: 460px; max-height: 90vh; overflow: auto; box-sizing: border-box; padding: 26px; border-radius: 28px; background: #141416; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 40px 80px -30px rgba(0,0,0,0.9), 0 0 60px -20px rgba(229,0,0,0.35); display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em">{{ scan.title }}</h2>
+<span style="font-size: 13px; color: #A1A1AA">{{ scan.sub }}</span>
+</div>
+<button type="button" class="icon-btn" onClick="{{ scan.cancel }}" aria-label="Fechar" style="width: 38px; height: 38px; flex: none; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #D4D4D8; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18 M6 6l12 12"></path></svg></button>
+</div>
+<sc-if value="{{ scan.isPhoto }}" hint-placeholder-val="{{ true }}">
+<div style="position: relative; height: 240px; border-radius: 20px; overflow: hidden; background: #000000; border: 1px solid rgba(255,255,255,0.1)">
+<img src="{{ scan.img }}" alt="Foto do boleto" style="width: 100%; height: 100%; object-fit: contain">
+<sc-if value="{{ scan.reading }}" hint-placeholder-val="{{ true }}"><div class="scan-frame" aria-hidden="true"></div><div class="scan-line" aria-hidden="true"></div></sc-if>
+</div>
+<sc-if value="{{ scan.reading }}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="height: 8px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden"><div style="height: 100%; width: {{ scan.progress }}%; border-radius: 999px; background: linear-gradient(90deg, #FF2E2E, #C40000); transition: width .4s ease"></div></div>
+<span role="status" style="font-size: 13px; color: #A1A1AA">{{ scan.msg }}</span>
+</div>
+</sc-if>
+</sc-if>
+<sc-if value="{{ scan.isVoice }}" hint-placeholder-val="{{ false }}">
+<sc-if value="{{ scan.listening }}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 14px 0 6px">
+<button class="mic-orb" onClick="{{ scan.stop }}" aria-label="Parar de ouvir e revisar"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z M19 10v2a7 7 0 0 1-14 0v-2 M12 19v3"></path></svg></button>
+<span role="status" style="font-size: 13px; color: #A1A1AA; text-align: center">Ouvindo… toque no microfone quando terminar de falar</span>
+</div>
+</sc-if>
+<div style="min-height: 64px; box-sizing: border-box; padding: 14px 16px; border-radius: 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); font-size: 16px; line-height: 1.45">
+<sc-if value="{{ scan.hasTranscript }}" hint-placeholder-val="{{ false }}"><span style="color: #FAFAFA">“{{ scan.transcript }}”</span></sc-if>
+<sc-if value="{{ scan.noTranscript }}" hint-placeholder-val="{{ true }}"><span style="color: #8B8B94">Ex.: “Gestor de tráfego, mil e quinhentos reais, vence dia 20”</span></sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ scan.isError }}" hint-placeholder-val="{{ false }}">
+<div role="alert" style="padding: 12px 14px; border-radius: 16px; background: rgba(229,0,0,0.12); border: 1px solid rgba(229,0,0,0.35); color: #FFC2C2; font-size: 13px; font-weight: 600; line-height: 1.45">{{ scan.msg }}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end">
+<button type="button" onClick="{{ scan.manual }}" style="min-height: 46px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: transparent; color: #D4D4D8; font-size: 14px; font-weight: 600; cursor: pointer">Digitar os dados</button>
+<sc-if value="{{ scan.isVoice }}" hint-placeholder-val="{{ false }}"><button type="button" class="btn" onClick="{{ scan.retry }}" style="display: inline-flex; align-items: center; gap: 8px; position: relative; min-height: 46px; padding: 0 18px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z M19 10v2a7 7 0 0 1-14 0v-2 M12 19v3"></path></svg>Falar de novo</button></sc-if>
+<sc-if value="{{ scan.isPhoto }}" hint-placeholder-val="{{ true }}"><label class="btn" style="display: inline-flex; align-items: center; gap: 8px; position: relative; min-height: 46px; padding: 0 18px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><input type="file" accept="image/*" aria-label="Escolher outra foto do boleto" onChange="{{ capture.onPhoto }}" style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z M12 10a3.5 3.5 0 1 0 0 7a3.5 3.5 0 1 0 0-7z"></path></svg>Outra foto</label></sc-if>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
 </div>
 </template>
 <script>
 class DCLogic { constructor(props){ this.props = props || {}; this.state = {}; } setState(p){ Object.assign(this.state, p); mount(); } }
+
+var BOLETO = (function () {
+  var BANKS = { '001': 'Banco do Brasil', '033': 'Santander', '041': 'Banrisul', '070': 'BRB', '077': 'Inter', '104': 'Caixa', '208': 'BTG Pactual',
+    '212': 'Banco Original', '237': 'Bradesco', '260': 'Nubank', '290': 'PagBank', '323': 'Mercado Pago', '336': 'C6 Bank', '341': 'Itaú',
+    '380': 'PicPay', '389': 'Mercantil', '422': 'Safra', '633': 'Rendimento', '655': 'Votorantim', '745': 'Citibank', '748': 'Sicredi', '756': 'Sicoob' };
+  var SEGMENTS = {
+    '1': { name: 'Taxa da prefeitura', kind: 'Imposto' }, '2': { name: 'Conta de água', kind: 'Conta fixa' },
+    '3': { name: 'Conta de luz', kind: 'Conta fixa' }, '4': { name: 'Telefone e internet', kind: 'Conta fixa' },
+    '5': { name: 'Imposto / guia do governo', kind: 'Imposto' }, '6': { name: 'Carnê', kind: 'Gasto' },
+    '7': { name: 'Multa de trânsito', kind: 'Gasto' }, '9': { name: 'Boleto de convênio', kind: 'Gasto' }
+  };
+  var digits = function (s) { return String(s || '').replace(/\D/g, ''); };
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  var isoOf = function (d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+  var mod10 = function (num) {
+    var sum = 0, w = 2;
+    for (var i = num.length - 1; i >= 0; i--) { var p = +num[i] * w; sum += p > 9 ? Math.floor(p / 10) + (p % 10) : p; w = w === 2 ? 1 : 2; }
+    return (10 - (sum % 10)) % 10;
+  };
+  var mod11 = function (num, bank) {
+    var sum = 0, w = 2;
+    for (var i = num.length - 1; i >= 0; i--) { sum += +num[i] * w; w = w === 9 ? 2 : w + 1; }
+    var r = sum % 11;
+    if (bank) { var dv = 11 - r; return (dv === 0 || dv === 10 || dv === 11) ? 1 : dv; }
+    return (r === 0 || r === 1) ? 0 : 11 - r;
+  };
+  var validBankBarcode = function (bc) { return bc.length === 44 && bc[0] !== '8' && mod11(bc.slice(0, 4) + bc.slice(5), true) === +bc[4]; };
+  var validConvBarcode = function (bc) {
+    if (bc.length !== 44 || bc[0] !== '8') return false;
+    var f = (bc[2] === '7' || bc[2] === '9') ? mod11 : mod10;
+    return f(bc.slice(0, 3) + bc.slice(4)) === +bc[3];
+  };
+  var bankLineToBarcode = function (ld) {
+    return ld.slice(0, 4) + ld.slice(32, 33) + ld.slice(33, 47) + ld.slice(4, 9) + ld.slice(10, 20) + ld.slice(21, 31);
+  };
+  var validBankLine = function (ld) {
+    return ld.length === 47 && mod10(ld.slice(0, 9)) === +ld[9] && mod10(ld.slice(10, 20)) === +ld[20] && mod10(ld.slice(21, 31)) === +ld[31] && validBankBarcode(bankLineToBarcode(ld));
+  };
+  var validConvLine = function (ld) {
+    if (ld.length !== 48 || ld[0] !== '8') return false;
+    var f = (ld[2] === '7' || ld[2] === '9') ? mod11 : mod10;
+    for (var b = 0; b < 4; b++) { var blk = ld.slice(b * 12, b * 12 + 11); if (f(blk) !== +ld[b * 12 + 11]) return false; }
+    return true;
+  };
+  var convLineToBarcode = function (ld) { return ld.slice(0, 11) + ld.slice(12, 23) + ld.slice(24, 35) + ld.slice(36, 47); };
+  var dueFromFactor = function (f) {
+    if (!f) return '';
+    var old = new Date(1997, 9, 7); old.setDate(old.getDate() + f);
+    if (old >= new Date(2023, 0, 1)) return isoOf(old);
+    var nw = new Date(2025, 1, 22); nw.setDate(nw.getDate() + (f - 1000));
+    return isoOf(nw);
+  };
+  var formatLine = function (code) {
+    if (code.length === 47) return code.slice(0, 5) + '.' + code.slice(5, 10) + ' ' + code.slice(10, 15) + '.' + code.slice(15, 21) + ' ' + code.slice(21, 26) + '.' + code.slice(26, 32) + ' ' + code[32] + ' ' + code.slice(33);
+    if (code.length === 48) return code.slice(0, 12) + ' ' + code.slice(12, 24) + ' ' + code.slice(24, 36) + ' ' + code.slice(36);
+    return code;
+  };
+  // code: 44 (código de barras), 47 (linha digitável bancária) ou 48 (convênio / concessionária)
+  var decode = function (raw) {
+    var c = digits(raw), bc, line = c;
+    if (c.length === 47 && validBankLine(c)) bc = bankLineToBarcode(c);
+    else if (c.length === 48 && validConvLine(c)) bc = convLineToBarcode(c);
+    else if (c.length === 44 && (validBankBarcode(c) || validConvBarcode(c))) bc = c;
+    else return null;
+    if (bc[0] === '8') {
+      var seg = SEGMENTS[bc[1]] || { name: 'Conta', kind: 'Conta fixa' };
+      var value = (bc[2] === '6' || bc[2] === '7') ? +bc.slice(4, 15) / 100 : 0;
+      var date = '';
+      var y = +bc.slice(19, 23), m = +bc.slice(23, 25), d = +bc.slice(25, 27);
+      if (y >= 2024 && y <= 2030 && m >= 1 && m <= 12 && d >= 1 && d <= 31) date = y + '-' + pad(m) + '-' + pad(d);
+      return { type: 'convenio', code: line, codeLabel: formatLine(line), name: seg.name, kind: seg.kind, value: value, date: date };
+    }
+    var bank = BANKS[bc.slice(0, 3)];
+    return { type: 'banco', code: line, codeLabel: formatLine(line), name: 'Boleto' + (bank ? ' ' + bank : ''), bank: bank || '', kind: 'Fornecedor',
+      value: +bc.slice(9, 19) / 100, date: dueFromFactor(+bc.slice(5, 9)) };
+  };
+  var findInDigits = function (all) {
+    var sizes = [47, 48, 44];
+    for (var s = 0; s < sizes.length; s++) {
+      for (var i = 0; i + sizes[s] <= all.length; i++) { var r = decode(all.slice(i, i + sizes[s])); if (r) return r; }
+    }
+    return null;
+  };
+  var money = function (s) {
+    s = String(s || '').replace(/[^\d,.]/g, '');
+    if (s.indexOf(',') > -1) s = s.replace(/\./g, '').replace(',', '.');
+    else if (/\.\d{3}$/.test(s)) s = s.replace(/\./g, '');
+    var v = parseFloat(s); return isNaN(v) ? 0 : v;
+  };
+  // texto do OCR: primeiro procura a linha digitável; se não achar, tenta valor, vencimento e beneficiário
+  var fromText = function (text) {
+    var t = String(text || '');
+    var byLine = t.split(/\n/).map(digits).filter(function (x) { return x.length >= 20; });
+    for (var k = 0; k < byLine.length; k++) { var hit = findInDigits(byLine[k]) || (byLine[k + 1] ? findInDigits(byLine[k] + byLine[k + 1]) : null); if (hit) return hit; }
+    var hit2 = findInDigits(digits(t));
+    if (hit2) return hit2;
+    var low = t.toLowerCase();
+    var value = 0, date = '', name = '';
+    var mv = low.match(/valor (?:do )?(?:documento|cobrado|a pagar|total)[^\d]{0,40}([\d\.]+,\d{2})/) || low.match(/r\$\s*([\d\.]+,\d{2})/);
+    if (mv) value = money(mv[1]);
+    var md = low.match(/vencimento[^\d]{0,40}(\d{2})\/(\d{2})\/(\d{4})/) || low.match(/(\d{2})\/(\d{2})\/(20\d{2})/);
+    if (md) date = md[3] + '-' + md[2] + '-' + md[1];
+    var mb = t.match(/benefici[aá]rio[:\s]*([^\n]{3,60})/i);
+    if (mb) name = mb[1].replace(/\s+/g, ' ').replace(/[^\wÀ-ú .&-]/g, '').trim();
+    if (!value && !date) return null;
+    return { type: 'texto', code: '', codeLabel: '', name: name ? 'Boleto ' + name : 'Boleto', kind: 'Fornecedor', value: value, date: date };
+  };
+
+  // ---------- fala ----------
+  var MONTHS = { janeiro: 1, fevereiro: 2, 'março': 3, marco: 3, abril: 4, maio: 5, junho: 6, julho: 7, agosto: 8, setembro: 9, outubro: 10, novembro: 11, dezembro: 12 };
+  var WORDNUM = { um: 1, uma: 1, dois: 2, duas: 2, 'três': 3, tres: 3, quatro: 4, cinco: 5, seis: 6, sete: 7, oito: 8, nove: 9, dez: 10, onze: 11, doze: 12,
+    treze: 13, quatorze: 14, catorze: 14, quinze: 15, dezesseis: 16, dezessete: 17, dezoito: 18, dezenove: 19, vinte: 20, trinta: 30, quarenta: 40,
+    cinquenta: 50, sessenta: 60, setenta: 70, oitenta: 80, noventa: 90, cem: 100, cento: 100, duzentos: 200, trezentos: 300, quatrocentos: 400,
+    quinhentos: 500, seiscentos: 600, setecentos: 700, oitocentos: 800, novecentos: 900 };
+  var wordsToNumbers = function (s) {
+    return s.replace(/\b((?:(?:um|uma|dois|duas|três|tres|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|quatorze|catorze|quinze|dezesseis|dezessete|dezoito|dezenove|vinte|trinta|quarenta|cinquenta|sessenta|setenta|oitenta|noventa|cem|cento|duzentos|trezentos|quatrocentos|quinhentos|seiscentos|setecentos|oitocentos|novecentos|mil)(?:\s+e\s+|\s+|\b))+)/g, function (m) {
+      var total = 0, cur = 0, any = false;
+      m.trim().split(/\s+/).forEach(function (w) {
+        if (w === 'e') return;
+        if (w === 'mil') { total += (cur || 1) * 1000; cur = 0; any = true; return; }
+        if (WORDNUM[w] !== undefined) { cur += WORDNUM[w]; any = true; }
+      });
+      return any ? ' ' + (total + cur) + ' ' : m;
+    });
+  };
+  var KINDS = [
+    { re: /gestor de tr[aá]fego|tr[aá]fego pago|ag[eê]ncia de marketing|marketing/, kind: 'Serviços', name: 'Gestor de tráfego' },
+    { re: /contabilidade|contador|contadora|escrit[oó]rio cont/, kind: 'Serviços', name: 'Contabilidade' },
+    { re: /\bdas\b|simples nacional/, kind: 'Imposto', name: 'DAS — Simples Nacional' },
+    { re: /fgts/, kind: 'Imposto', name: 'FGTS' }, { re: /inss/, kind: 'Imposto', name: 'INSS' },
+    { re: /\biss\b|icms|darf|iptu|ipva|imposto|tributo|taxa/, kind: 'Imposto', name: 'Impostos' },
+    { re: /folha|sal[aá]rio|funcion[aá]ri|vale|adiantamento|pro.?labore/, kind: 'Folha de pagamento', name: 'Folha de pagamento' },
+    { re: /\bluz\b|energia/, kind: 'Conta fixa', name: 'Conta de luz' }, { re: /[aá]gua|esgoto/, kind: 'Conta fixa', name: 'Conta de água' },
+    { re: /internet|telefone|celular/, kind: 'Conta fixa', name: 'Internet e telefone' }, { re: /aluguel/, kind: 'Conta fixa', name: 'Aluguel da loja' },
+    { re: /fornecedor|mercadoria|estoque|pe[cç]as|distribuidora/, kind: 'Fornecedor', name: 'Fornecedor' }
+  ];
+  var cap = function (s) { s = s.trim(); return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; };
+  var parseSpeech = function (text, todayIso) {
+    var raw = String(text || '').trim();
+    var s = ' ' + wordsToNumbers(raw.toLowerCase()) + ' ';
+    var value = 0, m;
+    if ((m = s.match(/r\$\s*([\d\.]+(?:,\d{1,2})?)/))) value = money(m[1]);
+    else if ((m = s.match(/(\d+(?:[.,]\d+)?)\s*mil(?:\s*(?:e\s*)?(\d{1,3}))?\s*(?:reais|real)?/)) && /mil/.test(m[0])) value = money(m[1]) * 1000 + (m[2] ? +m[2] : 0);
+    else if ((m = s.match(/(\d+(?:[.,]\d{1,2})?)\s*(?:reais|real|conto|contos|pila)(?:\s*e\s*(\d{1,2})(?:\s*centavos)?)?/))) value = money(m[1]) + (m[2] ? +m[2] / 100 : 0);
+    else if ((m = s.match(/(?:valor|de|por)\s*(\d+(?:[.,]\d{1,2})?)(?:\s*e\s*(\d{1,2})\b)?/))) value = money(m[1]) + (m[2] ? +m[2] / 100 : 0);
+    var p = todayIso.split('-'); var today = new Date(+p[0], +p[1] - 1, +p[2]);
+    var date = '';
+    if (/depois de amanh/.test(s)) { var d2 = new Date(today); d2.setDate(d2.getDate() + 2); date = isoOf(d2); }
+    else if (/amanh/.test(s)) { var d1 = new Date(today); d1.setDate(d1.getDate() + 1); date = isoOf(d1); }
+    else if (/\bhoje\b/.test(s)) date = todayIso;
+    else if ((m = s.match(/(\d{1,2})\s*\/\s*(\d{1,2})(?:\s*\/\s*(\d{2,4}))?/))) {
+      var yy = m[3] ? (+m[3] < 100 ? 2000 + +m[3] : +m[3]) : today.getFullYear();
+      date = yy + '-' + pad(+m[2]) + '-' + pad(+m[1]);
+    } else if ((m = s.match(/dia\s*(\d{1,2})(?:\s*de\s*([a-zç]+))?/))) {
+      var day = +m[1], mon = m[2] && MONTHS[m[2]] ? MONTHS[m[2]] - 1 : today.getMonth(), yr = today.getFullYear();
+      var cand = new Date(yr, mon, day);
+      if (!(m[2] && MONTHS[m[2]]) && cand < today) cand = new Date(yr, mon + 1, day);
+      else if (cand < today && m[2]) cand = new Date(yr + 1, mon, day);
+      date = isoOf(cand);
+    }
+    var kind = 'Gasto', name = '';
+    for (var i = 0; i < KINDS.length; i++) { if (KINDS[i].re.test(s)) { kind = KINDS[i].kind; name = KINDS[i].name; break; } }
+    if (!name || name === 'Impostos' || name === 'Fornecedor') {
+      var cut = raw.split(/\b(?:de\s+)?(?:r\$|\d|vence|venc|vencimento|para o dia|pro dia|no dia|dia\s+\d|amanh|hoje|valor)/i)[0];
+      cut = cut.replace(/^(?:registr\w*|anot\w*|cadastr\w*|lan[cç]\w*|adicion\w*|pagar|paguei|tenho que pagar|preciso pagar|uma|um|a|o)\s+/i, '').replace(/[,.;:]+$/, '');
+      if (cut.trim().length >= 3) name = cap(cut);
+      else if (!name) name = 'Nova conta';
+    }
+    return { name: name, kind: kind, value: value, date: date };
+  };
+  return { decode: decode, fromText: fromText, parseSpeech: parseSpeech, formatLine: formatLine, digits: digits, mod10: mod10, mod11: mod11 };
+})();
 
 class Component extends DCLogic {
   constructor(props) {
@@ -1110,7 +1358,7 @@ class Component extends DCLogic {
       view: 'overview', theme: theme, period: 'mes', filter: 'todas', salesFilter: 'todas', billFilter: 'todas',
       paid: {}, received: {}, extraSales: [], extraBills: [], extraGoals: [], read: false,
       prefs: { alerts: true, weekly: true, hide: false, round: false },
-      calY: 2026, calM: 10, sel: '2026-11-16', modal: null, lastExport: '',
+      calY: 2026, calM: 10, sel: '2026-11-16', modal: null, lastExport: '', prefill: null, scan: null,
       events: [
         E('e1', 'cliente', '2026-11-12', '10:00', 'Marcos P.', 'Kit 2 vias + tweeters', '(35) 9 9711-2034', 760, true),
         E('e2', 'cliente', '2026-11-13', '15:00', 'Diego R.', 'Subwoofer 12" + caixa', '(35) 9 9845-1120', 1350, true),
@@ -1288,12 +1536,30 @@ class Component extends DCLogic {
       doc: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M9 13h6 M9 17h6',
       fuel: 'M3 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18 M3 22h12 M15 12h2a2 2 0 0 1 2 2v3a2 2 0 0 0 4 0V9l-3-3 M7 7h4',
       tool: 'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z',
-      cart: 'M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L22 7H6 M9 21h.01 M18 21h.01'
+      cart: 'M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L22 7H6 M9 21h.01 M18 21h.01',
+      tax: 'M3 21h18 M5 21V10 M19 21V10 M9 21v-7 M15 21v-7 M12 3 3 8h18z',
+      people: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 3a4 4 0 1 0 0 8a4 4 0 1 0 0-8z M22 21v-2a4 4 0 0 0-3-3.9 M16 3.1a4 4 0 0 1 0 7.8',
+      megaphone: 'M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1z M16 9a4 4 0 0 1 0 6 M19 6a8 8 0 0 1 0 12',
+      calc: 'M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z M8 6h8 M8 11h.01 M12 11h.01 M16 11h.01 M8 15h.01 M12 15h.01 M16 15h.01 M8 18h8'
     };
+    var KIND_META = {
+      'Conta fixa': { fixed: true, group: 'fixas', icon: IC.doc, chip: 'rgba(229,0,0,0.14)', ink: '#FF5C5C' },
+      'Imposto': { fixed: true, group: 'impostos', icon: IC.tax, chip: 'rgba(250,204,21,0.15)', ink: '#FACC15' },
+      'Folha de pagamento': { fixed: true, group: 'impostos', icon: IC.people, chip: 'rgba(96,165,250,0.15)', ink: '#60A5FA' },
+      'Serviços': { fixed: true, group: 'servicos', icon: IC.megaphone, chip: 'rgba(229,0,0,0.14)', ink: '#FF5C5C' },
+      'Fornecedor': { fixed: false, group: 'gastos', icon: IC.box, chip: 'rgba(255,255,255,0.07)', ink: '#D4D4D8' },
+      'Gasto': { fixed: false, group: 'gastos', icon: IC.cart, chip: 'rgba(255,255,255,0.07)', ink: '#D4D4D8' }
+    };
+    var KIND_LIST = ['Conta fixa', 'Imposto', 'Folha de pagamento', 'Serviços', 'Fornecedor', 'Gasto'];
     var billsBase = [
       { id: 'agua', name: 'Conta de água', kind: 'Conta fixa', fixed: true, date: '2026-11-10', v: 186.4, paid: true, icon: IC.water },
       { id: 'aluguel', name: 'Aluguel da loja', kind: 'Conta fixa', fixed: true, date: '2026-11-10', v: 2200, paid: true, icon: IC.home },
-      { id: 'contador', name: 'Contador', kind: 'Conta fixa', fixed: true, date: '2026-11-12', v: 450, paid: true, icon: IC.doc },
+      { id: 'contador', name: 'Contabilidade (honorários)', kind: 'Serviços', fixed: true, date: '2026-11-12', v: 450, paid: true, icon: IC.calc },
+      { id: 'folha', name: 'Folha de pagamento — 2 funcionários', kind: 'Folha de pagamento', fixed: true, date: '2026-11-05', v: 4800, paid: true, icon: IC.people },
+      { id: 'fgts', name: 'FGTS e INSS dos funcionários', kind: 'Imposto', fixed: true, date: '2026-11-07', v: 768, paid: true, icon: IC.tax },
+      { id: 'trafego', name: 'Gestor de tráfego', kind: 'Serviços', fixed: true, date: '2026-11-20', v: 1500, paid: false, icon: IC.megaphone },
+      { id: 'das', name: 'DAS — Simples Nacional', kind: 'Imposto', fixed: true, date: '2026-11-20', v: 1312.8, paid: false, icon: IC.tax },
+      { id: 'vale', name: 'Adiantamento quinzenal (vale)', kind: 'Folha de pagamento', fixed: true, date: '2026-11-20', v: 1920, paid: false, icon: IC.people },
       { id: 'fornpecas', name: 'Fornecedor de alto-falantes', kind: 'Fornecedor', fixed: false, date: '2026-11-14', v: 3480, paid: true, icon: IC.box },
       { id: 'combust', name: 'Combustível', kind: 'Gasto', fixed: false, date: '2026-11-11', v: 280, paid: true, icon: IC.fuel },
       { id: 'internet', name: 'Internet', kind: 'Conta fixa', fixed: true, date: '2026-11-18', v: 129.9, paid: false, icon: IC.net },
@@ -1316,15 +1582,15 @@ class Component extends DCLogic {
         status: isPaid ? 'Pago' : (late ? 'Vencida' : (soon ? 'Vence logo' : 'A vencer')),
         statusBg: isPaid ? 'rgba(34,197,94,0.15)' : (late || soon ? 'rgba(229,0,0,0.16)' : 'rgba(255,255,255,0.08)'),
         statusInk: isPaid ? '#4ADE80' : (late || soon ? '#FF5C5C' : '#D4D4D8'),
-        chip: b.fixed ? 'rgba(229,0,0,0.14)' : 'rgba(255,255,255,0.07)', chipInk: b.fixed ? '#FF5C5C' : '#D4D4D8',
+        chip: (KIND_META[b.kind] || KIND_META['Gasto']).chip, chipInk: (KIND_META[b.kind] || KIND_META['Gasto']).ink, group: (KIND_META[b.kind] || KIND_META['Gasto']).group,
         pay: function () { var np = Object.assign({}, self.state.paid); np[b.id] = true; self.setState({ paid: np }); },
         togglePaid: function () { var np = Object.assign({}, self.state.paid); np[b.id] = !isPaid; self.setState({ paid: np }); }
       };
     });
     var bills = billsAll.filter(function (b) {
-      return bf === 'fixas' ? b.fixed : bf === 'gastos' ? !b.fixed : bf === 'pendentes' ? !b.isPaid : true;
+      return bf === 'pendentes' ? !b.isPaid : bf === 'todas' ? true : b.group === bf;
     }).sort(function (a, b) { return (a.isPaid - b.isPaid) || (a.date < b.date ? -1 : a.date > b.date ? 1 : 0); });
-    var billFilters = [{ id: 'todas', label: 'Todas' }, { id: 'fixas', label: 'Fixas' }, { id: 'gastos', label: 'Gastos e fornecedores' }, { id: 'pendentes', label: 'A pagar' }].map(function (f) {
+    var billFilters = [{ id: 'todas', label: 'Todas' }, { id: 'fixas', label: 'Contas fixas' }, { id: 'impostos', label: 'Impostos e folha' }, { id: 'servicos', label: 'Serviços' }, { id: 'gastos', label: 'Gastos e fornecedores' }, { id: 'pendentes', label: 'A pagar' }].map(function (f) {
       return { label: f.label, active: f.id === bf, inactive: f.id !== bf, pick: function () { self.setState({ billFilter: f.id }); } };
     });
     var billsTotal = billsAll.reduce(function (a, b) { return a + b.v; }, 0);
@@ -1510,8 +1776,9 @@ class Component extends DCLogic {
     var exports = exportDefs.map(function (d) { return { label: d.label, desc: d.desc, run: function () { runExport(d); } }; });
 
     // ---------- formulários (modal) ----------
-    var inp = function (name, label, ph, req, type, mode) { return { name: name, label: label, placeholder: ph, required: !!req, type: type || 'text', inputmode: mode || 'text', isInput: true, isChoice: false }; };
-    var choice = function (name, label, opts) { return { name: name, label: label, isInput: false, isChoice: true, options: opts.map(function (o, i) { return { value: o, label: o, checked: i === 0 }; }) }; };
+    var pf0 = st.prefill || {};
+    var inp = function (name, label, ph, req, type, mode, val) { return { name: name, label: label, placeholder: ph, required: !!req, type: type || 'text', inputmode: mode || 'text', value: val || '', isInput: true, isChoice: false }; };
+    var choice = function (name, label, opts, sel) { var pick = opts.indexOf(sel) > -1 ? sel : opts[0]; return { name: name, label: label, isInput: false, isChoice: true, options: opts.map(function (o) { return { value: o, label: o, checked: o === pick }; }) }; };
     var MODALS = {
       sale: { title: 'Nova venda', sub: 'A venda entra na lista e nos totais na hora.', submitLabel: 'Registrar venda', fields: [
         inp('client', 'Cliente', 'Ex.: João Silva', true), inp('item', 'Produto ou serviço', 'Ex.: Instalação de som', true),
@@ -1523,13 +1790,15 @@ class Component extends DCLogic {
         self.setState({ extraSales: [s].concat(self.state.extraSales), modal: null, salesFilter: 'todas' });
       } },
       bill: { title: 'Nova conta', sub: 'Conta fixa, fornecedor ou gasto do mês.', submitLabel: 'Adicionar conta', fields: [
-        inp('name', 'Descrição', 'Ex.: Conta de água', true), inp('value', 'Valor (R$)', 'Ex.: 189,90', true, 'text', 'decimal'),
-        inp('date', 'Vencimento', '', true, 'date'),
-        choice('kind', 'Tipo', ['Conta fixa', 'Fornecedor', 'Gasto'])
+        inp('name', 'Descrição', 'Ex.: Conta de água, gestor de tráfego, DAS…', true, 'text', 'text', pf0.name),
+        inp('value', 'Valor (R$)', 'Ex.: 189,90', true, 'text', 'decimal', pf0.value ? num(pf0.value) : ''),
+        inp('date', 'Vencimento', '', true, 'date', 'text', pf0.date || ''),
+        choice('kind', 'Tipo', KIND_LIST, pf0.kind)
       ], save: function (fd) {
         var kind = String(fd.get('kind') || 'Conta fixa');
-        var b = { id: 'b' + Date.now(), name: String(fd.get('name')).trim(), kind: kind, fixed: kind === 'Conta fixa', date: String(fd.get('date') || TODAY), v: money(fd.get('value')), paid: false, icon: kind === 'Fornecedor' ? IC.box : kind === 'Gasto' ? IC.cart : IC.doc };
-        self.setState({ extraBills: self.state.extraBills.concat([b]), modal: null, billFilter: 'todas' });
+        var meta = KIND_META[kind] || KIND_META['Gasto'];
+        var b = { id: 'b' + Date.now(), name: String(fd.get('name')).trim(), kind: kind, fixed: meta.fixed, date: String(fd.get('date') || TODAY), v: money(fd.get('value')), paid: false, icon: meta.icon, code: pf0.code || '' };
+        self.setState({ extraBills: self.state.extraBills.concat([b]), modal: null, prefill: null, billFilter: 'todas' });
       } },
       goal: { title: 'Nova meta', sub: 'Defina o objetivo e quanto já tem guardado.', submitLabel: 'Criar meta', fields: [
         inp('name', 'Nome da meta', 'Ex.: Novo letreiro da loja', true), inp('target', 'Valor da meta (R$)', 'Ex.: 8.000,00', true, 'text', 'decimal'),
@@ -1542,7 +1811,10 @@ class Component extends DCLogic {
     };
     var M = st.modal ? MODALS[st.modal] : null;
     var modal = { open: !!M, title: M ? M.title : '', sub: M ? M.sub : '', submitLabel: M ? M.submitLabel : '', fields: M ? M.fields : [],
-      close: function () { self.setState({ modal: null }); },
+      hasNote: !!(M && st.modal === 'bill' && pf0.source),
+      note: pf0.source === 'photo' ? (pf0.codeLabel ? 'Dados lidos do boleto. Confira antes de salvar.' : 'Li o texto do boleto, mas não achei o código. Confira os dados.') : pf0.source === 'voice' ? 'Você disse: “' + (pf0.heard || '') + '”' : '',
+      noteCode: pf0.codeLabel || '', hasCode: !!pf0.codeLabel,
+      close: function () { self.setState({ modal: null, prefill: null }); },
       submit: function (ev) { if (ev && ev.preventDefault) ev.preventDefault(); if (!M) return; M.save(new FormData(ev.currentTarget || ev.target)); } };
 
     // ---------- abas ----------
@@ -1617,7 +1889,176 @@ class Component extends DCLogic {
         pick: function () { try { window.localStorage.setItem('artsom-theme', t.id); } catch (e) {} self.setState({ theme: t.id }); } };
     });
 
+    // ---------- registrar por foto e por voz ----------
+    var sc = st.scan;
+    var setScan = function (patch) { self.setState({ scan: Object.assign({}, self.state.scan || {}, patch) }); };
+    var finishCapture = function (info, source, extra) {
+      var cur = self.state.scan;
+      if (cur && cur.img) { try { URL.revokeObjectURL(cur.img); } catch (e) {} }
+      self.setState({ scan: null, view: 'bills', modal: 'bill', prefill: Object.assign({ source: source }, info || {}, extra || {}) });
+    };
+    var loadScript = function (key, url) {
+      if (window[key]) return Promise.resolve(window[key]);
+      return new Promise(function (resolve, reject) {
+        var sTag = document.createElement('script');
+        sTag.src = url;
+        sTag.onload = function () { window[key] ? resolve(window[key]) : reject(new Error('lib')); };
+        sTag.onerror = reject;
+        document.head.appendChild(sTag);
+      });
+    };
+    var CFG = window.ARTSOM_TESS || {};
+    var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+    var loadImg = function (url) { return new Promise(function (res, rej) { var im = new Image(); im.onload = function () { res(im); }; im.onerror = rej; im.src = url; }); };
+    var drawRotated = function (img, maxW, ang, filter) {
+      var k = Math.min(1, maxW / Math.max(img.naturalWidth, img.naturalHeight));
+      var sw = img.naturalWidth * k, sh = img.naturalHeight * k, rad = ang * Math.PI / 180;
+      var W = Math.round(Math.abs(sw * Math.cos(rad)) + Math.abs(sh * Math.sin(rad))), H = Math.round(Math.abs(sw * Math.sin(rad)) + Math.abs(sh * Math.cos(rad)));
+      var c = document.createElement('canvas'); c.width = W; c.height = H;
+      var g = c.getContext('2d'); g.fillStyle = '#FFFFFF'; g.fillRect(0, 0, W, H);
+      g.translate(W / 2, H / 2); g.rotate(rad); if (filter) g.filter = filter; g.drawImage(img, -sw / 2, -sh / 2, sw, sh);
+      return c;
+    };
+    var band = function (c, y0, hh) {
+      var b = document.createElement('canvas'); b.width = c.width; b.height = Math.round(c.height * hh);
+      b.getContext('2d').drawImage(c, 0, Math.round(c.height * y0), c.width, b.height, 0, 0, c.width, b.height);
+      return b;
+    };
+    // 1) leitor nativo do celular (Android/Chrome)
+    var tryNative = function (img) {
+      if (!('BarcodeDetector' in window)) return Promise.resolve(null);
+      return window.BarcodeDetector.getSupportedFormats().then(function (fmts) {
+        if (fmts.indexOf('itf') < 0) return null;
+        return new window.BarcodeDetector({ formats: ['itf'] }).detect(img).then(function (found) {
+          for (var i = 0; i < found.length; i++) { var r = BOLETO.decode(found[i].rawValue); if (r) return r; }
+          return null;
+        });
+      }).catch(function () { return null; });
+    };
+    // 2) decodifica as barras (padrão ITF do boleto) girando e recortando a foto
+    var tryZxing = function (img, onStep) {
+      return loadScript('ZXing', CFG.zxingPath || 'https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js').then(function (Z) {
+        var hints = new Map();
+        hints.set(Z.DecodeHintType.POSSIBLE_FORMATS, [Z.BarcodeFormat.ITF]);
+        hints.set(Z.DecodeHintType.TRY_HARDER, true);
+        var reader = new Z.MultiFormatReader(); reader.setHints(hints);
+        var angles = [0, -2.5, 2.5, -5, 5, 90, -90];
+        var bands = [[0, 1], [0.5, 0.5], [0.55, 0.45], [0.35, 0.4], [0, 0.5], [0.25, 0.5]];
+        var step = function (i) {
+          if (i >= angles.length) return Promise.resolve(null);
+          onStep(i / angles.length);
+          return wait(16).then(function () {
+            var c = drawRotated(img, 3000, angles[i], 'grayscale(1) contrast(1.6)');
+            for (var j = 0; j < bands.length; j++) {
+              var bc = band(c, bands[j][0], bands[j][1]);
+              var bins = [Z.HybridBinarizer, Z.GlobalHistogramBinarizer];
+              for (var k = 0; k < bins.length; k++) {
+                try {
+                  var res = reader.decode(new Z.BinaryBitmap(new bins[k](new Z.HTMLCanvasElementLuminanceSource(bc))));
+                  var hit = BOLETO.decode(res.getText());
+                  if (hit) return hit;
+                } catch (e) {}
+              }
+            }
+            return step(i + 1);
+          });
+        };
+        return step(0);
+      }).catch(function () { return null; });
+    };
+    // 3) lê o texto do boleto (linha digitável, valor, vencimento, beneficiário)
+    var tryOcr = function (img, onProgress) {
+      return loadScript('Tesseract', CFG.scriptPath || 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js').then(function (T) {
+        var opts = { logger: function (m) { if (m.status === 'recognizing text') onProgress(m.progress); } };
+        ['workerPath', 'corePath', 'langPath'].forEach(function (k) { if (CFG[k]) opts[k] = CFG[k]; });
+        return T.createWorker('por', 1, opts).then(function (worker) {
+          var full = drawRotated(img, 2200, 0, 'grayscale(1) contrast(1.35)');
+          var passes = [[full, '3'], [full, '11'], [band(full, 0, 0.5), '6'], [band(full, 0.4, 0.6), '6']];
+          var best = null;
+          var run = function (i) {
+            if (i >= passes.length) return Promise.resolve(best);
+            return worker.setParameters({ tessedit_pageseg_mode: passes[i][1] }).then(function () { return worker.recognize(passes[i][0]); }).then(function (out) {
+              var info = BOLETO.fromText(out && out.data ? out.data.text : '');
+              if (info && info.code) return info;
+              if (info && !best) best = info;
+              return run(i + 1);
+            });
+          };
+          return run(0).then(function (r) { worker.terminate(); return r; }, function (e) { worker.terminate(); throw e; });
+        });
+      });
+    };
+    var processPhoto = function (file) {
+      if (!file) return;
+      var url = URL.createObjectURL(file);
+      var last = -10;
+      var prog = function (pr, msg) { pr = Math.round(pr); if (pr - last >= 3 || msg) { last = pr; setScan({ progress: pr, msg: msg || self.state.scan && self.state.scan.msg }); } };
+      self.setState({ scan: { kind: 'photo', status: 'reading', img: url, progress: 4, msg: 'Procurando o código de barras…' } });
+      var fail = function (msg) { setScan({ status: 'error', msg: msg }); };
+      loadImg(url).then(function (img) {
+        return tryNative(img).then(function (hit) {
+          if (hit) return hit;
+          return tryZxing(img, function (f) { prog(6 + f * 30, 'Lendo as barras do boleto…'); });
+        }).then(function (hit) {
+          if (hit) return hit;
+          prog(38, 'Lendo o texto do boleto (a primeira vez demora um pouco)…');
+          return tryOcr(img, function (f) { prog(40 + f * 58); });
+        });
+      }).then(function (info) {
+        if (!self.state.scan) return;
+        if (info) finishCapture(info, 'photo');
+        else fail('Não consegui ler esse boleto. Tente outra foto bem iluminada, com o código de barras inteiro e reto, ou digite os dados.');
+      }).catch(function () { if (self.state.scan) fail('Não foi possível ler a imagem agora. Confira a internet e tente de novo, ou digite os dados.'); });
+    };
+    var startVoice = function () {
+      var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SR) { self.setState({ scan: { kind: 'voice', status: 'error', transcript: '', msg: 'Este navegador não tem ditado por voz. No celular use o Chrome (Android) ou o Safari (iPhone); no computador, o Chrome.' } }); return; }
+      try { if (self._rec) self._rec.abort(); } catch (e) {}
+      var rec = new SR();
+      rec.lang = 'pt-BR'; rec.interimResults = true; rec.continuous = false; rec.maxAlternatives = 1;
+      var finalText = '';
+      self._recErr = null;
+      rec.onresult = function (ev) {
+        var interim = '';
+        for (var i = ev.resultIndex; i < ev.results.length; i++) { var r = ev.results[i]; if (r.isFinal) finalText += r[0].transcript + ' '; else interim += r[0].transcript; }
+        setScan({ transcript: (finalText + interim).trim() });
+      };
+      rec.onerror = function (ev) { self._recErr = ev.error; };
+      rec.onend = function () {
+        var cur = self.state.scan;
+        if (!cur || cur.kind !== 'voice') return;
+        var heard = (cur.transcript || finalText).trim();
+        if (!heard) {
+          setScan({ status: 'error', msg: self._recErr === 'not-allowed' || self._recErr === 'service-not-allowed' ? 'O microfone está bloqueado. Permita o microfone para este site e tente de novo.' : 'Não ouvi nada. Toque em "Falar de novo" e diga, por exemplo: “conta de luz, 287 reais e 40, vence dia 25”.' });
+          return;
+        }
+        finishCapture(BOLETO.parseSpeech(heard, TODAY), 'voice', { heard: heard });
+      };
+      self._rec = rec;
+      self.setState({ scan: { kind: 'voice', status: 'listening', transcript: '' } });
+      try { rec.start(); } catch (e) { setScan({ status: 'error', msg: 'Não deu para usar o microfone agora. Tente de novo.' }); }
+    };
+    var capture = {
+      onPhoto: function (ev) { var inpEl = ev.currentTarget || ev.target; var f = inpEl.files && inpEl.files[0]; processPhoto(f); try { inpEl.value = ''; } catch (e) {} },
+      voice: startVoice,
+      manual: function () { self.setState({ scan: null, view: 'bills', modal: 'bill', prefill: null }); }
+    };
+    var scan = {
+      open: !!sc, isPhoto: !!sc && sc.kind === 'photo', isVoice: !!sc && sc.kind === 'voice',
+      reading: !!sc && sc.status === 'reading', listening: !!sc && sc.status === 'listening', isError: !!sc && sc.status === 'error',
+      title: sc && sc.kind === 'voice' ? 'Registrar falando' : 'Foto do boleto',
+      sub: sc && sc.kind === 'voice' ? 'Diga o que é, o valor e quando vence.' : 'Lendo o código de barras e os dados do boleto.',
+      img: sc && sc.img ? sc.img : '', progress: sc && sc.progress ? sc.progress : 0, msg: sc && sc.msg ? sc.msg : '',
+      transcript: sc && sc.transcript ? sc.transcript : '', hasTranscript: !!(sc && sc.transcript), noTranscript: !(sc && sc.transcript),
+      stop: function () { try { self._rec && self._rec.stop(); } catch (e) {} },
+      retry: function () { if (sc && sc.kind === 'voice') startVoice(); else self.setState({ scan: null }); },
+      retryLabel: sc && sc.kind === 'voice' ? 'Falar de novo' : 'Escolher outra foto',
+      cancel: function () { try { self._rec && self._rec.abort(); } catch (e) {} var cur = self.state.scan; if (cur && cur.img) { try { URL.revokeObjectURL(cur.img); } catch (e) {} } self.setState({ scan: null }); },
+      manual: capture.manual
+    };
+
     return {
+      capture: capture, scan: scan,
       themeClass: st.theme === 'light' ? 'theme-light' : 'theme-dark',
       bars: bars, periods: periods, inTotal: brl(inSum), outTotal: brl(outSum),
       chartLabel: 'Gráfico de barras de entradas e saídas, ' + (period === 'mes' ? 'últimos 6 meses' : 'esta semana'),
