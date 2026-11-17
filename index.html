@@ -141,6 +141,36 @@ input{color-scheme:dark}
 .mic-orb::after{animation-delay:.9s}
 @keyframes ring{from{transform:scale(1);opacity:.9}to{transform:scale(1.9);opacity:0}}
 @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+/* ---------- assistente de voz ---------- */
+.fab-mic{position:fixed;right:24px;bottom:24px;z-index:190;width:64px;height:64px;border-radius:50%;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 35% 30%,#FF5C5C,#E50000 55%,#8B0000);box-shadow:0 16px 36px -10px rgba(229,0,0,0.85),0 0 0 1px rgba(255,255,255,0.12) inset;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s ease}
+.fab-mic.anim-in{animation:fabIn .6s cubic-bezier(.34,1.56,.64,1) .4s both}
+.fab-mic::before{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(255,46,46,0.45);animation:ring 2.6s ease-out infinite}
+.fab-mic:hover{transform:scale(1.08) translateY(-2px);box-shadow:0 22px 44px -10px rgba(229,0,0,0.95)}
+.fab-mic:active{transform:scale(.94)}
+.fab-mic.is-open{background:radial-gradient(circle at 35% 30%,#3F3F46,#18181B 70%);box-shadow:0 16px 36px -10px rgba(0,0,0,0.8),0 0 0 1px rgba(255,255,255,0.14) inset}
+.fab-mic.is-open::before{border-color:rgba(255,255,255,0.18);animation:none;opacity:0}
+.fab-mic.is-listening{animation:breathe 1.2s ease-in-out infinite}
+.fab-mic.is-listening::before,.fab-mic.is-listening::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,46,46,0.7);animation:ring 1.4s ease-out infinite}
+.fab-mic.is-listening::after{animation-delay:.7s}
+@keyframes fabIn{from{opacity:0;transform:scale(.4) translateY(30px)}to{opacity:1;transform:none}}
+.assist-panel{position:fixed;right:24px;bottom:100px;z-index:189;width:min(400px,calc(100vw - 32px));max-height:calc(100vh - 140px);overflow:auto;box-sizing:border-box;padding:18px;border-radius:26px;background:rgba(20,20,22,0.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);box-shadow:0 40px 80px -30px rgba(0,0,0,0.9),0 0 60px -20px rgba(229,0,0,0.4);display:flex;flex-direction:column;gap:14px;transform-origin:bottom right}
+.assist-panel.anim-in{animation:panelIn .45s cubic-bezier(.22,1,.36,1) both}
+@keyframes panelIn{from{opacity:0;transform:translateY(18px) scale(.92);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0px)}}
+.assist-panel .mic-orb{width:84px;height:84px}
+.assist-reply.anim-in{animation:rise .5s cubic-bezier(.22,1,.36,1) both}
+.assist-chip{transition:background .2s ease,border-color .2s ease,transform .2s ease}
+.assist-chip:hover{background:rgba(229,0,0,0.14) !important;border-color:rgba(229,0,0,0.45) !important;transform:translateY(-2px)}
+.wave{display:flex;align-items:center;gap:4px;height:26px}
+.wave i{display:block;width:4px;height:8px;border-radius:4px;background:#FF2E2E;animation:wave 1s ease-in-out infinite}
+.wave i:nth-child(2){animation-delay:.1s}.wave i:nth-child(3){animation-delay:.2s}.wave i:nth-child(4){animation-delay:.3s}.wave i:nth-child(5){animation-delay:.4s}.wave i:nth-child(6){animation-delay:.5s}.wave i:nth-child(7){animation-delay:.6s}
+@keyframes wave{0%,100%{height:6px;opacity:.5}50%{height:26px;opacity:1}}
+.theme-light .assist-panel{background:rgba(255,255,255,0.97);border-color:rgba(24,24,27,0.08);box-shadow:0 40px 80px -30px rgba(24,24,27,0.45)}
+@media (max-width: 860px){
+.fab-mic{right:16px;bottom:calc(88px + env(safe-area-inset-bottom));width:58px;height:58px}
+.assist-panel{right:12px;left:12px;width:auto;bottom:calc(156px + env(safe-area-inset-bottom));max-height:calc(100vh - 200px)}
+}
+@media (prefers-reduced-motion: reduce){.fab-mic,.fab-mic::before,.fab-mic::after,.assist-panel,.wave i{animation:none !important}}
 /* ---------- celular e tablet ---------- */
 @media (max-width: 860px){
 .app-root{padding:16px 12px 104px !important}
@@ -1123,6 +1153,65 @@ html.intro body{overflow:hidden}
 </form>
 </div>
 </sc-if>
+<button class="{{ assist.fabClass }}" onClick="{{ assist.toggle }}" aria-label="{{ assist.fabLabel }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z M19 10v2a7 7 0 0 1-14 0v-2 M12 19v3"></path></svg></button>
+<sc-if value="{{ assist.open }}" hint-placeholder-val="{{ false }}">
+<section class="{{ assist.panelClass }}" role="dialog" aria-label="Assistente de voz">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="width: 36px; height: 36px; border-radius: 12px; background: linear-gradient(135deg, #FF2E2E, #8B0000); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px -8px rgba(229,0,0,0.8)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z M19 10v2a7 7 0 0 1-14 0v-2 M12 19v3"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 1px">
+<span style="font-size: 16px; font-weight: 800">Assistente ArtSom</span>
+<span style="font-size: 12px; color: #A1A1AA">{{ assist.statusText }}</span>
+</div>
+</div>
+<div style="display: flex; gap: 6px">
+<button type="button" class="icon-btn" onClick="{{ assist.toggleVoice }}" aria-label="{{ assist.voiceLabel }}" title="{{ assist.voiceLabel }}" style="width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #D4D4D8; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<sc-if value="{{ assist.voiceOn }}" hint-placeholder-val="{{ true }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z M15.5 8.5a5 5 0 0 1 0 7 M19 5a10 10 0 0 1 0 14"></path></svg></sc-if><sc-if value="{{ assist.voiceOff }}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z M22 9l-6 6 M16 9l6 6"></path></svg></sc-if>
+</button>
+<button type="button" class="icon-btn" onClick="{{ assist.close }}" aria-label="Fechar assistente" style="width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #D4D4D8; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18 M6 6l12 12"></path></svg></button>
+</div>
+</div>
+<sc-if value="{{ assist.listening }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 6px 0 2px">
+<button class="mic-orb" onClick="{{ assist.mic }}" aria-label="Parar de ouvir"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z M19 10v2a7 7 0 0 1-14 0v-2 M12 19v3"></path></svg></button>
+<div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</div>
+<div role="status" style="min-height: 52px; box-sizing: border-box; padding: 12px 14px; border-radius: 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); font-size: 15px; line-height: 1.45">
+<sc-if value="{{ assist.hasTranscript }}" hint-placeholder-val="{{ false }}"><span style="color: #FAFAFA">“{{ assist.transcript }}”</span></sc-if>
+<sc-if value="{{ assist.noTranscript }}" hint-placeholder-val="{{ true }}"><span style="color: #8B8B94">Fale o que quer fazer… quando terminar, é só parar de falar.</span></sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ assist.hasHeard }}" hint-placeholder-val="{{ false }}">
+<div style="align-self: flex-end; max-width: 88%; padding: 10px 14px; border-radius: 18px 18px 4px 18px; background: rgba(255,255,255,0.07); color: #FAFAFA; font-size: 14px; line-height: 1.4">{{ assist.heard }}</div>
+</sc-if>
+<sc-if value="{{ assist.done }}" hint-placeholder-val="{{ false }}">
+<div role="status" class="{{ assist.replyClass }}" style="display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 18px 18px 18px 4px; background: rgba(34,197,94,0.1); border: 1px solid rgba(74,222,128,0.3); color: #4ADE80; font-size: 14px; font-weight: 600; line-height: 1.45">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M20 6 9 17l-5-5"></path></svg>
+<span>{{ assist.message }}</span>
+</div>
+</sc-if>
+<sc-if value="{{ assist.isError }}" hint-placeholder-val="{{ false }}">
+<div role="alert" class="{{ assist.replyClass }}" style="padding: 12px 14px; border-radius: 18px 18px 18px 4px; background: rgba(229,0,0,0.12); border: 1px solid rgba(229,0,0,0.35); color: #FFC2C2; font-size: 14px; font-weight: 600; line-height: 1.45">{{ assist.message }}</div>
+</sc-if>
+<sc-if value="{{ assist.notListening }}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button class="btn" onClick="{{ assist.mic }}" style="flex: 1 1 auto; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 18px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z M19 10v2a7 7 0 0 1-14 0v-2 M12 19v3"></path></svg>Falar</button>
+<sc-if value="{{ assist.undoable }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ assist.undo }}" style="min-height: 46px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: transparent; color: #D4D4D8; font-size: 14px; font-weight: 600; cursor: pointer">Desfazer</button></sc-if>
+</div>
+</sc-if>
+<form onSubmit="{{ assist.submit }}" style="display: flex; gap: 8px">
+<label style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)" for="assist-cmd">Digite um comando</label>
+<input id="assist-cmd" name="cmd" type="text" autocomplete="off" placeholder="Ou digite: registrar conta 130 dia 20" style="flex: 1; min-width: 0; height: 44px; padding: 0 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #FAFAFA; font: inherit; font-size: 14px; outline: none">
+<button type="submit" class="icon-btn" aria-label="Enviar comando" style="width: 44px; height: 44px; flex: none; border-radius: 50%; border: 0; background: #E50000; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14 M13 6l6 6-6 6"></path></svg></button>
+</form>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #8B8B94">Experimente dizer</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{ assist.examples }}" as="x" hint-placeholder-count="4"><button type="button" class="assist-chip" onClick="{{ x.run }}" style="padding: 7px 11px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: #D4D4D8; font-size: 12px; font-weight: 600; cursor: pointer; text-align: left">“{{ x.label }}”</button></sc-for>
+</div>
+</div>
+</section>
+</sc-if>
 <sc-if value="{{ scan.open }}" hint-placeholder-val="{{ false }}">
 <div style="position: fixed; inset: 0; z-index: 210; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box">
 <div class="modal-backdrop" onClick="{{ scan.cancel }}" style="position: absolute; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px)"></div>
@@ -1289,6 +1378,8 @@ var BOLETO = (function () {
     quinhentos: 500, seiscentos: 600, setecentos: 700, oitocentos: 800, novecentos: 900 };
   var wordsToNumbers = function (s) {
     return s.replace(/\b((?:(?:um|uma|dois|duas|três|tres|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|quatorze|catorze|quinze|dezesseis|dezessete|dezoito|dezenove|vinte|trinta|quarenta|cinquenta|sessenta|setenta|oitenta|noventa|cem|cento|duzentos|trezentos|quatrocentos|quinhentos|seiscentos|setecentos|oitocentos|novecentos|mil)(?:\s+e\s+|\s+|\b))+)/g, function (m) {
+      var ws = m.trim().split(/\s+/).filter(function (w) { return w !== 'e'; });
+      if (ws.length === 1 && (ws[0] === 'um' || ws[0] === 'uma' || ws[0] === 'mil')) return m;
       var total = 0, cur = 0, any = false;
       m.trim().split(/\s+/).forEach(function (w) {
         if (w === 'e') return;
@@ -1343,7 +1434,205 @@ var BOLETO = (function () {
     }
     return { name: name, kind: kind, value: value, date: date };
   };
-  return { decode: decode, fromText: fromText, parseSpeech: parseSpeech, formatLine: formatLine, digits: digits, mod10: mod10, mod11: mod11 };
+  return { decode: decode, fromText: fromText, parseSpeech: parseSpeech, words: wordsToNumbers, formatLine: formatLine, digits: digits, mod10: mod10, mod11: mod11 };
+})();
+
+var ASSIST = (function () {
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  var isoOf = function (d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+  var norm = function (s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); };
+  var cap = function (s) { s = String(s || '').trim(); return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; };
+  var MONTHS = { janeiro: 0, fevereiro: 1, marco: 2, abril: 3, maio: 4, junho: 5, julho: 6, agosto: 7, setembro: 8, outubro: 9, novembro: 10, dezembro: 11 };
+  var WEEK = { domingo: 0, segunda: 1, terca: 2, quarta: 3, quinta: 4, sexta: 5, sabado: 6 };
+  var money = function (s) {
+    s = String(s || '').replace(/[^\d,.]/g, '');
+    if (s.indexOf(',') > -1) s = s.replace(/\./g, '').replace(',', '.');
+    else if (/\.\d{3}$/.test(s)) s = s.replace(/\./g, '');
+    var v = parseFloat(s); return isNaN(v) ? 0 : v;
+  };
+  // tudo trabalha sobre texto normalizado (sem acento, minúsculo); cada extração devolve o texto sem o trecho achado
+  var takeDate = function (s, todayIso) {
+    var p = todayIso.split('-'); var today = new Date(+p[0], +p[1] - 1, +p[2]);
+    var m, d;
+    var add = function (n) { var x = new Date(today); x.setDate(x.getDate() + n); return isoOf(x); };
+    if ((m = s.match(/\bdepois de amanha\b/))) return { date: add(2), rest: s.replace(m[0], ' ') };
+    if ((m = s.match(/\bamanha\b/))) return { date: add(1), rest: s.replace(m[0], ' ') };
+    if ((m = s.match(/\bhoje\b/))) return { date: todayIso, rest: s.replace(m[0], ' ') };
+    if ((m = s.match(/\b(?:dia\s+)?(\d{1,2})\s*\/\s*(\d{1,2})(?:\s*\/\s*(\d{2,4}))?\b/))) {
+      var yy = m[3] ? (+m[3] < 100 ? 2000 + +m[3] : +m[3]) : today.getFullYear();
+      d = new Date(yy, +m[2] - 1, +m[1]); if (!m[3] && d < today) d = new Date(yy + 1, +m[2] - 1, +m[1]);
+      return { date: isoOf(d), rest: s.replace(m[0], ' ') };
+    }
+    if ((m = s.match(/\b(?:no |para o |pro |ate o |ate )?dia\s+(\d{1,2})(?:\s+de\s+(janeiro|fevereiro|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro))?\b/))) {
+      var day = +m[1];
+      if (day >= 1 && day <= 31) {
+        if (m[2]) { d = new Date(today.getFullYear(), MONTHS[m[2]], day); if (d < today) d = new Date(today.getFullYear() + 1, MONTHS[m[2]], day); }
+        else { d = new Date(today.getFullYear(), today.getMonth(), day); if (d < today) d = new Date(today.getFullYear(), today.getMonth() + 1, day); }
+        return { date: isoOf(d), rest: s.replace(m[0], ' ') };
+      }
+    }
+    if ((m = s.match(/\b(?:na |no |nesta |neste |proxima |proximo )?(domingo|segunda|terca|quarta|quinta|sexta|sabado)(?:-feira| feira)?\b/))) {
+      var diff = (WEEK[m[1]] - today.getDay() + 7) % 7 || 7;
+      return { date: add(diff), rest: s.replace(m[0], ' ') };
+    }
+    return { date: '', rest: s };
+  };
+  var takeTime = function (s) {
+    var m;
+    if ((m = s.match(/\b(?:as |a partir das |para as |pras )?meio[- ]dia(?: e meia)?\b/))) return { time: /meia/.test(m[0]) ? '12:30' : '12:00', rest: s.replace(m[0], ' ') };
+    if ((m = s.match(/\b(?:as |a partir das |para as |pras |de )?(\d{1,2})(?:\s*(?::|h)\s*(\d{2}))?\s*(?:h|hs|horas?)?(?:\s+e\s+(meia|\d{1,2}))?\s+da\s+(manha|tarde|noite)\b/))) {
+      var h = +m[1], mi = m[2] ? +m[2] : (m[3] === 'meia' ? 30 : m[3] ? +m[3] : 0);
+      if ((m[4] === 'tarde' || m[4] === 'noite') && h < 12) h += 12;
+      return { time: pad(h) + ':' + pad(mi), rest: s.replace(m[0], ' ') };
+    }
+    if ((m = s.match(/\b(?:as |pras |para as )?(\d{1,2})\s*:\s*(\d{2})\b/)) || (m = s.match(/\b(?:as |pras |para as )?(\d{1,2})\s*h\s*(\d{2})?\b/)) || (m = s.match(/\b(?:as |pras |para as )?(\d{1,2})\s*horas?(?:\s+e\s+(meia|\d{1,2}))?\b/)) || (m = s.match(/\b(?:as|pras|para as)\s+(\d{1,2})(?:\s+e\s+(meia|\d{1,2}))?\b/))) {
+      var hh = +m[1], mm = m[2] === 'meia' ? 30 : m[2] ? +m[2] : 0;
+      if (hh <= 23 && mm <= 59) return { time: pad(hh) + ':' + pad(mm), rest: s.replace(m[0], ' ') };
+    }
+    return { time: '', rest: s };
+  };
+  var takeValue = function (s) {
+    var m;
+    if ((m = s.match(/r\$\s*([\d\.]+(?:,\d{1,2})?)/))) return { value: money(m[1]), rest: s.replace(m[0], ' ') };
+    if ((m = s.match(/\b(\d+(?:[.,]\d+)?)\s*mil(?:\s+e\s+(\d{1,3}))?(?:\s*(?:reais|real|conto|contos))?\b/))) return { value: money(m[1]) * 1000 + (m[2] ? +m[2] : 0), rest: s.replace(m[0], ' ') };
+    if ((m = s.match(/\b(\d+(?:[.,]\d{1,2})?)\s*(?:reais|real|conto|contos|pila)(?:\s+e\s+(\d{1,2})(?:\s*centavos?)?)?\b/))) return { value: money(m[1]) + (m[2] ? +m[2] / 100 : 0), rest: s.replace(m[0], ' ') };
+    if ((m = s.match(/\b(?:valor(?: de)?|de|por|no valor de)\s+(\d+(?:[.,]\d{1,2})?)(?:\s+e\s+(\d{1,2})\b)?/))) return { value: money(m[1]) + (m[2] ? +m[2] / 100 : 0), rest: s.replace(m[0], ' ') };
+    if ((m = s.match(/\b(\d+(?:[.,]\d{1,2})?)\b/))) return { value: money(m[1]), rest: s.replace(m[0], ' ') };
+    return { value: 0, rest: s };
+  };
+  var clean = function (s) { return s.replace(/\s+/g, ' ').replace(/^[\s,.;:-]+|[\s,.;:-]+$/g, '').trim(); };
+  var stripWords = function (s, words) { return clean((' ' + s + ' ').replace(new RegExp('\\s(?:' + words.join('|') + ')(?=\\s)', 'g'), ' ')); };
+  var FILLER = ['as', 'registrar', 'registra', 'registre', 'anotar', 'anota', 'anote', 'adicionar', 'adiciona', 'adicione', 'cadastrar', 'cadastra', 'lancar', 'lanca', 'criar', 'cria', 'crie', 'colocar', 'coloca', 'coloque', 'novo', 'nova', 'um', 'uma', 'por favor', 'ai', 'e', 'pra mim', 'para mim'];
+  var SERVICE = /(instalacao|instalar|som|alto|alto[- ]?falantes?|falantes?|multimidia|central|camera|alarme|trava|modulo|amplificador|subwoofer|sub|caixa|insulfilm|pelicula|revisao|orcamento|tweeters?|kit|radio|sensor|led|farol|manutencao|conserto|troca|reparo|bateria|antena)/;
+  var METHODS = [['pix', 'Pix'], ['debito', 'Débito'], ['credito', 'Crédito'], ['cartao', 'Crédito'], ['dinheiro', 'Dinheiro'], ['especie', 'Dinheiro'], ['boleto', 'Boleto']];
+
+  // separa "nome do cliente" e "serviço" do que sobrou da frase
+  var splitPerson = function (rest, original) {
+    var r = ' ' + rest + ' ', name = '', service = '', m;
+    if ((m = r.match(/\s(?:com o|com a|com|cliente|para o|para a|para|pro|pra|do|da)\s+([a-z]+(?:\s+(?!(?:para|pra|fazer|servico|de|do|da|no|na|as)\b)[a-z]+)?)\b/))) {
+      var cand = m[1].trim().split(' ');
+      var keep = [];
+      for (var i = 0; i < cand.length && keep.length < 2; i++) { if (SERVICE.test(cand[i])) break; keep.push(cand[i]); }
+      if (keep.length) { name = keep.join(' '); r = r.replace(m[0], ' ' + cand.slice(keep.length).join(' ') + ' '); }
+    }
+    r = clean(r.replace(/\b(?:servico|para fazer|fazer|vai fazer|referente a|referente|sobre)\b/g, ' ')).replace(/^(?:(?:o|a|os|as|pro|pra|para)\s+)+/, '');
+    if (!name) {
+      var words = r.split(' ').filter(Boolean);
+      var si = -1; for (var j = 0; j < words.length; j++) { if (SERVICE.test(words[j])) { si = j; break; } }
+      if (si > 0) { name = words.slice(0, Math.min(si, 2)).join(' '); service = words.slice(si).join(' '); }
+      else if (si === 0) { service = words.join(' '); }
+      else { name = words.slice(0, 2).join(' '); service = words.slice(2).join(' '); }
+    } else service = r;
+    service = clean(service.replace(/\s+-\s*/g, '-').replace(/^(?:de|da|do|para|pra|a|o)\s+/, ''));
+    // recupera maiúsculas/acentos do texto original quando possível
+    var restore = function (txt) {
+      if (!txt) return txt;
+      var words = String(original).split(/\s+/);
+      return txt.split(' ').map(function (w) {
+        for (var k = 0; k < words.length; k++) { if (norm(words[k]).replace(/[^a-z0-9]/g, '') === w.replace(/[^a-z0-9]/g, '')) return words[k].replace(/[,.;:!?]+$/, ''); }
+        return w;
+      }).join(' ');
+    };
+    name = restore(name); service = restore(service);
+    return { name: name ? name.split(' ').map(cap).join(' ') : '', service: cap(service) };
+  };
+
+  var restoreWords = function (txt, original) {
+    var words = String(original).split(/\s+/);
+    return txt.split(' ').map(function (w) {
+      for (var k = 0; k < words.length; k++) { if (norm(words[k]).replace(/[^a-z0-9-]/g, '') === w.replace(/[^a-z0-9-]/g, '')) return words[k].replace(/[,.;:!?]+$/, ''); }
+      return w;
+    }).join(' ');
+  };
+  var VIEWS = [['visao geral|inicio|painel|tela inicial|home', 'overview'], ['hoje|meu dia|o dia de hoje', 'today'], ['agenda|calendario|compromissos', 'agenda'], ['vendas', 'sales'],
+    ['contas|gastos|despesas', 'bills'], ['relatorios?', 'reports'], ['metas|objetivos', 'goals'], ['notificac|avisos', 'notifs'], ['configurac|ajustes', 'settings']];
+
+  var parse = function (text, todayIso) {
+    var original = String(text || '').trim();
+    var s = ' ' + norm(BOLETO_WORDS(original.toLowerCase())) + ' ';
+    s = s.replace(/,(?!\d)/g, ' ').replace(/[;!?]/g, ' ').replace(/\s+/g, ' ');
+    var m;
+    if (!clean(s)) return { intent: 'none' };
+    // perguntas
+    if (/\b(quanto|qual|quais|como esta|resumo|tenho)\b/.test(s) && !/\b(registr|anot|adicion|cadastr|lanc)/.test(s)) {
+      if (/(falta|preciso|tenho que|devo|a pagar|pagar)/.test(s)) return { intent: 'ask', topic: 'toPay' };
+      if (/(vendi|vendas|faturei|faturamento|entrou)/.test(s)) return { intent: 'ask', topic: 'sales' };
+      if (/(receber)/.test(s)) return { intent: 'ask', topic: 'toReceive' };
+      if (/(hoje|agenda|compromisso|cliente)/.test(s)) return { intent: 'ask', topic: 'today' };
+      if (/(saldo|dinheiro|caixa)/.test(s)) return { intent: 'ask', topic: 'balance' };
+      return { intent: 'ask', topic: 'summary' };
+    }
+    if ((m = s.match(/\b(?:modo|tema)\s+(claro|escuro|light|dark)\b/)) || (m = s.match(/\b(clarear|escurecer)\b/))) {
+      return { intent: 'theme', theme: /claro|light|clarear/.test(m[0]) ? 'light' : 'dark' };
+    }
+    if ((m = s.match(/^\s*(?:abrir|abre|abra|ir para|ir pra|vai para|vai pra|va para|va pra|mostr[ae]r?|mostra|ver|veja|entrar em|entra em|quero ver)\s+(?:a |o |as |os |na |no |minha |meus |minhas )?(.+)$/))) {
+      for (var v = 0; v < VIEWS.length; v++) { if (new RegExp('\\b(?:' + VIEWS[v][0] + ')').test(m[1])) return { intent: 'nav', view: VIEWS[v][1] }; }
+    }
+    // dar baixa
+    if (/\b(recebi|recebido|recebida|ja recebi|caiu o pagamento|pagou)\b/.test(s) && !/\b(registr|anot|adicion|cadastr)\w*\s+(?:um |uma )?(?:a receber|venda)/.test(s)) {
+      var who = clean(s.replace(/\b(marcar|marca|marque|como|ja|recebi|recebido|recebida|o pagamento|pagamento|caiu|pagou|da|do|de|a|o|que|venda|parcela)\b/g, ' '));
+      return { intent: 'receive', query: who };
+    }
+    if (/\b(paguei|pago|paga|quitei|quitar|dar baixa|dei baixa|ja paguei)\b/.test(s) && !/\b(registr|anot|adicion|cadastr|lanc)/.test(s)) {
+      var what = clean(s.replace(/\b(marcar|marca|marque|como|ja|paguei|pago|paga|quitei|quitar|dar baixa|dei baixa|baixa|na|no|da|do|de|a|o|que|conta)\b/g, ' '));
+      return { intent: 'pay', query: what };
+    }
+    var d = takeDate(s, todayIso); var t = takeTime(d.rest); var val = takeValue(t.rest);
+    var rest = val.rest;
+    if (/\b(vendi|venda|vender)\b/.test(s)) {
+      var method = 'Pix'; for (var k = 0; k < METHODS.length; k++) { if (new RegExp('\\b' + METHODS[k][0]).test(rest)) { method = METHODS[k][1]; rest = rest.replace(new RegExp('\\b(?:no |em |pelo |pela |via |no cartao de )?' + METHODS[k][0] + '\\w*'), ' '); break; } }
+      var open = /\b(a receber|fiado|parcelad|pendente|ainda nao pag|vai pagar|depois)\w*/.test(rest);
+      rest = rest.replace(/\b(a receber|fiado|parcelado|parcelada|pendente|ainda nao pagou|vai pagar depois|depois|em \d+ ?x|\d+ ?vezes)\b/g, ' ');
+      rest = stripWords(rest.replace(/\b(venda de|vendi|venda|vender|registrar|registra|anotar|anota|nova|uma|um)\b/g, ' '), FILLER).replace(/^(?:de|do|da)\s+/, '');
+      var pv = splitPerson(rest, original);
+      return { intent: 'sale', client: pv.name || 'Cliente', item: pv.service || 'Venda', value: val.value, method: method, paid: !open, date: d.date || todayIso };
+    }
+    var typeOf = /\b(comprar|compra|compras)\b/.test(s) ? 'compra'
+      : /\b(a receber|vou receber|receber de|receber do|receber da|cobrar|cobranca)\b/.test(s) ? 'receber'
+      : /\b(compromisso|agendar|agenda|agendamento|marcar horario|horario|atendimento|cliente|visita|instalacao|reuniao)\b/.test(s) ? 'cliente'
+      : /\b(meta|objetivo|juntar|guardar|economizar)\b/.test(s) ? 'meta' : 'conta';
+    if (typeOf === 'meta') {
+      var gname = stripWords(rest.replace(/\b(meta|objetivo|juntar|guardar|economizar)\b/g, ' '), FILLER).replace(/^(?:(?:de|para|pra|do|da)\s+)+/, '');
+      return { intent: 'goal', name: cap(restoreWords(gname, original)) || 'Nova meta', target: val.value };
+    }
+    if (typeOf === 'cliente') {
+      rest = rest.replace(/\b(compromisso|agendar|agenda|agendamento|marcar horario|marcar|horario|atendimento|visita|reuniao|na agenda|no calendario)\b/g, ' ');
+      var pc = splitPerson(stripWords(rest, FILLER), original);
+      return { intent: 'event', type: 'cliente', title: pc.name || 'Cliente', detail: pc.service, value: val.value, date: d.date || todayIso, time: t.time };
+    }
+    if (typeOf === 'compra') {
+      var item = stripWords(rest.replace(/\b(comprar|compra|compras|preciso|tenho que|lembrar de|lembrete)\b/g, ' '), FILLER).replace(/^(?:de|do|da)\s+/, '');
+      item = splitPerson('', original) && item ? restoreWords(item, original) : item;
+      return { intent: 'event', type: 'compra', title: 'Comprar ' + (item || 'material'), detail: '', value: val.value, date: d.date || todayIso, time: t.time };
+    }
+    if (typeOf === 'receber') {
+      var pr = splitPerson(stripWords(rest.replace(/\b(a receber|vou receber|receber|cobrar|cobranca|valor)\b/g, ' '), FILLER), original);
+      return { intent: 'event', type: 'receber', title: (pr.name || 'Cliente') + ' — a receber', detail: pr.service, value: val.value, date: d.date || todayIso, time: t.time };
+    }
+    // conta (padrão): reaproveita a leitura de categorias das contas
+    var guess = BOLETO_SPEECH(original, todayIso);
+    var bname = String(guess.name || '').replace(/^(?:uma|um)\s+/i, '');
+    if (/^conta$/i.test(bname)) bname = 'Conta';
+    if (!bname || /^(nova conta|conta|registrar.*)$/i.test(bname)) {
+      var left = stripWords(rest.replace(/\b(conta|contas|boleto|pagar|vence|vencimento|valor|de|do|da)\b/g, ' '), FILLER);
+      bname = left ? 'Conta ' + left : 'Conta';
+    }
+    return { intent: 'bill', name: cap(bname), kind: guess.kind, value: val.value || guess.value, date: d.date || guess.date || todayIso };
+  };
+  // ligações com o leitor de fala das contas (números por extenso e categorias)
+  var BOLETO_WORDS = function (t) { return typeof BOLETO !== 'undefined' && BOLETO.words ? BOLETO.words(t) : t; };
+  var BOLETO_SPEECH = function (t, today) { return typeof BOLETO !== 'undefined' ? BOLETO.parseSpeech(t, today) : { name: '', kind: 'Gasto', value: 0, date: '' }; };
+  var match = function (query, items, getText) {
+    var q = norm(query).split(/\s+/).filter(function (w) { return w.length >= 3; });
+    var best = null, bestScore = 0;
+    items.forEach(function (it) {
+      var txt = norm(getText(it));
+      var score = 0; q.forEach(function (w) { if (txt.indexOf(w) > -1) score += w.length; });
+      if (score > bestScore) { bestScore = score; best = it; }
+    });
+    return best;
+  };
+  return { parse: parse, match: match, norm: norm };
 })();
 
 class Component extends DCLogic {
@@ -1358,7 +1647,7 @@ class Component extends DCLogic {
       view: 'overview', theme: theme, period: 'mes', filter: 'todas', salesFilter: 'todas', billFilter: 'todas',
       paid: {}, received: {}, extraSales: [], extraBills: [], extraGoals: [], read: false,
       prefs: { alerts: true, weekly: true, hide: false, round: false },
-      calY: 2026, calM: 10, sel: '2026-11-16', modal: null, lastExport: '', prefill: null, scan: null,
+      calY: 2026, calM: 10, sel: '2026-11-16', modal: null, lastExport: '', prefill: null, scan: null, assistant: null, assistVoice: true,
       events: [
         E('e1', 'cliente', '2026-11-12', '10:00', 'Marcos P.', 'Kit 2 vias + tweeters', '(35) 9 9711-2034', 760, true),
         E('e2', 'cliente', '2026-11-13', '15:00', 'Diego R.', 'Subwoofer 12" + caixa', '(35) 9 9845-1120', 1350, true),
@@ -2057,7 +2346,158 @@ class Component extends DCLogic {
       manual: capture.manual
     };
 
+    // ---------- assistente de voz ----------
+    var VIEW_NAMES = { overview: 'a visão geral', today: 'o dia de hoje', agenda: 'a agenda', sales: 'as vendas', bills: 'as contas', reports: 'os relatórios', goals: 'as metas', notifs: 'as notificações', settings: 'as configurações' };
+    var dlabel = function (isoD) { var dd = parse(isoD); var diff = daysBetween(TODAY, isoD); return diff === 0 ? 'hoje' : diff === 1 ? 'amanhã' : 'dia ' + dd.getDate() + ' de ' + MONTHS[dd.getMonth()]; };
+    var speak = function (msg) {
+      if (!self.state.assistVoice || !msg || !window.speechSynthesis) return;
+      try {
+        window.speechSynthesis.cancel();
+        var u = new SpeechSynthesisUtterance(msg.replace(/R\$\s?/g, '').replace(/—/g, ','));
+        u.lang = 'pt-BR'; u.rate = 1.05;
+        var vs = window.speechSynthesis.getVoices().filter(function (v) { return /^pt(-|_)BR/i.test(v.lang); });
+        if (vs.length) u.voice = vs[0];
+        window.speechSynthesis.speak(u);
+      } catch (e) {}
+    };
+    var runCommand = function (text) {
+      var S = self.state;
+      var cmd = ASSIST.parse(text, TODAY);
+      var snap = { events: S.events, extraBills: S.extraBills, extraSales: S.extraSales, extraGoals: S.extraGoals, paid: S.paid, received: S.received, theme: S.theme, view: S.view, sel: S.sel, calM: S.calM, calY: S.calY };
+      var ns = { modal: null }, msg = '', ok = true, undoable = true, goView = null;
+      var needValue = function (ex) { ok = false; msg = 'Faltou o valor. Tente de novo dizendo, por exemplo: “' + ex + '”.'; };
+      if (cmd.intent === 'bill') {
+        if (!cmd.value) needValue('registrar conta de luz 130 reais dia 25');
+        else {
+          var meta = KIND_META[cmd.kind] || KIND_META['Gasto'];
+          ns.extraBills = S.extraBills.concat([{ id: 'b' + Date.now(), name: cmd.name, kind: cmd.kind, fixed: meta.fixed, date: cmd.date, v: cmd.value, paid: false, icon: meta.icon }]);
+          msg = 'Conta registrada: ' + cmd.name + ', ' + brl(cmd.value) + ', vence ' + dlabel(cmd.date) + '.'; goView = 'bills';
+        }
+      } else if (cmd.intent === 'event') {
+        var ed = parse(cmd.date);
+        ns.events = S.events.concat([{ id: 'n' + Date.now(), type: cmd.type, date: cmd.date, time: cmd.time, title: cmd.title, detail: cmd.detail, phone: '', value: cmd.value, done: false }]);
+        ns.sel = cmd.date; ns.calM = ed.getMonth(); ns.calY = ed.getFullYear();
+        var when = dlabel(cmd.date) + (cmd.time ? ' às ' + cmd.time : '');
+        msg = cmd.type === 'cliente' ? 'Compromisso marcado: ' + cmd.title + (cmd.detail ? ' — ' + cmd.detail : '') + ', ' + when + (cmd.value ? ', ' + brl(cmd.value) : '') + '.'
+          : cmd.type === 'compra' ? 'Anotei na agenda: ' + cmd.title.toLowerCase().replace(/^comprar/, 'comprar') + ', ' + when + (cmd.value ? ', ' + brl(cmd.value) : '') + '.'
+          : 'A receber registrado: ' + cmd.title.replace(' — a receber', '') + (cmd.value ? ', ' + brl(cmd.value) : '') + ', ' + when + '.';
+        msg = msg.charAt(0).toUpperCase() + msg.slice(1);
+        goView = 'agenda';
+      } else if (cmd.intent === 'sale') {
+        if (!cmd.value) needValue('vendi instalação de som para o Carlos 800 reais no pix');
+        else {
+          ns.extraSales = [{ id: 'v' + Date.now(), client: cmd.client, item: cmd.item, date: cmd.date, method: cmd.method, v: cmd.value, paid: cmd.paid }].concat(S.extraSales);
+          ns.salesFilter = 'todas';
+          msg = 'Venda registrada: ' + cmd.item + ' para ' + cmd.client + ', ' + brl(cmd.value) + ' no ' + cmd.method + (cmd.paid ? '.' : ', a receber.'); goView = 'sales';
+        }
+      } else if (cmd.intent === 'goal') {
+        if (!cmd.target) needValue('nova meta de 8 mil para o letreiro da loja');
+        else { ns.extraGoals = S.extraGoals.concat([{ name: cmd.name, target: cmd.target, saved: 0, monthly: 0, due: '' }]); msg = 'Meta criada: ' + cmd.name + ', ' + brl(cmd.target) + '.'; goView = 'goals'; }
+      } else if (cmd.intent === 'pay') {
+        var bHit = ASSIST.match(cmd.query, billsAll.filter(function (b) { return !b.isPaid; }), function (b) { return b.name + ' ' + b.kind; });
+        var cHit = bHit ? null : ASSIST.match(cmd.query, evs.filter(function (e) { return e.src === 'event' && e.type === 'compra' && !e.done; }), function (e) { return e.title + ' ' + (e.detail || ''); });
+        if (bHit) { var np = Object.assign({}, S.paid); np[bHit.id] = true; ns.paid = np; msg = 'Marquei como paga: ' + bHit.name + ' (' + bHit.value + ').'; goView = 'bills'; }
+        else if (cHit) { ns.events = S.events.map(function (x) { return x.id === cHit.id ? Object.assign({}, x, { done: true }) : x; }); msg = 'Marquei como comprado: ' + cHit.title + '.'; goView = 'agenda'; }
+        else { ok = false; msg = 'Não achei nenhuma conta pendente com “' + (cmd.query || text) + '”. Diga o nome como aparece na lista, por exemplo: “paguei a internet”.'; }
+      } else if (cmd.intent === 'receive') {
+        var sHit = ASSIST.match(cmd.query, salesRaw.filter(function (x) { return !x.paid; }), function (x) { return x.client + ' ' + x.item; });
+        var rHit = sHit ? null : ASSIST.match(cmd.query, evs.filter(function (e) { return e.src === 'event' && e.type === 'receber' && !e.done; }), function (e) { return e.title + ' ' + (e.detail || ''); });
+        if (sHit) { var nr = Object.assign({}, S.received); nr[sHit.id] = true; ns.received = nr; msg = 'Recebido! ' + sHit.client + ' pagou ' + brl(sHit.v) + ' (' + sHit.item + ').'; goView = 'sales'; }
+        else if (rHit) { ns.events = S.events.map(function (x) { return x.id === rHit.id ? Object.assign({}, x, { done: true }) : x; }); msg = 'Marquei como recebido: ' + rHit.title.replace(' — a receber', '') + (rHit.value ? ', ' + brl(rHit.value) : '') + '.'; goView = 'agenda'; }
+        else { ok = false; msg = 'Não achei nada a receber de “' + (cmd.query || text) + '”.'; }
+      } else if (cmd.intent === 'nav') {
+        ns.view = cmd.view; undoable = false; msg = 'Abrindo ' + VIEW_NAMES[cmd.view] + '.';
+      } else if (cmd.intent === 'theme') {
+        try { window.localStorage.setItem('artsom-theme', cmd.theme); } catch (e) {}
+        ns.theme = cmd.theme; msg = cmd.theme === 'light' ? 'Pronto, modo claro ligado.' : 'Pronto, modo escuro ligado.';
+      } else if (cmd.intent === 'ask') {
+        undoable = false;
+        var toRecv = salesOpen + evs.filter(function (e) { return e.type === 'receber' && !e.done && e.date >= TODAY; }).reduce(function (a, e) { return a + (e.value || 0); }, 0);
+        if (cmd.topic === 'toPay') msg = 'Falta pagar ' + brl(billsTotal - billsPaid) + ' em ' + pending.length + ' contas.' + (pending.length ? ' A próxima é ' + pending[0].name + ', ' + dlabel(pending[0].date) + ', ' + pending[0].value + '.' : '');
+        else if (cmd.topic === 'sales') msg = 'Este mês você vendeu ' + brl(salesTotal) + ' em ' + salesRaw.length + ' vendas.' + (salesOpen ? ' Ainda falta receber ' + brl(salesOpen) + '.' : '');
+        else if (cmd.topic === 'toReceive') msg = 'Você tem ' + brl(toRecv) + ' para receber, somando vendas em aberto e parcelas agendadas.';
+        else if (cmd.topic === 'today') msg = 'Hoje são ' + todayClients.length + ' clientes, ' + todayLeft + ' compromissos ainda em aberto.' + (nextAppt.has ? ' O próximo é ' + nextAppt.client + ' ' + (nextAppt.when === 'Amanhã' ? 'amanhã' : nextAppt.when) + ' às ' + nextAppt.time + '.' : '');
+        else if (cmd.topic === 'balance') msg = 'O saldo total é de R$ 48.320,90.';
+        else msg = 'Resumo: vendeu ' + brl(salesTotal) + ' no mês, falta pagar ' + brl(billsTotal - billsPaid) + ' e há ' + brl(toRecv) + ' para receber.';
+      } else {
+        ok = false; msg = 'Não entendi. Tente: “registrar conta de luz 130 reais dia 25” ou “compromisso dia 12 com João, instalação de som, 450 reais”.';
+      }
+      if (ok && goView) ns.view = goView;
+      self._undo = ok && undoable ? snap : null;
+      ns.assistant = { status: ok ? 'done' : 'error', heard: text, transcript: '', message: msg, undoable: ok && undoable };
+      self.setState(ns);
+      speak(msg);
+    };
+    var ERR = {
+      'not-allowed': 'O microfone está bloqueado. Toque no cadeado ao lado do endereço do site e permita o microfone.',
+      'service-not-allowed': 'O reconhecimento de voz está desligado neste aparelho. No iPhone, ative “Ditado” em Ajustes › Geral › Teclado.',
+      'no-speech': 'Não ouvi nada. Toque no microfone e fale logo em seguida.',
+      'audio-capture': 'Não encontrei um microfone neste aparelho.',
+      'network': 'O reconhecimento de voz precisa de internet. Confira a conexão e tente de novo.'
+    };
+    var assistListen = function () {
+      var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SR) { self.setState({ assistant: { status: 'error', heard: '', message: 'Este navegador não tem reconhecimento de voz. Use o Chrome (Android ou computador) ou o Safari (iPhone). Você também pode digitar o comando abaixo.' } }); return; }
+      try { if (self._arec) self._arec.abort(); } catch (e) {}
+      try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+      var rec = new SR();
+      rec.lang = 'pt-BR'; rec.interimResults = true; rec.continuous = false; rec.maxAlternatives = 1;
+      var finalText = '';
+      self._aErr = null;
+      rec.onresult = function (ev) {
+        var interim = '';
+        for (var i = ev.resultIndex; i < ev.results.length; i++) { var r = ev.results[i]; if (r.isFinal) finalText += r[0].transcript + ' '; else interim += r[0].transcript; }
+        var cur = self.state.assistant;
+        if (cur && cur.status === 'listening') self.setState({ assistant: Object.assign({}, cur, { transcript: (finalText + interim).trim() }) });
+      };
+      rec.onerror = function (ev) { self._aErr = ev.error; };
+      rec.onend = function () {
+        var cur = self.state.assistant;
+        if (!cur || cur.status !== 'listening') return;
+        var heard = (cur.transcript || finalText).trim();
+        if (!heard) { self.setState({ assistant: { status: 'error', heard: '', message: ERR[self._aErr] || ERR['no-speech'] } }); return; }
+        runCommand(heard);
+      };
+      self._arec = rec;
+      self.setState({ assistant: { status: 'listening', heard: '', transcript: '', message: '' } });
+      try { rec.start(); } catch (e) { self.setState({ assistant: { status: 'error', heard: '', message: 'Não deu para abrir o microfone agora. Tente de novo.' } }); }
+    };
+    var A = st.assistant;
+    var assistStop = function () { try { self._arec && self._arec.stop(); } catch (e) {} };
+    var assistClose = function () {
+      try { self._arec && self._arec.abort(); } catch (e) {}
+      try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+      self.setState({ assistant: null });
+    };
+    var EXAMPLES = ['Registrar conta de luz 287 reais dia 25', 'Compromisso dia 20 com João, instalação de som, 450 reais às 14h', 'Vendi alarme para o Pedro 690 reais no Pix', 'Comprar cabos amanhã 300 reais', 'Paguei a internet', 'Quanto falta pagar?'];
+    var panelFresh = !!A && !self._assistShown;
+    self._assistShown = !!A;
+    var fabFirst = !self._fabShown; self._fabShown = true;
+    var replyKey = A ? (A.status + '|' + (A.message || '')) : '';
+    var replyFresh = !!A && replyKey !== self._lastReply; self._lastReply = replyKey;
+    var assist = {
+      panelClass: 'assist-panel' + (panelFresh ? ' anim-in' : ''),
+      replyClass: 'assist-reply' + (replyFresh ? ' anim-in' : ''),
+      open: !!A, listening: !!A && A.status === 'listening', notListening: !!A && A.status !== 'listening',
+      done: !!A && A.status === 'done', isError: !!A && A.status === 'error', idle: !!A && A.status === 'idle',
+      heard: A && A.heard ? A.heard : '', hasHeard: !!(A && A.heard && A.status !== 'listening'),
+      transcript: A && A.transcript ? A.transcript : '', hasTranscript: !!(A && A.transcript), noTranscript: !(A && A.transcript),
+      message: A && A.message ? A.message : '', undoable: !!(A && A.undoable),
+      fabClass: 'fab-mic' + (fabFirst ? ' anim-in' : '') + (A && A.status === 'listening' ? ' is-listening' : A ? ' is-open' : ''),
+      fabLabel: A && A.status === 'listening' ? 'Parar de ouvir' : 'Falar com o assistente',
+      statusText: A && A.status === 'listening' ? 'Ouvindo… pode falar' : 'Toque no microfone e fale',
+      toggle: function () { var cur = self.state.assistant; if (cur && cur.status === 'listening') assistStop(); else assistListen(); },
+      mic: function () { var cur = self.state.assistant; if (cur && cur.status === 'listening') assistStop(); else assistListen(); },
+      close: assistClose,
+      submit: function (ev) { if (ev && ev.preventDefault) ev.preventDefault(); var f = ev.currentTarget || ev.target; var t = String(new FormData(f).get('cmd') || '').trim(); if (t) { try { self._arec && self._arec.abort(); } catch (e) {} runCommand(t); } },
+      undo: function () { if (!self._undo) return; var u = self._undo; self._undo = null; try { window.localStorage.setItem('artsom-theme', u.theme); } catch (e) {} self.setState(Object.assign({}, u, { assistant: { status: 'done', heard: '', message: 'Desfeito.', undoable: false } })); },
+      voiceOn: !!st.assistVoice, voiceOff: !st.assistVoice, voiceLabel: st.assistVoice ? 'Resposta falada ligada' : 'Resposta falada desligada',
+      toggleVoice: function () { if (self.state.assistVoice) { try { window.speechSynthesis.cancel(); } catch (e) {} } self.setState({ assistVoice: !self.state.assistVoice }); },
+      examples: EXAMPLES.map(function (x) { return { label: x, run: function () { runCommand(x); } }; })
+    };
+
     return {
+      assist: assist,
       capture: capture, scan: scan,
       themeClass: st.theme === 'light' ? 'theme-light' : 'theme-dark',
       bars: bars, periods: periods, inTotal: brl(inSum), outTotal: brl(outSum),
