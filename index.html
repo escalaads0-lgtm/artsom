@@ -142,6 +142,20 @@ input{color-scheme:dark}
 @keyframes ring{from{transform:scale(1);opacity:.9}to{transform:scale(1.9);opacity:0}}
 @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 
+
+/* ---------- clientes e estoque ---------- */
+.plate{display:inline-flex;align-items:center;padding:2px 8px 2px 8px;border-radius:6px;background:#FFFFFF;color:#111111;border:1.5px solid #1B3A8A;border-top-width:5px;font-family:ui-monospace,Menlo,monospace;font-size:11px;font-weight:800;letter-spacing:.08em;white-space:nowrap;line-height:1.3}
+.client-card{transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s ease,box-shadow .25s ease}
+.client-card:hover{transform:translateY(-4px) !important;border-color:rgba(229,0,0,0.35) !important;box-shadow:0 18px 40px -20px rgba(229,0,0,0.5)}
+.link-btn:hover{color:#FF5C5C !important;text-decoration:underline}
+.field-hint[data-tone="ok"]{color:#4ADE80 !important}
+.field-hint[data-tone="bad"]{color:#FF5C5C !important}
+.field-hint[data-tone="warn"]{color:#FACC15 !important}
+.field-hint[data-tone="wait"]{color:#A1A1AA !important}
+.field-hint:empty{display:none}
+.theme-light .field-hint[data-tone="ok"]{color:#15803D !important}
+.theme-light .field-hint[data-tone="bad"]{color:#C40000 !important}
+.theme-light .field-hint[data-tone="warn"]{color:#A16207 !important}
 /* ---------- assistente de voz ---------- */
 .fab-mic{position:fixed;right:24px;bottom:24px;z-index:190;width:64px;height:64px;border-radius:50%;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 35% 30%,#FF5C5C,#E50000 55%,#8B0000);box-shadow:0 16px 36px -10px rgba(229,0,0,0.85),0 0 0 1px rgba(255,255,255,0.12) inset;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s ease}
 .fab-mic.anim-in{animation:fabIn .6s cubic-bezier(.34,1.56,.64,1) .4s both}
@@ -750,6 +764,141 @@ html.intro body{overflow:hidden}
 </section>
 </div>
 </sc-if>
+<sc-if value="{{ screens.clients }}" hint-placeholder-val="{{ false }}">
+<div class="screen" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; padding: 8px 4px 0">
+<div class="anim" style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FF5C5C">{{ page.eyebrow }}</span>
+<h1 style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.02em">{{ page.title }}</h1>
+<p style="margin: 0; font-size: 15px; color: #A1A1AA">{{ page.sub }}</p>
+</div>
+<sc-if value="{{ page.hasAction }}" hint-placeholder-val="{{ true }}">
+<button class="btn" onClick="{{ page.onAction }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
+</sc-if>
+</div>
+<div class="screen" style="display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; flex-wrap: wrap; gap: 14px">
+<sc-for list="{{ clientStatsTiles }}" as="k" hint-placeholder-count="4">
+<div class="anim" style="flex: 1 1 190px; padding: 18px 20px; border-radius: 20px; background: {{ k.bg }}; border: 1px solid {{ k.border }}; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 13px; color: #A1A1AA">{{ k.label }}</span>
+<span style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: {{ k.ink }}">{{ k.value }}</span>
+<span style="font-size: 12px; color: #8B8B94">{{ k.note }}</span>
+</div>
+</sc-for>
+</div>
+<section class="glass" style="box-sizing: border-box; padding: 24px 26px; border-radius: 30px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center">
+<label style="flex: 1 1 260px; max-width: 420px; display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 16px; border-radius: 999px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #A1A1AA">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3a8 8 0 1 0 0 16a8 8 0 1 0 0-16z M21 21l-4.3-4.3"></path></svg>
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Buscar por nome, telefone, carro ou placa</span>
+<input type="search" placeholder="Buscar por nome, telefone, carro ou placa" onInput="{{ filterRows }}" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; color: #FAFAFA; font: inherit; font-size: 14px">
+</label>
+<button class="btn" onClick="{{ newClient }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; background: rgba(255,255,255,0.05); color: #FAFAFA; font-size: 14px; font-weight: 600; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14 M5 12h14"></path></svg>Cadastrar cliente</button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px">
+<sc-for list="{{ clientsAll }}" as="c" hint-placeholder-count="6">
+<article class="row-hover client-card" data-q="{{ c.q }}" style="display: flex; flex-direction: column; gap: 12px; padding: 18px; border-radius: 22px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08)">
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="width: 48px; height: 48px; flex: none; border-radius: 16px; background: linear-gradient(135deg, #E50000, #5C0000); color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800">{{ c.initials }}</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 16px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ c.name }}</span>
+<span style="font-size: 12px; color: #8B8B94">{{ c.last }}</span>
+</div>
+<span style="text-align: right; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 800; color: #4ADE80">{{ c.total }}</span><span style="font-size: 11px; color: #8B8B94">{{ c.visits }} compras</span></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #D4D4D8">
+<span style="display: flex; align-items: center; gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17h14 M3 13l2-6a2 2 0 0 1 2-1.4h10A2 2 0 0 1 19 7l2 6v4a1 1 0 0 1-1 1h-1 M3 13v4a1 1 0 0 0 1 1h1 M7 17a2 2 0 1 0 0 .01 M17 17a2 2 0 1 0 0 .01 M3 13h18"></path></svg><span style="flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ c.car }}</span><sc-if value="{{ c.hasPlate }}" hint-placeholder-val="{{ true }}"><span class="plate">{{ c.plate }}</span></sc-if></span>
+<span style="display: flex; align-items: center; gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg>{{ c.phone }}</span>
+<span style="display: flex; align-items: center; gap: 8px; color: #A1A1AA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z M12 7a3 3 0 1 0 0 6a3 3 0 1 0 0-6z"></path></svg><span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ c.addr }}</span></span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-if value="{{ c.hasOpen }}" hint-placeholder-val="{{ false }}"><span style="padding: 4px 10px; border-radius: 999px; background: rgba(250,204,21,0.14); color: #FACC15; font-size: 11px; font-weight: 700">A receber {{ c.open }}</span></sc-if>
+<sc-if value="{{ c.hasNext }}" hint-placeholder-val="{{ false }}"><span style="padding: 4px 10px; border-radius: 999px; background: rgba(229,0,0,0.14); color: #FF5C5C; font-size: 11px; font-weight: 700">{{ c.next }}</span></sc-if>
+</div>
+<div style="display: flex; gap: 8px; margin-top: auto">
+<button class="btn" onClick="{{ c.open_ }}" style="flex: 1; min-height: 40px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 13px; font-weight: 700; cursor: pointer">Ver ficha</button>
+<sc-if value="{{ c.hasPhone }}" hint-placeholder-val="{{ true }}"><a class="btn" href="{{ c.wa }}" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp" style="min-height: 40px; padding: 0 14px; display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; border: 1px solid rgba(74,222,128,0.4); background: rgba(34,197,94,0.1); color: #4ADE80; font-size: 13px; font-weight: 700; text-decoration: none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.7-5A9 9 0 1 1 8 19.3z M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.6-2.1-1-1 .9a4 4 0 0 1-2-2l.9-1-1-2.1z"></path></svg>WhatsApp</a></sc-if>
+</div>
+</article>
+</sc-for>
+</div>
+<p data-role="empty" style="display: none; margin: 0; padding: 20px; text-align: center; font-size: 14px; color: #8B8B94">Nenhum cliente encontrado com essa busca.</p>
+</section>
+</div>
+</sc-if>
+<sc-if value="{{ screens.stock }}" hint-placeholder-val="{{ false }}">
+<div class="screen" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; padding: 8px 4px 0">
+<div class="anim" style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FF5C5C">{{ page.eyebrow }}</span>
+<h1 style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.02em">{{ page.title }}</h1>
+<p style="margin: 0; font-size: 15px; color: #A1A1AA">{{ page.sub }}</p>
+</div>
+<sc-if value="{{ page.hasAction }}" hint-placeholder-val="{{ true }}">
+<button class="btn" onClick="{{ page.onAction }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>{{ page.action }}</button>
+</sc-if>
+</div>
+<div class="screen" style="display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; flex-wrap: wrap; gap: 14px">
+<sc-for list="{{ stockTiles }}" as="k" hint-placeholder-count="4">
+<div class="anim" style="flex: 1 1 190px; padding: 18px 20px; border-radius: 20px; background: {{ k.bg }}; border: 1px solid {{ k.border }}; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 13px; color: #A1A1AA">{{ k.label }}</span>
+<span style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: {{ k.ink }}">{{ k.value }}</span>
+<span style="font-size: 12px; color: #8B8B94">{{ k.note }}</span>
+</div>
+</sc-for>
+</div>
+<section class="glass" style="box-sizing: border-box; padding: 22px 24px; border-radius: 28px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between">
+<div style="flex: 1 1 300px; display: flex; align-items: center; gap: 14px">
+<span style="width: 50px; height: 50px; flex: none; border-radius: 16px; background: linear-gradient(135deg, #FF2E2E, #8B0000); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 24px -10px rgba(229,0,0,0.8)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z M3 8l9 5 9-5 M12 13v8"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 3px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 700">Lista de materiais da ArtSom</h2>
+<span style="font-size: 13px; color: #A1A1AA">Os itens abaixo são exemplos. Quando a relação de materiais chegar, importe a planilha (Excel ou CSV) e o estoque fica pronto.</span>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<label class="btn" style="display: inline-flex; align-items: center; gap: 8px; position: relative; min-height: 44px; padding: 0 16px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 13px; font-weight: 700; cursor: pointer"><input type="file" accept=".csv,text/csv,.txt" aria-label="Importar planilha de estoque" onChange="{{ stockIO.importFile }}" style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M17 8l-5-5-5 5 M12 3v12"></path></svg>Importar planilha</label>
+<button class="btn" onClick="{{ stockIO.template }}" style="display: inline-flex; align-items: center; gap: 8px; position: relative; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); color: #FAFAFA; font-size: 13px; font-weight: 600; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M7 10l5 5 5-5 M12 15V3"></path></svg>Modelo de planilha</button>
+<button class="btn" onClick="{{ stockIO.exportAll }}" style="display: inline-flex; align-items: center; gap: 8px; position: relative; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); color: #FAFAFA; font-size: 13px; font-weight: 600; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M7 10l5 5 5-5 M12 15V3"></path></svg>Exportar estoque</button>
+</div>
+<sc-if value="{{ hasStockMsg }}" hint-placeholder-val="{{ false }}"><div class="anim" role="status" style="flex: 1 1 100%; padding: 12px 14px; border-radius: 14px; background: rgba(34,197,94,0.1); border: 1px solid rgba(74,222,128,0.3); color: #4ADE80; font-size: 13px; font-weight: 600">{{ stockMsg }}</div></sc-if>
+</section>
+<section class="glass" style="box-sizing: border-box; padding: 24px 26px; border-radius: 30px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center">
+<label style="flex: 1 1 260px; max-width: 420px; display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 16px; border-radius: 999px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #A1A1AA">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3a8 8 0 1 0 0 16a8 8 0 1 0 0-16z M21 21l-4.3-4.3"></path></svg>
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Buscar produto ou material</span>
+<input type="search" placeholder="Buscar produto ou material" onInput="{{ filterRows }}" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; color: #FAFAFA; font: inherit; font-size: 14px">
+</label>
+<div role="group" aria-label="Filtro" style="display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08)">
+<sc-for list="{{ stockFilters }}" as="f" hint-placeholder-count="3">
+<sc-if value="{{ f.active }}" hint-placeholder-val="{{ false }}"><button class="pill" onClick="{{ f.pick }}" aria-pressed="true" style="min-height: 36px; padding: 0 16px; border: 0; border-radius: 999px; background: #C40000; color: #FFFFFF; box-shadow: 0 6px 16px -6px rgba(229,0,0,0.8); font-size: 13px; font-weight: 700; cursor: pointer">{{ f.label }}</button></sc-if>
+<sc-if value="{{ f.inactive }}" hint-placeholder-val="{{ true }}"><button class="pill" onClick="{{ f.pick }}" aria-pressed="false" style="min-height: 36px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; color: #D4D4D8; font-size: 13px; font-weight: 600; cursor: pointer">{{ f.label }}</button></sc-if>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<sc-for list="{{ stockRows }}" as="p" hint-placeholder-count="8">
+<div class="row-hover" data-q="{{ p.q }}" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 12px 10px; border-radius: 16px; border-bottom: 1px solid rgba(255,255,255,0.05)">
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 15px; font-weight: 700">{{ p.name }}</span>
+<span style="font-size: 12px; color: #8B8B94">{{ p.cat }} · custo {{ p.cost }} · venda {{ p.price }} · {{ p.margin }}</span>
+</div>
+<div style="flex: 0 1 190px; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 6px"><span style="font-size: 18px; font-weight: 800; color: {{ p.qtyInk }}">{{ p.qty }} <span style="font-size: 12px; font-weight: 600; color: #8B8B94">{{ p.unit }}</span></span><span style="font-size: 11px; color: #8B8B94">mín. {{ p.min }}</span></div>
+<div style="height: 6px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden"><div class="fillbar" style="height: 100%; width: {{ p.pct }}%; border-radius: 999px; background: {{ p.bar }}"></div></div>
+</div>
+<div style="flex: 0 0 auto; display: flex; align-items: center; gap: 6px">
+<sc-if value="{{ p.low }}" hint-placeholder-val="{{ false }}"><span style="padding: 5px 10px; border-radius: 999px; background: rgba(229,0,0,0.16); color: #FF5C5C; font-size: 11px; font-weight: 800">Repor</span></sc-if>
+<button class="icon-btn" onClick="{{ p.minus }}" aria-label="Tirar 1 do estoque" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); color: #FAFAFA; font-size: 18px; font-weight: 700; cursor: pointer">−</button>
+<button class="icon-btn" onClick="{{ p.plus }}" aria-label="Somar 1 ao estoque" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); color: #FAFAFA; font-size: 18px; font-weight: 700; cursor: pointer">+</button>
+<button class="btn" onClick="{{ p.restock }}" style="min-height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 12px; font-weight: 700; cursor: pointer">Entrada</button>
+</div>
+</div>
+</sc-for>
+</div>
+<p data-role="empty" style="display: none; margin: 0; padding: 20px; text-align: center; font-size: 14px; color: #8B8B94">Nenhum produto encontrado.</p>
+</section>
+</div>
+</sc-if>
 <sc-if value="{{ screens.sales }}" hint-placeholder-val="{{ false }}">
 <div class="screen" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; padding: 8px 4px 0">
 <div class="anim" style="display: flex; flex-direction: column; gap: 6px">
@@ -795,7 +944,7 @@ html.intro body{overflow:hidden}
 <span style="width: 44px; height: 44px; flex: none; border-radius: 14px; background: rgba(34,197,94,0.14); color: #4ADE80; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z M3 6h18 M16 10a4 4 0 0 1-8 0"></path></svg></span>
 <div style="flex: 1 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 2px">
 <span style="font-size: 15px; font-weight: 700">{{ v.item }}</span>
-<span style="font-size: 12px; color: #8B8B94">{{ v.client }} · {{ v.date }}</span>
+<span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 12px; color: #8B8B94"><button type="button" class="link-btn" onClick="{{ v.openClient }}" style="padding: 0; border: 0; background: none; color: #D4D4D8; font: inherit; font-weight: 700; cursor: pointer">{{ v.client }}</button> · {{ v.date }}<sc-if value="{{ v.hasCar }}" hint-placeholder-val="{{ false }}"> · {{ v.car }}</sc-if><sc-if value="{{ v.hasPlate }}" hint-placeholder-val="{{ false }}"><span class="plate">{{ v.plate }}</span></sc-if></span>
 </div>
 <span style="flex: 0 1 120px; font-size: 13px; color: #A1A1AA">{{ v.method }}</span>
 <span style="flex: 0 0 130px">
@@ -1114,10 +1263,53 @@ html.intro body{overflow:hidden}
 </sc-if>
 </main>
 </div>
+<sc-if value="{{ clientCard.open }}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box">
+<div class="modal-backdrop" onClick="{{ clientCard.close }}" style="position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px)"></div>
+<div class="modal-card" role="dialog" aria-label="Ficha do cliente" style="position: relative; width: 100%; max-width: 620px; max-height: 90vh; overflow: auto; box-sizing: border-box; padding: 26px; border-radius: 28px; background: #141416; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 40px 80px -30px rgba(0,0,0,0.9), 0 0 60px -20px rgba(229,0,0,0.35); display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; gap: 14px">
+<span style="width: 60px; height: 60px; flex: none; border-radius: 20px; background: linear-gradient(135deg, #E50000, #5C0000); color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; box-shadow: 0 12px 26px -10px rgba(229,0,0,0.8)">{{ clientCard.initials }}</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<h2 style="margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.02em">{{ clientCard.name }}</h2>
+<span style="font-size: 13px; color: #A1A1AA">{{ clientCard.since }}</span>
+</div>
+<button type="button" class="icon-btn" onClick="{{ clientCard.close }}" aria-label="Fechar" style="width: 38px; height: 38px; flex: none; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #D4D4D8; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18 M6 6l12 12"></path></svg></button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+<div style="padding: 14px; border-radius: 18px; background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.22)"><span style="font-size: 12px; color: #A1A1AA">Total comprado</span><div style="font-size: 18px; font-weight: 800; color: #4ADE80; margin-top: 4px">{{ clientCard.total }}</div></div>
+<div style="padding: 14px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08)"><span style="font-size: 12px; color: #A1A1AA">Compras</span><div style="font-size: 18px; font-weight: 800; margin-top: 4px">{{ clientCard.visits }}</div></div>
+<div style="padding: 14px; border-radius: 18px; background: rgba(250,204,21,0.08); border: 1px solid rgba(250,204,21,0.22)"><span style="font-size: 12px; color: #A1A1AA">A receber</span><div style="font-size: 18px; font-weight: 800; color: #FACC15; margin-top: 4px">{{ clientCard.openV }}</div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 20px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #D4D4D8">
+<span style="display: flex; align-items: center; gap: 10px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17h14 M3 13l2-6a2 2 0 0 1 2-1.4h10A2 2 0 0 1 19 7l2 6v4a1 1 0 0 1-1 1h-1 M3 13v4a1 1 0 0 0 1 1h1 M7 17a2 2 0 1 0 0 .01 M17 17a2 2 0 1 0 0 .01 M3 13h18"></path></svg><span style="flex: 1">{{ clientCard.car }}</span><sc-if value="{{ clientCard.hasPlate }}" hint-placeholder-val="{{ true }}"><span class="plate">{{ clientCard.plate }}</span></sc-if></span>
+<span style="display: flex; align-items: center; gap: 10px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg>{{ clientCard.phone }}</span>
+<span style="display: flex; align-items: flex-start; gap: 10px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z M12 7a3 3 0 1 0 0 6a3 3 0 1 0 0-6z"></path></svg><span>{{ clientCard.addr }}</span></span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button class="btn" onClick="{{ clientCard.sell }}" style="flex: 1 1 140px; min-height: 44px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 13px; font-weight: 700; cursor: pointer">Nova venda</button>
+<sc-if value="{{ clientCard.hasPhone }}" hint-placeholder-val="{{ true }}"><a class="btn" href="{{ clientCard.wa }}" target="_blank" rel="noopener" style="flex: 1 1 120px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border-radius: 999px; border: 1px solid rgba(74,222,128,0.4); background: rgba(34,197,94,0.1); color: #4ADE80; font-size: 13px; font-weight: 700; text-decoration: none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.7-5A9 9 0 1 1 8 19.3z M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.6-2.1-1-1 .9a4 4 0 0 1-2-2l.9-1-1-2.1z"></path></svg>WhatsApp</a></sc-if>
+<sc-if value="{{ clientCard.hasPhone }}" hint-placeholder-val="{{ true }}"><a class="btn" href="{{ clientCard.tel }}" style="flex: 0 1 auto; min-height: 44px; padding: 0 16px; display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); color: #FAFAFA; font-size: 13px; font-weight: 600; text-decoration: none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg>Ligar</a></sc-if>
+<button class="btn" onClick="{{ clientCard.schedule }}" style="display: inline-flex; align-items: center; gap: 8px; position: relative; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); color: #FAFAFA; font-size: 13px; font-weight: 600; cursor: pointer">Agendar</button>
+<button class="btn" onClick="{{ clientCard.edit }}" style="display: inline-flex; align-items: center; gap: 8px; position: relative; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); color: #FAFAFA; font-size: 13px; font-weight: 600; cursor: pointer">Editar</button>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h3 style="margin: 0; font-size: 16px; font-weight: 800">Histórico</h3>
+<sc-if value="{{ clientCard.noHist }}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; color: #8B8B94">Ainda não há vendas ou atendimentos para este cliente.</span></sc-if>
+<sc-for list="{{ clientCard.hist }}" as="h" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 16px; background: rgba(255,255,255,0.03)">
+<span style="width: 10px; height: 10px; flex: none; border-radius: 50%; background: {{ h.dot }}; box-shadow: 0 0 10px {{ h.dot }}"></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{ h.title }}</span><span style="font-size: 12px; color: #8B8B94">{{ h.label }} · {{ h.sub }}</span></div>
+<span style="font-size: 14px; font-weight: 800; color: {{ h.ink }}; white-space: nowrap">{{ h.value }}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
 <sc-if value="{{ modal.open }}" hint-placeholder-val="{{ false }}">
 <div style="position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box">
 <div class="modal-backdrop" onClick="{{ modal.close }}" style="position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px)"></div>
-<form class="modal-card" onSubmit="{{ modal.submit }}" style="position: relative; width: 100%; max-width: 520px; max-height: 90vh; overflow: auto; box-sizing: border-box; padding: 28px; border-radius: 28px; background: #141416; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 40px 80px -30px rgba(0,0,0,0.9), 0 0 60px -20px rgba(229,0,0,0.35); display: flex; flex-direction: column; gap: 16px">
+<form class="modal-card" onSubmit="{{ modal.submit }}" style="position: relative; width: 100%; max-width: {{ modal.cardWidth }}; max-height: 90vh; overflow: auto; box-sizing: border-box; padding: 28px; border-radius: 28px; background: #141416; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 40px 80px -30px rgba(0,0,0,0.9), 0 0 60px -20px rgba(229,0,0,0.35); display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px">
 <div style="display: flex; flex-direction: column; gap: 4px">
 <h2 style="margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.02em">{{ modal.title }}</h2>
@@ -1131,14 +1323,21 @@ html.intro body{overflow:hidden}
 <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0"><span>{{ modal.note }}</span><sc-if value="{{ modal.hasCode }}" hint-placeholder-val="{{ false }}"><span style="font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; font-weight: 500; color: #A1A1AA; word-break: break-all">{{ modal.noteCode }}</span></sc-if></div>
 </div>
 </sc-if>
+<div class="form-grid" style="display: flex; flex-wrap: wrap; gap: 12px 12px">
 <sc-for list="{{ modal.fields }}" as="f" hint-placeholder-count="4">
+<sc-if value="{{ f.isSection }}" hint-placeholder-val="{{ false }}">
+<div class="form-section" style="flex: 1 1 100%; display: flex; align-items: center; gap: 10px; margin-top: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #FF5C5C">{{ f.label }}<span style="flex: 1; height: 1px; background: rgba(255,255,255,0.08)"></span></div>
+</sc-if>
+<sc-if value="{{ f.isHint }}" hint-placeholder-val="{{ false }}">
+<span class="field-hint" data-role="{{ f.role }}" role="status" style="flex: 1 1 100%; margin-top: -4px; font-size: 12px; font-weight: 600; color: #8B8B94">{{ f.text }}</span>
+</sc-if>
 <sc-if value="{{ f.isInput }}" hint-placeholder-val="{{ true }}">
-<label style="display: flex; flex-direction: column; gap: 7px; font-size: 12px; font-weight: 600; color: #D4D4D8">{{ f.label }}
-<input name="{{ f.name }}" type="{{ f.type }}" placeholder="{{ f.placeholder }}" value="{{ f.value }}" required="{{ f.required }}" inputmode="{{ f.inputmode }}" style="height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #FAFAFA; font: inherit; font-size: 14px; outline: none">
+<label style="flex: {{ f.basis }}; min-width: 0; display: flex; flex-direction: column; gap: 7px; font-size: 12px; font-weight: 600; color: #D4D4D8">{{ f.label }}
+<input name="{{ f.name }}" type="{{ f.type }}" placeholder="{{ f.placeholder }}" value="{{ f.value }}" required="{{ f.required }}" inputmode="{{ f.inputmode }}" list="{{ f.list }}" maxlength="{{ f.maxlength }}" autocomplete="{{ f.autocomplete }}" onInput="{{ f.onInput }}" style="width: 100%; box-sizing: border-box; height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #FAFAFA; font: inherit; font-size: 14px; outline: none">
 </label>
 </sc-if>
 <sc-if value="{{ f.isChoice }}" hint-placeholder-val="{{ false }}">
-<div role="radiogroup" aria-label="{{ f.label }}" style="display: flex; flex-direction: column; gap: 8px">
+<div role="radiogroup" aria-label="{{ f.label }}" style="flex: 1 1 100%; display: flex; flex-direction: column; gap: 8px">
 <span style="font-size: 12px; font-weight: 600; color: #D4D4D8">{{ f.label }}</span>
 <div style="display: flex; flex-wrap: wrap; gap: 8px">
 <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="3"><label class="chip-radio"><input type="radio" name="{{ f.name }}" value="{{ o.value }}" checked="{{ o.checked }}"><span>{{ o.label }}</span></label></sc-for>
@@ -1146,6 +1345,9 @@ html.intro body{overflow:hidden}
 </div>
 </sc-if>
 </sc-for>
+</div>
+<datalist id="dl-clients"><sc-for list="{{ modal.clientNames }}" as="c" hint-placeholder-count="3"><option value="{{ c.v }}" label="{{ c.label }}"></option></sc-for></datalist>
+<datalist id="dl-products"><sc-for list="{{ modal.productNames }}" as="c" hint-placeholder-count="3"><option value="{{ c.v }}" label="{{ c.label }}"></option></sc-for></datalist>
 <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; margin-top: 6px">
 <button type="button" onClick="{{ modal.close }}" style="min-height: 46px; padding: 0 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: transparent; color: #D4D4D8; font-size: 14px; font-weight: 600; cursor: pointer">Cancelar</button>
 <button type="submit" class="btn" style="min-height: 46px; padding: 0 22px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #E50000, #8B0000); color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer">{{ modal.submitLabel }}</button>
@@ -1390,6 +1592,8 @@ var BOLETO = (function () {
     });
   };
   var KINDS = [
+    { re: /an[uú]ncios?|facebook ads|meta ads|google ads|impulsionamento|impulsionar/, kind: 'Anúncios', name: 'Anúncios' },
+    { re: /insumos?|fita isolante|terminais|abra[cç]adeiras?/, kind: 'Insumos', name: 'Insumos' },
     { re: /gestor de tr[aá]fego|tr[aá]fego pago|ag[eê]ncia de marketing|marketing/, kind: 'Serviços', name: 'Gestor de tráfego' },
     { re: /contabilidade|contador|contadora|escrit[oó]rio cont/, kind: 'Serviços', name: 'Contabilidade' },
     { re: /\bdas\b|simples nacional/, kind: 'Imposto', name: 'DAS — Simples Nacional' },
@@ -1397,7 +1601,7 @@ var BOLETO = (function () {
     { re: /\biss\b|icms|darf|iptu|ipva|imposto|tributo|taxa/, kind: 'Imposto', name: 'Impostos' },
     { re: /folha|sal[aá]rio|funcion[aá]ri|vale|adiantamento|pro.?labore/, kind: 'Folha de pagamento', name: 'Folha de pagamento' },
     { re: /\bluz\b|energia/, kind: 'Conta fixa', name: 'Conta de luz' }, { re: /[aá]gua|esgoto/, kind: 'Conta fixa', name: 'Conta de água' },
-    { re: /internet|telefone|celular/, kind: 'Conta fixa', name: 'Internet e telefone' }, { re: /aluguel/, kind: 'Conta fixa', name: 'Aluguel da loja' },
+    { re: /internet/, kind: 'Conta fixa', name: 'Internet' }, { re: /telefone|celular/, kind: 'Conta fixa', name: 'Telefone' }, { re: /aluguel/, kind: 'Conta fixa', name: 'Aluguel da loja' },
     { re: /fornecedor|mercadoria|estoque|pe[cç]as|distribuidora/, kind: 'Fornecedor', name: 'Fornecedor' }
   ];
   var cap = function (s) { s = s.trim(); return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; };
@@ -1497,6 +1701,7 @@ var ASSIST = (function () {
     if ((m = s.match(/\b(\d+(?:[.,]\d+)?)\s*mil(?:\s+e\s+(\d{1,3}))?(?:\s*(?:reais|real|conto|contos))?\b/))) return { value: money(m[1]) * 1000 + (m[2] ? +m[2] : 0), rest: s.replace(m[0], ' ') };
     if ((m = s.match(/\b(\d+(?:[.,]\d{1,2})?)\s*(?:reais|real|conto|contos|pila)(?:\s+e\s+(\d{1,2})(?:\s*centavos?)?)?\b/))) return { value: money(m[1]) + (m[2] ? +m[2] / 100 : 0), rest: s.replace(m[0], ' ') };
     if ((m = s.match(/\b(?:valor(?: de)?|de|por|no valor de)\s+(\d+(?:[.,]\d{1,2})?)(?:\s+e\s+(\d{1,2})\b)?/))) return { value: money(m[1]) + (m[2] ? +m[2] / 100 : 0), rest: s.replace(m[0], ' ') };
+    if ((m = s.match(/\b(\d+)\s+e\s+(\d{1,2})\b/))) return { value: +m[1] + +m[2] / 100, rest: s.replace(m[0], ' ') };
     if ((m = s.match(/\b(\d+(?:[.,]\d{1,2})?)\b/))) return { value: money(m[1]), rest: s.replace(m[0], ' ') };
     return { value: 0, rest: s };
   };
@@ -1544,7 +1749,7 @@ var ASSIST = (function () {
       return w;
     }).join(' ');
   };
-  var VIEWS = [['visao geral|inicio|painel|tela inicial|home', 'overview'], ['hoje|meu dia|o dia de hoje', 'today'], ['agenda|calendario|compromissos', 'agenda'], ['vendas', 'sales'],
+  var VIEWS = [['visao geral|inicio|painel|tela inicial|home', 'overview'], ['hoje|meu dia|o dia de hoje', 'today'], ['agenda|calendario|compromissos', 'agenda'], ['clientes|cadastro', 'clients'], ['estoque|produtos|materiais', 'stock'], ['vendas', 'sales'],
     ['contas|gastos|despesas', 'bills'], ['relatorios?', 'reports'], ['metas|objetivos', 'goals'], ['notificac|avisos', 'notifs'], ['configurac|ajustes', 'settings']];
 
   var parse = function (text, todayIso) {
@@ -1567,6 +1772,23 @@ var ASSIST = (function () {
     }
     if ((m = s.match(/^\s*(?:abrir|abre|abra|ir para|ir pra|vai para|vai pra|va para|va pra|mostr[ae]r?|mostra|ver|veja|entrar em|entra em|quero ver)\s+(?:a |o |as |os |na |no |minha |meus |minhas )?(.+)$/))) {
       for (var v = 0; v < VIEWS.length; v++) { if (new RegExp('\\b(?:' + VIEWS[v][0] + ')').test(m[1])) return { intent: 'nav', view: VIEWS[v][1] }; }
+    }
+    // cadastro de cliente
+    if (/\b(cadastr\w*|nov[oa]|registr\w*|adicion\w*|salv\w*)\s+(?:o |a |um |uma )?(?:cliente|contato)\b/.test(s)) {
+      var c = { name: '', phone: '', plate: '', car: '', cep: '' };
+      var mm;
+      var t2 = s.replace(/\b(cadastr\w*|nov[oa]|registr\w*|adicion\w*|salv\w*)\s+(?:o |a |um |uma )?(?:cliente|contato)\b/, ' ');
+      if ((mm = t2.match(/\bcep\s*(\d{5})\s*-?\s*(\d{3})\b/))) { c.cep = mm[1] + '-' + mm[2]; t2 = t2.replace(mm[0], ' '); }
+      if ((mm = t2.match(/\bplaca\s+([a-z]{3})\s*-?\s*(\d)\s*([a-z0-9])\s*(\d)\s*(\d)\b/)) || (mm = t2.match(/\b([a-z]{3})\s*-?\s*(\d)([a-z0-9])(\d)(\d)\b/))) { c.plate = (mm[1] + mm[2] + mm[3] + mm[4] + mm[5]).toUpperCase(); t2 = t2.replace(mm[0], ' '); }
+      if ((mm = t2.match(/\b(?:telefone|celular|whatsapp|zap|fone|numero)\s*((?:\d[\s.-]*){10,11})/)) || (mm = t2.match(/\b((?:\d[\s.-]*){10,11})\b/))) {
+        var dg = mm[1].replace(/\D/g, '');
+        c.phone = dg.length === 11 ? '(' + dg.slice(0, 2) + ') ' + dg.slice(2, 3) + ' ' + dg.slice(3, 7) + '-' + dg.slice(7) : '(' + dg.slice(0, 2) + ') ' + dg.slice(2, 6) + '-' + dg.slice(6);
+        t2 = t2.replace(mm[0], ' ');
+      }
+      if ((mm = t2.match(/\b(?:carro|veiculo|modelo)\s+(?:e |um |uma |o |a )?(.+?)(?=\s+(?:telefone|celular|placa|cep|nome)\b|$)/))) { c.car = restoreWords(clean(mm[1]), original).split(' ').map(cap).join(' '); t2 = t2.replace(mm[0], ' '); }
+      t2 = t2.replace(/\b(telefone|celular|whatsapp|placa|cep|nome|chamado|chamada|com|o|a|de|do|da)\b/g, ' ');
+      c.name = restoreWords(clean(t2), original).split(' ').slice(0, 4).map(cap).join(' ');
+      return { intent: 'client', client: c };
     }
     // dar baixa
     if (/\b(recebi|recebido|recebida|ja recebi|caiu o pagamento|pagou)\b/.test(s) && !/\b(registr|anot|adicion|cadastr)\w*\s+(?:um |uma )?(?:a receber|venda)/.test(s)) {
@@ -1647,7 +1869,32 @@ class Component extends DCLogic {
       view: 'overview', theme: theme, period: 'mes', filter: 'todas', salesFilter: 'todas', billFilter: 'todas',
       paid: {}, received: {}, extraSales: [], extraBills: [], extraGoals: [], read: false,
       prefs: { alerts: true, weekly: true, hide: false, round: false },
-      calY: 2026, calM: 10, sel: '2026-11-16', modal: null, lastExport: '', prefill: null, scan: null, assistant: null, assistVoice: true,
+      calY: 2026, calM: 10, sel: '2026-11-16', modal: null, lastExport: '', prefill: null, scan: null, assistant: null, assistVoice: true, clientView: null, stockFilter: 'todos', stockMsg: '',
+      clients: [
+        { id: 'c1', name: 'Rafael M.', phone: '(35) 9 9812-4471', cep: '', street: 'Rua das Acácias', number: '120', district: 'Centro', city: '', car: 'VW Gol 2018', plate: 'RFL2E18', since: '2025-03-10' },
+        { id: 'c2', name: 'Juliana S.', phone: '(35) 9 9733-0098', cep: '', street: 'Av. Brasil', number: '845', district: 'Jardim Europa', city: '', car: 'Fiat Argo 2021', plate: 'JLS4B21', since: '2026-11-15' },
+        { id: 'c3', name: 'Carlos A.', phone: '(35) 9 9920-5512', cep: '', street: 'Rua Pernambuco', number: '33', district: 'Vila Nova', city: '', car: 'Chevrolet Onix 2020', plate: 'CRL7C20', since: '2026-02-02' },
+        { id: 'c4', name: 'Bruno T.', phone: '(35) 9 9654-7788', cep: '', street: 'Rua São Paulo', number: '410', district: 'Centro', city: '', car: 'Honda Civic 2017', plate: 'BRT3D17', since: '2025-11-20' },
+        { id: 'c5', name: 'Diego R.', phone: '(35) 9 9845-1120', cep: '', street: 'Rua Goiás', number: '78', district: 'São Benedito', city: '', car: 'VW Saveiro 2019', plate: 'DGR9A19', since: '2026-11-13' },
+        { id: 'c6', name: 'Fernanda L.', phone: '(35) 9 9877-3321', cep: '', street: 'Rua Minas Gerais', number: '1500', district: 'Jardim dos Estados', city: '', car: 'Hyundai HB20 2022', plate: 'FRN1L22', since: '2026-06-08' },
+        { id: 'c7', name: 'Marcos P.', phone: '(35) 9 9711-2034', cep: '', street: 'Rua Rio de Janeiro', number: '56', district: 'Centro', city: '', car: 'Fiat Strada 2023', plate: 'MRC5P23', since: '2024-09-14' },
+        { id: 'c8', name: 'Patrícia N.', phone: '(35) 9 9588-4410', cep: '', street: 'Rua Bahia', number: '902', district: 'Santa Ângela', city: '', car: 'Renault Kwid 2020', plate: 'PTN6N20', since: '2026-11-10' }
+      ],
+      products: [
+        { id: 'p1', name: 'Alto-falante 6" 100W RMS (par)', cat: 'Som', unit: 'par', qty: 12, min: 6, cost: 180, price: 320 },
+        { id: 'p2', name: 'Alto-falante 6x9 (par)', cat: 'Som', unit: 'par', qty: 8, min: 4, cost: 260, price: 520 },
+        { id: 'p3', name: 'Tweeter (par)', cat: 'Som', unit: 'par', qty: 3, min: 6, cost: 60, price: 140 },
+        { id: 'p4', name: 'Módulo amplificador 800W', cat: 'Som', unit: 'un', qty: 5, min: 3, cost: 520, price: 980 },
+        { id: 'p5', name: 'Subwoofer 12"', cat: 'Som', unit: 'un', qty: 2, min: 3, cost: 410, price: 790 },
+        { id: 'p6', name: 'Caixa selada 12"', cat: 'Som', unit: 'un', qty: 4, min: 2, cost: 150, price: 320 },
+        { id: 'p7', name: 'Central multimídia 9"', cat: 'Acessórios', unit: 'un', qty: 6, min: 3, cost: 780, price: 1490 },
+        { id: 'p8', name: 'Câmera de ré', cat: 'Acessórios', unit: 'un', qty: 9, min: 5, cost: 95, price: 220 },
+        { id: 'p9', name: 'Kit alarme + trava elétrica', cat: 'Acessórios', unit: 'kit', qty: 4, min: 3, cost: 290, price: 590 },
+        { id: 'p10', name: 'Cabo de força 4mm', cat: 'Insumos', unit: 'm', qty: 120, min: 50, cost: 6.5, price: 14 },
+        { id: 'p11', name: 'Fita isolante', cat: 'Insumos', unit: 'un', qty: 18, min: 20, cost: 4.9, price: 9 },
+        { id: 'p12', name: 'Terminais e conectores (pacote 100)', cat: 'Insumos', unit: 'pct', qty: 7, min: 5, cost: 22, price: 45 },
+        { id: 'p13', name: 'Abraçadeiras de nylon (pacote)', cat: 'Insumos', unit: 'pct', qty: 10, min: 5, cost: 12, price: 25 }
+      ],
       events: [
         E('e1', 'cliente', '2026-11-12', '10:00', 'Marcos P.', 'Kit 2 vias + tweeters', '(35) 9 9711-2034', 760, true),
         E('e2', 'cliente', '2026-11-13', '15:00', 'Diego R.', 'Subwoofer 12" + caixa', '(35) 9 9845-1120', 1350, true),
@@ -1802,8 +2049,13 @@ class Component extends DCLogic {
     var salesRaw = st.extraSales.concat(salesBase).map(function (x) { return Object.assign({}, x, { paid: x.paid || !!st.received[x.id] }); });
     var salesTotal = salesRaw.reduce(function (a, x) { return a + x.v; }, 0);
     var salesOpen = salesRaw.filter(function (x) { return !x.paid; }).reduce(function (a, x) { return a + x.v; }, 0);
+    var normName = function (t) { return String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim(); };
+    var findClient = function (name) { var k = normName(name); if (!k) return null; return st.clients.filter(function (c) { return normName(c.name) === k; })[0] || null; };
     var sales = salesRaw.filter(function (x) { return sf === 'pagas' ? x.paid : sf === 'receber' ? !x.paid : true; }).map(function (x) {
-      return { item: x.item, client: x.client, date: shortDate(x.date), method: x.method, value: '+ ' + brl(x.v), isOpen: !x.paid, isPaid: x.paid,
+      var cl = findClient(x.client);
+      return { item: x.item + (x.qty > 1 ? ' × ' + x.qty : ''), client: x.client, date: shortDate(x.date), method: x.method, value: '+ ' + brl(x.v), isOpen: !x.paid, isPaid: x.paid,
+        car: cl && cl.car ? cl.car : '', plate: cl && cl.plate ? cl.plate : '', hasCar: !!(cl && (cl.car || cl.plate)), hasPlate: !!(cl && cl.plate),
+        openClient: function () { if (cl) self.setState({ clientView: cl.id }); },
         receive: function () { var r = Object.assign({}, self.state.received); r[x.id] = true; self.setState({ received: r }); } };
     });
     var salesFilters = [{ id: 'todas', label: 'Todas' }, { id: 'pagas', label: 'Recebidas' }, { id: 'receber', label: 'A receber' }].map(function (f) {
@@ -1836,10 +2088,12 @@ class Component extends DCLogic {
       'Imposto': { fixed: true, group: 'impostos', icon: IC.tax, chip: 'rgba(250,204,21,0.15)', ink: '#FACC15' },
       'Folha de pagamento': { fixed: true, group: 'impostos', icon: IC.people, chip: 'rgba(96,165,250,0.15)', ink: '#60A5FA' },
       'Serviços': { fixed: true, group: 'servicos', icon: IC.megaphone, chip: 'rgba(229,0,0,0.14)', ink: '#FF5C5C' },
-      'Fornecedor': { fixed: false, group: 'gastos', icon: IC.box, chip: 'rgba(255,255,255,0.07)', ink: '#D4D4D8' },
+      'Anúncios': { fixed: true, group: 'servicos', icon: IC.megaphone, chip: 'rgba(96,165,250,0.15)', ink: '#60A5FA' },
+      'Insumos': { fixed: false, group: 'insumos', icon: IC.box, chip: 'rgba(250,204,21,0.15)', ink: '#FACC15' },
+      'Fornecedor': { fixed: false, group: 'insumos', icon: IC.box, chip: 'rgba(255,255,255,0.07)', ink: '#D4D4D8' },
       'Gasto': { fixed: false, group: 'gastos', icon: IC.cart, chip: 'rgba(255,255,255,0.07)', ink: '#D4D4D8' }
     };
-    var KIND_LIST = ['Conta fixa', 'Imposto', 'Folha de pagamento', 'Serviços', 'Fornecedor', 'Gasto'];
+    var KIND_LIST = ['Conta fixa', 'Imposto', 'Folha de pagamento', 'Serviços', 'Anúncios', 'Insumos', 'Fornecedor', 'Gasto'];
     var billsBase = [
       { id: 'agua', name: 'Conta de água', kind: 'Conta fixa', fixed: true, date: '2026-11-10', v: 186.4, paid: true, icon: IC.water },
       { id: 'aluguel', name: 'Aluguel da loja', kind: 'Conta fixa', fixed: true, date: '2026-11-10', v: 2200, paid: true, icon: IC.home },
@@ -1847,6 +2101,10 @@ class Component extends DCLogic {
       { id: 'folha', name: 'Folha de pagamento — 2 funcionários', kind: 'Folha de pagamento', fixed: true, date: '2026-11-05', v: 4800, paid: true, icon: IC.people },
       { id: 'fgts', name: 'FGTS e INSS dos funcionários', kind: 'Imposto', fixed: true, date: '2026-11-07', v: 768, paid: true, icon: IC.tax },
       { id: 'trafego', name: 'Gestor de tráfego', kind: 'Serviços', fixed: true, date: '2026-11-20', v: 1500, paid: false, icon: IC.megaphone },
+      { id: 'adsmeta', name: 'Anúncios Meta (Facebook e Instagram)', kind: 'Anúncios', fixed: true, date: '2026-11-15', v: 800, paid: true, icon: IC.megaphone },
+      { id: 'adsgoogle', name: 'Anúncios Google', kind: 'Anúncios', fixed: true, date: '2026-11-25', v: 400, paid: false, icon: IC.megaphone },
+      { id: 'telefone', name: 'Telefone (fixo e celular da loja)', kind: 'Conta fixa', fixed: true, date: '2026-11-22', v: 89.9, paid: false, icon: 'M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z' },
+      { id: 'insumos1', name: 'Insumos: fita, terminais e abraçadeiras', kind: 'Insumos', fixed: false, date: '2026-11-08', v: 245, paid: true, icon: IC.box },
       { id: 'das', name: 'DAS — Simples Nacional', kind: 'Imposto', fixed: true, date: '2026-11-20', v: 1312.8, paid: false, icon: IC.tax },
       { id: 'vale', name: 'Adiantamento quinzenal (vale)', kind: 'Folha de pagamento', fixed: true, date: '2026-11-20', v: 1920, paid: false, icon: IC.people },
       { id: 'fornpecas', name: 'Fornecedor de alto-falantes', kind: 'Fornecedor', fixed: false, date: '2026-11-14', v: 3480, paid: true, icon: IC.box },
@@ -1879,7 +2137,7 @@ class Component extends DCLogic {
     var bills = billsAll.filter(function (b) {
       return bf === 'pendentes' ? !b.isPaid : bf === 'todas' ? true : b.group === bf;
     }).sort(function (a, b) { return (a.isPaid - b.isPaid) || (a.date < b.date ? -1 : a.date > b.date ? 1 : 0); });
-    var billFilters = [{ id: 'todas', label: 'Todas' }, { id: 'fixas', label: 'Contas fixas' }, { id: 'impostos', label: 'Impostos e folha' }, { id: 'servicos', label: 'Serviços' }, { id: 'gastos', label: 'Gastos e fornecedores' }, { id: 'pendentes', label: 'A pagar' }].map(function (f) {
+    var billFilters = [{ id: 'todas', label: 'Todas' }, { id: 'fixas', label: 'Contas fixas' }, { id: 'impostos', label: 'Impostos e folha' }, { id: 'servicos', label: 'Tráfego, anúncios e serviços' }, { id: 'insumos', label: 'Insumos e fornecedores' }, { id: 'gastos', label: 'Outros gastos' }, { id: 'pendentes', label: 'A pagar' }].map(function (f) {
       return { label: f.label, active: f.id === bf, inactive: f.id !== bf, pick: function () { self.setState({ billFilter: f.id }); } };
     });
     var billsTotal = billsAll.reduce(function (a, b) { return a + b.v; }, 0);
@@ -2064,24 +2322,272 @@ class Component extends DCLogic {
     };
     var exports = exportDefs.map(function (d) { return { label: d.label, desc: d.desc, run: function () { runExport(d); } }; });
 
+    // ---------- clientes (CRM) ----------
+    var initials = function (n) { var w = String(n || '?').replace(/\./g, '').trim().split(/\s+/); return ((w[0] || '?').charAt(0) + (w[1] ? w[1].charAt(0) : '')).toUpperCase(); };
+    var fmtPlate = function (p) { p = String(p || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); return p.length === 7 ? p.slice(0, 3) + (/\d/.test(p[4]) ? '-' : '') + p.slice(3) : p; };
+    var waLink = function (ph) { var d = String(ph || '').replace(/\D/g, ''); if (!d) return ''; if (d.length <= 11) d = '55' + d; return 'https://wa.me/' + d; };
+    var clientStats = function (c) {
+      var k = normName(c.name);
+      var cs = salesRaw.filter(function (x) { return normName(x.client) === k; });
+      var ce = evs.filter(function (e) { return e.type === 'cliente' && normName(e.title) === k; });
+      var total = cs.reduce(function (a, x) { return a + x.v; }, 0);
+      var open = cs.filter(function (x) { return !x.paid; }).reduce(function (a, x) { return a + x.v; }, 0);
+      var dates = cs.map(function (x) { return x.date; }).concat(ce.filter(function (e) { return e.date <= TODAY; }).map(function (e) { return e.date; })).sort();
+      var nextE = ce.filter(function (e) { return e.date >= TODAY && !e.done; })[0];
+      return { sales: cs, events: ce, total: total, open: open, last: dates.length ? dates[dates.length - 1] : '', next: nextE };
+    };
+    var clientsAll = st.clients.map(function (c) {
+      var x = clientStats(c);
+      var addr = [c.street ? c.street + (c.number ? ', ' + c.number : '') : '', c.district, c.city].filter(Boolean).join(' · ');
+      return { id: c.id, name: c.name, initials: initials(c.name), phone: c.phone || 'Sem telefone', hasPhone: !!c.phone, wa: waLink(c.phone),
+        car: c.car || 'Carro não informado', plate: fmtPlate(c.plate), hasPlate: !!c.plate, addr: addr || 'Endereço não informado',
+        total: brl(x.total), totalV: x.total, visits: x.sales.length, open: x.open ? brl(x.open) : '', hasOpen: x.open > 0,
+        last: x.last ? 'Última visita ' + shortDate(x.last) : 'Ainda sem visitas', next: x.next ? 'Agendado ' + shortDate(x.next.date) + (x.next.time ? ' às ' + x.next.time : '') : '', hasNext: !!x.next,
+        q: normName([c.name, c.phone, c.car, c.plate, addr].join(' ')),
+        open_: function () { self.setState({ clientView: c.id }); } };
+    }).sort(function (a, b) { return b.totalV - a.totalV; });
+    var newThisMonth = st.clients.filter(function (c) { return (c.since || '').slice(0, 7) === TODAY.slice(0, 7); }).length;
+    var clientStatsTiles = [
+      tile(plainTile, 'Clientes cadastrados', String(st.clients.length), 'Com carro e contato'),
+      tile(greenTile, 'Novos este mês', String(newThisMonth), 'Cadastrados em novembro'),
+      tile(greenTile, 'Ticket médio por cliente', brl(st.clients.length ? clientsAll.reduce(function (a, c) { return a + c.totalV; }, 0) / st.clients.length : 0), 'Soma das vendas ÷ clientes'),
+      tile(redTile, 'Clientes com valor a receber', String(clientsAll.filter(function (c) { return c.hasOpen; }).length), 'Vendas em aberto')
+    ];
+    var CV = st.clientView ? st.clients.filter(function (c) { return c.id === st.clientView; })[0] : null;
+    var clientCard = { open: !!CV };
+    if (CV) {
+      var cx = clientStats(CV);
+      var hist = cx.sales.map(function (x) { return { date: x.date, label: shortDate(x.date), title: x.item, sub: x.method + (x.paid ? ' · recebido' : ' · a receber'), value: '+ ' + brl(x.v), ink: '#4ADE80', dot: '#4ADE80' }; })
+        .concat(cx.events.map(function (e) { return { date: e.date, label: shortDate(e.date), title: e.detail || 'Atendimento', sub: 'Agenda' + (e.time ? ' · ' + e.time : '') + (e.done ? ' · concluído' : e.date >= TODAY ? ' · agendado' : ''), value: e.value ? brl(e.value) : '', ink: '#D4D4D8', dot: e.date >= TODAY && !e.done ? '#FF2E2E' : '#71717A' }; }))
+        .sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+      clientCard = { open: true, name: CV.name, initials: initials(CV.name), phone: CV.phone || 'Sem telefone', hasPhone: !!CV.phone, wa: waLink(CV.phone), tel: 'tel:' + String(CV.phone || '').replace(/\D/g, ''),
+        car: CV.car || 'Carro não informado', plate: fmtPlate(CV.plate), hasPlate: !!CV.plate,
+        addr: [CV.street ? CV.street + (CV.number ? ', ' + CV.number : '') : '', CV.district, CV.city, CV.cep ? 'CEP ' + CV.cep : ''].filter(Boolean).join(' · ') || 'Endereço não informado',
+        since: CV.since ? 'Cliente desde ' + shortDate(CV.since) + ' ' + CV.since.slice(0, 4) : '',
+        total: brl(cx.total), visits: String(cx.sales.length), openV: cx.open ? brl(cx.open) : 'R$ 0,00',
+        hist: hist, hasHist: hist.length > 0, noHist: hist.length === 0,
+        close: function () { self.setState({ clientView: null }); },
+        sell: function () { self.setState({ clientView: null, view: 'sales', modal: 'sale', prefill: { client: CV } }); },
+        edit: function () { self.setState({ clientView: null, modal: 'client', prefill: { client: CV, editId: CV.id } }); },
+        schedule: function () { self.setState({ clientView: null, view: 'agenda', sel: TODAY, calM: 10, calY: 2026 }); }
+      };
+    }
+    var upsertClient = function (list, d) {
+      var k = normName(d.name);
+      var found = false;
+      var out = list.map(function (c) {
+        if ((d.id && c.id === d.id) || (!d.id && normName(c.name) === k)) {
+          found = true;
+          var m2 = Object.assign({}, c);
+          ['name', 'phone', 'cep', 'street', 'number', 'district', 'city', 'car', 'plate'].forEach(function (f) { if (d[f]) m2[f] = d[f]; });
+          return m2;
+        }
+        return c;
+      });
+      if (!found) out = out.concat([Object.assign({ id: 'c' + Date.now(), since: TODAY }, d)]);
+      return out;
+    };
+
+    // ---------- estoque ----------
+    var sfl = st.stockFilter;
+    var prods = st.products;
+    var lowList = prods.filter(function (pp) { return pp.qty <= pp.min; });
+    var stockRows = prods.filter(function (pp) {
+      return sfl === 'baixo' ? pp.qty <= pp.min : sfl === 'todos' ? true : pp.cat === sfl;
+    }).map(function (pp) {
+      var low = pp.qty <= pp.min;
+      var pct = Math.max(4, Math.min(100, Math.round(pp.qty / Math.max(1, pp.min * 2) * 100)));
+      var adj = function (delta) { return function () { self.setState({ products: self.state.products.map(function (x) { return x.id === pp.id ? Object.assign({}, x, { qty: Math.max(0, Math.round((x.qty + delta) * 100) / 100) }) : x; }) }); }; };
+      return { name: pp.name, cat: pp.cat, unit: pp.unit, qty: String(pp.qty).replace('.', ','), min: String(pp.min), cost: brl(pp.cost), price: brl(pp.price),
+        margin: pp.cost ? Math.round((pp.price - pp.cost) / pp.price * 100) + '% de margem' : '',
+        low: low, ok: !low, pct: pct, bar: low ? 'linear-gradient(90deg, #FF5C5C, #C40000)' : 'linear-gradient(90deg, #4ADE80, #16A34A)',
+        qtyInk: low ? '#FF5C5C' : '#FAFAFA', q: normName(pp.name + ' ' + pp.cat),
+        plus: adj(1), minus: adj(-1), restock: function () { self.setState({ modal: 'restock', prefill: { product: pp } }); } };
+    });
+    var stockCats = ['Som', 'Acessórios', 'Insumos', 'Outros'].filter(function (c) { return prods.some(function (pp) { return pp.cat === c; }); });
+    var stockFilters = [{ id: 'todos', label: 'Todos' }, { id: 'baixo', label: 'Repor (' + lowList.length + ')' }].concat(stockCats.map(function (c) { return { id: c, label: c }; })).map(function (f) {
+      return { label: f.label, active: f.id === sfl, inactive: f.id !== sfl, pick: function () { self.setState({ stockFilter: f.id }); } };
+    });
+    var stockCost = prods.reduce(function (a, pp) { return a + pp.qty * pp.cost; }, 0);
+    var stockPrice = prods.reduce(function (a, pp) { return a + pp.qty * pp.price; }, 0);
+    var stockTiles = [
+      tile(plainTile, 'Produtos cadastrados', String(prods.length), stockCats.join(' · ')),
+      tile(plainTile, 'Valor em estoque (custo)', brl(stockCost), 'Quanto foi investido'),
+      tile(greenTile, 'Valor de venda do estoque', brl(stockPrice), 'Lucro previsto ' + brl(stockPrice - stockCost)),
+      tile(redTile, 'Abaixo do mínimo', String(lowList.length), lowList.length ? lowList.slice(0, 2).map(function (pp) { return pp.name.split(' (')[0]; }).join(', ') + (lowList.length > 2 ? '…' : '') : 'Tudo em ordem')
+    ];
+    var csvCell = function (v) { v = String(v); return /[;"\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+    var downloadCsv = function (name, lines) {
+      try {
+        var blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+        var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 800);
+      } catch (e) {}
+    };
+    var stockIO = {
+      template: function () {
+        downloadCsv('modelo-estoque-artsom.csv', ['Nome;Categoria;Unidade;Quantidade;Minimo;Custo;Preco',
+          'Alto-falante 6" 100W RMS (par);Som;par;10;4;180,00;320,00', 'Cabo de força 4mm;Insumos;m;100;50;6,50;14,00']);
+      },
+      exportAll: function () {
+        downloadCsv('estoque-artsom-' + TODAY + '.csv', ['Nome;Categoria;Unidade;Quantidade;Minimo;Custo;Preco'].concat(prods.map(function (pp) {
+          return [pp.name, pp.cat, pp.unit, String(pp.qty).replace('.', ','), pp.min, num(pp.cost), num(pp.price)].map(csvCell).join(';');
+        })));
+      },
+      importFile: function (ev) {
+        var el = ev.currentTarget || ev.target; var f = el.files && el.files[0]; if (!f) return;
+        var rd = new FileReader();
+        rd.onload = function () {
+          var text = String(rd.result || '').replace(/^﻿/, '');
+          var lines = text.split(/\r?\n/).filter(function (l) { return l.trim(); });
+          if (lines.length < 2) { self.setState({ stockMsg: 'A planilha está vazia.' }); return; }
+          var sep = lines[0].split(';').length >= lines[0].split(',').length ? ';' : ',';
+          var split = function (l) { var out = [], cur = '', q = false; for (var i = 0; i < l.length; i++) { var ch = l[i]; if (ch === '"') { if (q && l[i + 1] === '"') { cur += '"'; i++; } else q = !q; } else if (ch === sep && !q) { out.push(cur); cur = ''; } else cur += ch; } out.push(cur); return out.map(function (x) { return x.trim(); }); };
+          var head = split(lines[0]).map(normName);
+          var col = function (names) { for (var i = 0; i < head.length; i++) { for (var j = 0; j < names.length; j++) { if (head[i].indexOf(names[j]) === 0) return i; } } return -1; };
+          var iN = col(['nome', 'produto', 'material', 'descricao', 'item']), iC = col(['categoria', 'tipo', 'grupo']), iU = col(['unidade', 'un']), iQ = col(['quantidade', 'qtd', 'qtde', 'estoque']), iM = col(['minimo', 'min']), iCo = col(['custo', 'valor de compra', 'compra']), iP = col(['preco', 'valor de venda', 'venda', 'valor']);
+          if (iN < 0) iN = 0;
+          var list = self.state.products.slice(), added = 0, updated = 0;
+          lines.slice(1).forEach(function (l, ix) {
+            var c = split(l); var nm = (c[iN] || '').trim(); if (!nm) return;
+            var rec = { name: nm, cat: iC > -1 && c[iC] ? c[iC] : 'Outros', unit: iU > -1 && c[iU] ? c[iU] : 'un', qty: iQ > -1 ? money(c[iQ]) : 0, min: iM > -1 ? money(c[iM]) : 0, cost: iCo > -1 ? money(c[iCo]) : 0, price: iP > -1 ? money(c[iP]) : 0 };
+            var at = -1; for (var k = 0; k < list.length; k++) { if (normName(list[k].name) === normName(nm)) { at = k; break; } }
+            if (at > -1) { list[at] = Object.assign({}, list[at], rec); updated++; } else { list.push(Object.assign({ id: 'p' + Date.now() + '_' + ix }, rec)); added++; }
+          });
+          self.setState({ products: list, stockFilter: 'todos', stockMsg: 'Planilha importada: ' + added + ' produtos novos e ' + updated + ' atualizados.' });
+        };
+        rd.readAsText(f, 'utf-8');
+        try { el.value = ''; } catch (e) {}
+      }
+    };
+    var findProduct = function (name) { var k = normName(name); return k ? prods.filter(function (pp) { return normName(pp.name) === k; })[0] || null : null; };
+
     // ---------- formulários (modal) ----------
     var pf0 = st.prefill || {};
-    var inp = function (name, label, ph, req, type, mode, val) { return { name: name, label: label, placeholder: ph, required: !!req, type: type || 'text', inputmode: mode || 'text', value: val || '', isInput: true, isChoice: false }; };
-    var choice = function (name, label, opts, sel) { var pick = opts.indexOf(sel) > -1 ? sel : opts[0]; return { name: name, label: label, isInput: false, isChoice: true, options: opts.map(function (o) { return { value: o, label: o, checked: o === pick }; }) }; };
+    var inp = function (name, label, ph, req, type, mode, val, extra) {
+      var o = { name: name, label: label, placeholder: ph, required: !!req, type: type || 'text', inputmode: mode || 'text', value: val || '', isInput: true, isChoice: false, isSection: false, isHint: false, basis: '1 1 100%', list: null, role: null, onInput: null, maxlength: null };
+      return Object.assign(o, extra || {});
+    };
+    var half = function (f) { f.basis = '1 1 180px'; return f; };
+    var choice = function (name, label, opts, sel) { var pick = opts.indexOf(sel) > -1 ? sel : opts[0]; return { name: name, label: label, isInput: false, isChoice: true, isSection: false, isHint: false, basis: '1 1 100%', options: opts.map(function (o) { return { value: o, label: o, checked: o === pick }; }) }; };
+    var section = function (label) { return { isSection: true, isInput: false, isChoice: false, isHint: false, label: label, basis: '1 1 100%' }; };
+    var hint = function (role, text) { return { isHint: true, isSection: false, isInput: false, isChoice: false, role: role, text: text || '', basis: '1 1 100%' }; };
+    // ajudas que mexem direto no formulário (não apagam o que já foi digitado)
+    var formOf = function (ev) { var el = ev.currentTarget || ev.target; return { el: el, form: el.form || el.closest('form') }; };
+    var fld = function (form, name) { return form ? form.querySelector('[name="' + name + '"]') : null; };
+    var setField = function (form, name, val, force) { var f = fld(form, name); if (f && val !== undefined && val !== null && (force || !f.value)) f.value = val; };
+    var setHint = function (form, role, text, tone) { var h = form && form.querySelector('[data-role="' + role + '"]'); if (h) { h.textContent = text; h.setAttribute('data-tone', tone || ''); } };
+    var maskPhone = function (ev) { var o = formOf(ev); var d = o.el.value.replace(/\D/g, '').slice(0, 11); o.el.value = d.length > 10 ? '(' + d.slice(0, 2) + ') ' + d.slice(2, 3) + ' ' + d.slice(3, 7) + '-' + d.slice(7) : d.length > 6 ? '(' + d.slice(0, 2) + ') ' + d.slice(2, 6) + '-' + d.slice(6) : d.length > 2 ? '(' + d.slice(0, 2) + ') ' + d.slice(2) : d; };
+    var maskPlate = function (ev) { var o = formOf(ev); o.el.value = o.el.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 7); };
+    var cepLookup = function (ev) {
+      var o = formOf(ev); var d = o.el.value.replace(/\D/g, '').slice(0, 8);
+      o.el.value = d.length > 5 ? d.slice(0, 5) + '-' + d.slice(5) : d;
+      if (d.length !== 8) { if (d.length) setHint(o.form, 'cep', 'Digite os 8 números do CEP para buscar o endereço.', ''); return; }
+      setHint(o.form, 'cep', 'Buscando endereço…', 'wait');
+      fetch((CFG.cepUrl || 'https://viacep.com.br/ws/') + d + '/json/').then(function (r) { return r.json(); }).then(function (j) {
+        if (!j || j.erro) { setHint(o.form, 'cep', 'CEP não encontrado. Preencha o endereço manualmente.', 'bad'); return; }
+        setField(o.form, 'street', j.logradouro, true); setField(o.form, 'district', j.bairro, true); setField(o.form, 'city', (j.localidade || '') + (j.uf ? '/' + j.uf : ''), true);
+        setHint(o.form, 'cep', 'Endereço encontrado: ' + [j.logradouro, j.bairro, (j.localidade || '') + '/' + (j.uf || '')].filter(Boolean).join(', ') + '. Falta só o número.', 'ok');
+        var n = fld(o.form, 'number'); if (n && !n.value) { try { n.focus(); } catch (e) {} }
+      }).catch(function () { setHint(o.form, 'cep', 'Não consegui buscar o CEP agora (sem internet?). Preencha o endereço manualmente.', 'bad'); });
+    };
+    var fillClient = function (form, c) {
+      ['phone', 'cep', 'street', 'number', 'district', 'city', 'car', 'plate'].forEach(function (f) { setField(form, f, c[f], true); });
+    };
+    var clientPick = function (ev) {
+      var o = formOf(ev); var c = findClient(o.el.value);
+      if (c) { fillClient(o.form, c); setHint(o.form, 'client', 'Cliente já cadastrado — dados preenchidos. Pode alterar se mudou algo.', 'ok'); }
+      else setHint(o.form, 'client', o.el.value.trim().length > 2 ? (fld(o.form, 'item') ? 'Cliente novo — será cadastrado junto com a venda.' : 'Cliente novo.') : '', '');
+    };
+    var priceFromProduct = function (form) {
+      var itemEl = fld(form, 'item'), qtyEl = fld(form, 'qty');
+      var pp = findProduct(itemEl ? itemEl.value : ''); var q = money(qtyEl && qtyEl.value) || 1;
+      if (!pp) { setHint(form, 'item', itemEl && itemEl.value.trim() ? 'Serviço ou produto fora do estoque.' : '', ''); return; }
+      var v = fld(form, 'value');
+      if (v && (!v.value || v.getAttribute('data-auto') === '1')) { v.value = num(pp.price * q); v.setAttribute('data-auto', '1'); }
+      var left = pp.qty - q;
+      setHint(form, 'item', 'Do estoque: ' + String(pp.qty).replace('.', ',') + ' ' + pp.unit + ' disponíveis · ' + brl(pp.price) + ' cada' + (left < 0 ? ' · atenção: estoque insuficiente' : left <= pp.min ? ' · vai ficar abaixo do mínimo' : ''), left < 0 ? 'bad' : left <= pp.min ? 'warn' : 'ok');
+    };
+    var itemPick = function (ev) { priceFromProduct(formOf(ev).form); };
+    var valueTyped = function (ev) { (ev.currentTarget || ev.target).setAttribute('data-auto', '0'); };
+    var clientFields = function (c) {
+      c = c || {};
+      return [
+        section('Dados do cliente'),
+        inp('client', 'Nome do cliente', 'Ex.: João Silva', true, 'text', 'text', c.name, { list: 'dl-clients', onInput: clientPick, autocomplete: 'off' }),
+        hint('client', ''),
+        half(inp('phone', 'Telefone / WhatsApp', '(00) 0 0000-0000', false, 'tel', 'tel', c.phone, { onInput: maskPhone })),
+        half(inp('cep', 'CEP', '00000-000', false, 'text', 'numeric', c.cep, { onInput: cepLookup, maxlength: '9' })),
+        hint('cep', 'Digite o CEP e o endereço aparece sozinho.'),
+        inp('street', 'Rua / avenida', 'Preenchido pelo CEP', false, 'text', 'text', c.street),
+        half(inp('number', 'Número', 'Ex.: 120', false, 'text', 'text', c.number)),
+        half(inp('district', 'Bairro', '', false, 'text', 'text', c.district)),
+        inp('city', 'Cidade / UF', '', false, 'text', 'text', c.city),
+        section('Carro'),
+        half(inp('car', 'Modelo do carro', 'Ex.: VW Gol 2018', false, 'text', 'text', c.car)),
+        half(inp('plate', 'Placa', 'ABC1D23', false, 'text', 'text', c.plate, { onInput: maskPlate, maxlength: '7' }))
+      ];
+    };
+    var readClient = function (fd) {
+      return { name: String(fd.get('client') || '').trim(), phone: String(fd.get('phone') || '').trim(), cep: String(fd.get('cep') || '').trim(), street: String(fd.get('street') || '').trim(),
+        number: String(fd.get('number') || '').trim(), district: String(fd.get('district') || '').trim(), city: String(fd.get('city') || '').trim(), car: String(fd.get('car') || '').trim(), plate: String(fd.get('plate') || '').trim().toUpperCase() };
+    };
+    var prodPf = pf0.product || {};
     var MODALS = {
-      sale: { title: 'Nova venda', sub: 'A venda entra na lista e nos totais na hora.', submitLabel: 'Registrar venda', fields: [
-        inp('client', 'Cliente', 'Ex.: João Silva', true), inp('item', 'Produto ou serviço', 'Ex.: Instalação de som', true),
-        inp('value', 'Valor (R$)', 'Ex.: 1.250,00', true, 'text', 'decimal'),
-        choice('method', 'Forma de pagamento', ['Pix', 'Débito', 'Crédito', 'Dinheiro', 'Boleto']),
-        choice('status', 'Situação', ['Recebido', 'A receber'])
-      ], save: function (fd) {
-        var s = { id: 'v' + Date.now(), client: String(fd.get('client')).trim(), item: String(fd.get('item')).trim(), date: TODAY, method: String(fd.get('method') || 'Pix'), v: money(fd.get('value')), paid: fd.get('status') !== 'A receber' };
-        self.setState({ extraSales: [s].concat(self.state.extraSales), modal: null, salesFilter: 'todas' });
-      } },
-      bill: { title: 'Nova conta', sub: 'Conta fixa, fornecedor ou gasto do mês.', submitLabel: 'Adicionar conta', fields: [
+      sale: { title: 'Nova venda', sub: 'Registre a venda e o cadastro do cliente de uma vez. Produto do estoque dá baixa sozinho.', submitLabel: 'Registrar venda', wide: true,
+        fields: clientFields(pf0.client).concat([
+          section('Venda'),
+          inp('item', 'Produto ou serviço', 'Escolha do estoque ou digite um serviço', true, 'text', 'text', '', { list: 'dl-products', onInput: itemPick, autocomplete: 'off' }),
+          hint('item', ''),
+          half(inp('qty', 'Quantidade', '1', false, 'number', 'numeric', '1', { onInput: itemPick })),
+          half(inp('value', 'Valor total (R$)', 'Ex.: 1.250,00', true, 'text', 'decimal', '', { onInput: valueTyped })),
+          choice('method', 'Forma de pagamento', ['Pix', 'Débito', 'Crédito', 'Dinheiro', 'Boleto']),
+          choice('status', 'Situação', ['Recebido', 'A receber'])
+        ]),
+        save: function (fd) {
+          var c = readClient(fd);
+          var item = String(fd.get('item')).trim(); var qty = money(fd.get('qty')) || 1;
+          var pp = findProduct(item);
+          var sale = { id: 'v' + Date.now(), client: c.name, item: item, qty: qty, productId: pp ? pp.id : '', date: TODAY, method: String(fd.get('method') || 'Pix'), v: money(fd.get('value')), paid: fd.get('status') !== 'A receber' };
+          var ns = { extraSales: [sale].concat(self.state.extraSales), clients: upsertClient(self.state.clients, c), modal: null, prefill: null, salesFilter: 'todas' };
+          if (pp) ns.products = self.state.products.map(function (x) { return x.id === pp.id ? Object.assign({}, x, { qty: Math.max(0, x.qty - qty) }) : x; });
+          self.setState(ns);
+        } },
+      client: { title: pf0.editId ? 'Editar cliente' : 'Novo cliente', sub: 'Nome, contato, endereço pelo CEP e o carro do cliente.', submitLabel: pf0.editId ? 'Salvar alterações' : 'Cadastrar cliente', wide: true,
+        fields: clientFields(pf0.client),
+        save: function (fd) {
+          var c = readClient(fd); if (pf0.editId) c.id = pf0.editId;
+          var list = upsertClient(self.state.clients, c);
+          self.setState({ clients: list, modal: null, prefill: null, clientView: pf0.editId || list[list.length - 1].id });
+        } },
+      product: { title: 'Novo produto', sub: 'Cadastre um item do estoque. Ele aparece na hora de vender.', submitLabel: 'Adicionar ao estoque', fields: [
+          inp('name', 'Nome do produto ou material', 'Ex.: Alto-falante 6" 100W (par)', true),
+          choice('cat', 'Categoria', ['Som', 'Acessórios', 'Insumos', 'Outros']),
+          choice('unit', 'Unidade', ['un', 'par', 'kit', 'm', 'pct', 'cx']),
+          half(inp('qty', 'Quantidade em estoque', 'Ex.: 10', true, 'number', 'decimal')), half(inp('min', 'Estoque mínimo', 'Ex.: 3', false, 'number', 'decimal')),
+          half(inp('cost', 'Custo (R$)', 'Ex.: 180,00', false, 'text', 'decimal')), half(inp('price', 'Preço de venda (R$)', 'Ex.: 320,00', false, 'text', 'decimal'))
+        ], save: function (fd) {
+          var pr = { id: 'p' + Date.now(), name: String(fd.get('name')).trim(), cat: String(fd.get('cat') || 'Outros'), unit: String(fd.get('unit') || 'un'), qty: money(fd.get('qty')), min: money(fd.get('min')), cost: money(fd.get('cost')), price: money(fd.get('price')) };
+          self.setState({ products: self.state.products.concat([pr]), modal: null, stockFilter: 'todos' });
+        } },
+      restock: { title: 'Entrada no estoque', sub: prodPf.name ? prodPf.name + ' · hoje: ' + String(prodPf.qty).replace('.', ',') + ' ' + prodPf.unit : '', submitLabel: 'Dar entrada', fields: [
+          half(inp('qty', 'Quantidade que chegou', 'Ex.: 10', true, 'number', 'decimal')), half(inp('cost', 'Custo unitário (R$)', prodPf.cost ? num(prodPf.cost) : '', false, 'text', 'decimal', prodPf.cost ? num(prodPf.cost) : '')),
+          inp('supplier', 'Fornecedor (opcional)', 'Ex.: Distribuidora Som Total', false),
+          choice('bill', 'Lançar a compra em Contas?', ['Sim, a pagar', 'Sim, já paga', 'Não'])
+        ], save: function (fd) {
+          var q = money(fd.get('qty')); var cost = money(fd.get('cost')) || prodPf.cost || 0;
+          var ns = { modal: null, prefill: null, products: self.state.products.map(function (x) { return x.id === prodPf.id ? Object.assign({}, x, { qty: x.qty + q, cost: cost || x.cost }) : x; }) };
+          var b = String(fd.get('bill') || 'Não');
+          if (b !== 'Não' && q * cost > 0) {
+            var sup = String(fd.get('supplier') || '').trim();
+            ns.extraBills = self.state.extraBills.concat([{ id: 'b' + Date.now(), name: 'Compra: ' + prodPf.name + ' (' + String(q).replace('.', ',') + ' ' + prodPf.unit + ')' + (sup ? ' — ' + sup : ''), kind: prodPf.cat === 'Insumos' ? 'Insumos' : 'Fornecedor', fixed: false, date: TODAY, v: q * cost, paid: b === 'Sim, já paga', icon: IC.box }]);
+          }
+          self.setState(ns);
+        } },
+      bill: { title: 'Nova conta', sub: 'Conta fixa, imposto, folha, tráfego, anúncios, insumos ou outro gasto.', submitLabel: 'Adicionar conta', fields: [
         inp('name', 'Descrição', 'Ex.: Conta de água, gestor de tráfego, DAS…', true, 'text', 'text', pf0.name),
-        inp('value', 'Valor (R$)', 'Ex.: 189,90', true, 'text', 'decimal', pf0.value ? num(pf0.value) : ''),
-        inp('date', 'Vencimento', '', true, 'date', 'text', pf0.date || ''),
+        half(inp('value', 'Valor (R$)', 'Ex.: 189,90', true, 'text', 'decimal', pf0.value ? num(pf0.value) : '')),
+        half(inp('date', 'Vencimento', '', true, 'date', 'text', pf0.date || '')),
         choice('kind', 'Tipo', KIND_LIST, pf0.kind)
       ], save: function (fd) {
         var kind = String(fd.get('kind') || 'Conta fixa');
@@ -2090,16 +2596,17 @@ class Component extends DCLogic {
         self.setState({ extraBills: self.state.extraBills.concat([b]), modal: null, prefill: null, billFilter: 'todas' });
       } },
       goal: { title: 'Nova meta', sub: 'Defina o objetivo e quanto já tem guardado.', submitLabel: 'Criar meta', fields: [
-        inp('name', 'Nome da meta', 'Ex.: Novo letreiro da loja', true), inp('target', 'Valor da meta (R$)', 'Ex.: 8.000,00', true, 'text', 'decimal'),
-        inp('saved', 'Já guardado (R$)', 'Ex.: 1.500,00', false, 'text', 'decimal'), inp('monthly', 'Quanto guardar por mês (R$)', 'Ex.: 500,00', false, 'text', 'decimal'),
-        inp('due', 'Prazo', 'Ex.: jun 2027', false)
+        inp('name', 'Nome da meta', 'Ex.: Novo letreiro da loja', true), half(inp('target', 'Valor da meta (R$)', 'Ex.: 8.000,00', true, 'text', 'decimal')),
+        half(inp('saved', 'Já guardado (R$)', 'Ex.: 1.500,00', false, 'text', 'decimal')), half(inp('monthly', 'Guardar por mês (R$)', 'Ex.: 500,00', false, 'text', 'decimal')),
+        half(inp('due', 'Prazo', 'Ex.: jun 2027', false))
       ], save: function (fd) {
         var g = { name: String(fd.get('name')).trim(), target: money(fd.get('target')), saved: money(fd.get('saved')), monthly: money(fd.get('monthly')), due: String(fd.get('due') || '').trim() };
         self.setState({ extraGoals: self.state.extraGoals.concat([g]), modal: null });
       } }
     };
     var M = st.modal ? MODALS[st.modal] : null;
-    var modal = { open: !!M, title: M ? M.title : '', sub: M ? M.sub : '', submitLabel: M ? M.submitLabel : '', fields: M ? M.fields : [],
+    var modal = { open: !!M, title: M ? M.title : '', sub: M ? M.sub : '', submitLabel: M ? M.submitLabel : '', fields: M ? M.fields : [], cardWidth: M && M.wide ? '640px' : '520px',
+      clientNames: st.clients.map(function (c) { return { v: c.name, label: (c.car || '') + (c.plate ? ' · ' + fmtPlate(c.plate) : '') }; }), productNames: st.products.map(function (pp) { return { v: pp.name, label: String(pp.qty).replace('.', ',') + ' ' + pp.unit + ' · ' + brl(pp.price) }; }),
       hasNote: !!(M && st.modal === 'bill' && pf0.source),
       note: pf0.source === 'photo' ? (pf0.codeLabel ? 'Dados lidos do boleto. Confira antes de salvar.' : 'Li o texto do boleto, mas não achei o código. Confira os dados.') : pf0.source === 'voice' ? 'Você disse: “' + (pf0.heard || '') + '”' : '',
       noteCode: pf0.codeLabel || '', hasCode: !!pf0.codeLabel,
@@ -2107,12 +2614,14 @@ class Component extends DCLogic {
       submit: function (ev) { if (ev && ev.preventDefault) ev.preventDefault(); if (!M) return; M.save(new FormData(ev.currentTarget || ev.target)); } };
 
     // ---------- abas ----------
-    var unread = st.read ? 0 : 3;
+    var unread = (st.read ? 0 : 3) + (lowList.length && !st.read ? 1 : 0);
     var navDef = [
       { id: 'overview', label: 'Visão geral', d: 'M4.5 3h4a1.5 1.5 0 0 1 1.5 1.5v4A1.5 1.5 0 0 1 8.5 10h-4A1.5 1.5 0 0 1 3 8.5v-4A1.5 1.5 0 0 1 4.5 3z M15.5 3h4A1.5 1.5 0 0 1 21 4.5v4a1.5 1.5 0 0 1-1.5 1.5h-4A1.5 1.5 0 0 1 14 8.5v-4A1.5 1.5 0 0 1 15.5 3z M4.5 14h4a1.5 1.5 0 0 1 1.5 1.5v4A1.5 1.5 0 0 1 8.5 21h-4A1.5 1.5 0 0 1 3 19.5v-4A1.5 1.5 0 0 1 4.5 14z M15.5 14h4a1.5 1.5 0 0 1 1.5 1.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a1.5 1.5 0 0 1-1.5-1.5v-4a1.5 1.5 0 0 1 1.5-1.5z' },
       { id: 'today', label: 'Hoje', d: 'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20z M12 6v6l4 2', badge: todayLeft },
       { id: 'agenda', label: 'Agenda', d: 'M8 2v4 M16 2v4 M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z M3 10h18 M8 14h.01 M12 14h.01 M16 14h.01 M8 18h.01 M12 18h.01' },
+      { id: 'clients', label: 'Clientes', d: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 3a4 4 0 1 0 0 8a4 4 0 1 0 0-8z M22 21v-2a4 4 0 0 0-3-3.9 M16 3.1a4 4 0 0 1 0 7.8' },
       { id: 'sales', label: 'Vendas', d: 'M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z M3 6h18 M16 10a4 4 0 0 1-8 0' },
+      { id: 'stock', label: 'Estoque', d: 'M21 8 12 3 3 8v8l9 5 9-5z M3 8l9 5 9-5 M12 13v8', badge: lowList.length },
       { id: 'bills', label: 'Contas', d: 'M4 2v20l3-2 3 2 3-2 3 2 3-2 3 2V2l-3 2-3-2-3 2-3-2-3 2z M8 8h8 M8 12h8 M8 16h5' },
       { id: 'reports', label: 'Relatórios', d: 'M21.21 15.89A10 10 0 1 1 8 2.83 M22 12A10 10 0 0 0 12 2v10z' },
       { id: 'goals', label: 'Metas', d: 'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20z M12 6a6 6 0 1 0 0 12a6 6 0 1 0 0-12z M12 10a2 2 0 1 0 0 4a2 2 0 1 0 0-4z' }
@@ -2128,7 +2637,9 @@ class Component extends DCLogic {
       overview: { eyebrow: '', title: '', sub: '' },
       today: { eyebrow: 'Hoje', title: WD[todayD.getDay()] + ', ' + todayD.getDate() + ' de ' + MONTHS[todayD.getMonth()], sub: greet + ' ' + (todayLeft ? 'Ainda há ' + todayLeft + ' compromissos para hoje.' : 'Tudo de hoje já foi resolvido.'), hasAction: true, action: 'Novo compromisso', onAction: go('agenda') },
       agenda: { eyebrow: 'Agenda', title: 'Agenda', sub: 'Clientes, contas a vencer, compras e valores a receber. Toque em um dia para ver e registrar.', hasAction: false },
-      sales: { eyebrow: 'Vendas', title: 'Suas vendas', sub: 'Tudo o que foi vendido em novembro.', hasAction: true, action: 'Nova venda', onAction: openModal('sale') },
+      clients: { eyebrow: 'Clientes', title: 'Cadastro de clientes', sub: 'Contato, endereço, carro e histórico de cada cliente.', hasAction: true, action: 'Novo cliente', onAction: function () { self.setState({ modal: 'client', prefill: null }); } },
+      sales: { eyebrow: 'Vendas', title: 'Suas vendas', sub: 'Tudo o que foi vendido em novembro, com o cliente e o carro.', hasAction: true, action: 'Nova venda', onAction: function () { self.setState({ modal: 'sale', prefill: null }); } },
+      stock: { eyebrow: 'Estoque', title: 'Controle de estoque', sub: 'Produtos, insumos e materiais. As vendas dão baixa automática.', hasAction: true, action: 'Novo produto', onAction: openModal('product') },
       bills: { eyebrow: 'Contas', title: 'Contas e gastos', sub: 'Contas fixas e gastos do mês em um só lugar.', hasAction: true, action: 'Nova conta', onAction: openModal('bill') },
       reports: { eyebrow: 'Relatórios', title: 'Desempenho financeiro', sub: 'Fluxo de caixa, para onde o dinheiro está indo e exportação.', hasAction: false },
       goals: { eyebrow: 'Metas', title: 'Seus objetivos', sub: 'Acompanhe quanto falta para cada meta.', hasAction: true, action: 'Nova meta', onAction: openModal('goal') },
@@ -2147,6 +2658,7 @@ class Component extends DCLogic {
 
     var read = st.read;
     var notifs = [
+      { title: 'Estoque baixo: ' + lowList.length + ' itens', text: lowList.length ? 'Repor: ' + lowList.map(function (pp) { return pp.name + ' (' + String(pp.qty).replace('.', ',') + ' ' + pp.unit + ')'; }).join(', ') + '.' : 'Nenhum item abaixo do mínimo.', time: 'Hoje, 08:00', kind: lowList.length ? 'warn' : 'good', unread: lowList.length > 0 },
       { title: 'Internet vence em 2 dias', text: 'A conta de internet (R$ 129,90) vence no dia 18.', time: 'Hoje, 09:12', kind: 'warn', unread: true },
       { title: 'Pagamento recebido', text: 'Rafael M. pagou R$ 2.850,00 via Pix.', time: 'Hoje, 08:40', kind: 'good', unread: true },
       { title: 'Meta quase concluída', text: 'Equipamentos da loja já está em 87%. Faltam R$ 1.200,00.', time: '13 nov', kind: 'good', unread: true },
@@ -2347,7 +2859,7 @@ class Component extends DCLogic {
     };
 
     // ---------- assistente de voz ----------
-    var VIEW_NAMES = { overview: 'a visão geral', today: 'o dia de hoje', agenda: 'a agenda', sales: 'as vendas', bills: 'as contas', reports: 'os relatórios', goals: 'as metas', notifs: 'as notificações', settings: 'as configurações' };
+    var VIEW_NAMES = { clients: 'os clientes', stock: 'o estoque', overview: 'a visão geral', today: 'o dia de hoje', agenda: 'a agenda', sales: 'as vendas', bills: 'as contas', reports: 'os relatórios', goals: 'as metas', notifs: 'as notificações', settings: 'as configurações' };
     var dlabel = function (isoD) { var dd = parse(isoD); var diff = daysBetween(TODAY, isoD); return diff === 0 ? 'hoje' : diff === 1 ? 'amanhã' : 'dia ' + dd.getDate() + ' de ' + MONTHS[dd.getMonth()]; };
     var speak = function (msg) {
       if (!self.state.assistVoice || !msg || !window.speechSynthesis) return;
@@ -2363,7 +2875,7 @@ class Component extends DCLogic {
     var runCommand = function (text) {
       var S = self.state;
       var cmd = ASSIST.parse(text, TODAY);
-      var snap = { events: S.events, extraBills: S.extraBills, extraSales: S.extraSales, extraGoals: S.extraGoals, paid: S.paid, received: S.received, theme: S.theme, view: S.view, sel: S.sel, calM: S.calM, calY: S.calY };
+      var snap = { clients: S.clients, clientView: S.clientView, events: S.events, extraBills: S.extraBills, extraSales: S.extraSales, extraGoals: S.extraGoals, paid: S.paid, received: S.received, theme: S.theme, view: S.view, sel: S.sel, calM: S.calM, calY: S.calY };
       var ns = { modal: null }, msg = '', ok = true, undoable = true, goView = null;
       var needValue = function (ex) { ok = false; msg = 'Faltou o valor. Tente de novo dizendo, por exemplo: “' + ex + '”.'; };
       if (cmd.intent === 'bill') {
@@ -2387,6 +2899,7 @@ class Component extends DCLogic {
         if (!cmd.value) needValue('vendi instalação de som para o Carlos 800 reais no pix');
         else {
           ns.extraSales = [{ id: 'v' + Date.now(), client: cmd.client, item: cmd.item, date: cmd.date, method: cmd.method, v: cmd.value, paid: cmd.paid }].concat(S.extraSales);
+          if (cmd.client && cmd.client !== 'Cliente') ns.clients = upsertClient(S.clients, { name: cmd.client });
           ns.salesFilter = 'todas';
           msg = 'Venda registrada: ' + cmd.item + ' para ' + cmd.client + ', ' + brl(cmd.value) + ' no ' + cmd.method + (cmd.paid ? '.' : ', a receber.'); goView = 'sales';
         }
@@ -2405,6 +2918,15 @@ class Component extends DCLogic {
         if (sHit) { var nr = Object.assign({}, S.received); nr[sHit.id] = true; ns.received = nr; msg = 'Recebido! ' + sHit.client + ' pagou ' + brl(sHit.v) + ' (' + sHit.item + ').'; goView = 'sales'; }
         else if (rHit) { ns.events = S.events.map(function (x) { return x.id === rHit.id ? Object.assign({}, x, { done: true }) : x; }); msg = 'Marquei como recebido: ' + rHit.title.replace(' — a receber', '') + (rHit.value ? ', ' + brl(rHit.value) : '') + '.'; goView = 'agenda'; }
         else { ok = false; msg = 'Não achei nada a receber de “' + (cmd.query || text) + '”.'; }
+      } else if (cmd.intent === 'client') {
+        if (!cmd.client.name) { ok = false; msg = 'Faltou o nome. Tente: “cadastrar cliente João Silva, telefone 35 9 9999 0000, carro Gol, placa ABC1D23”.'; }
+        else {
+          var listC = upsertClient(S.clients, cmd.client);
+          var saved = listC.filter(function (x) { return normName(x.name) === normName(cmd.client.name); })[0];
+          ns.clients = listC; ns.clientView = saved ? saved.id : null;
+          msg = 'Cliente cadastrado: ' + cmd.client.name + (cmd.client.car ? ', ' + cmd.client.car : '') + (cmd.client.plate ? ', placa ' + fmtPlate(cmd.client.plate) : '') + (cmd.client.phone ? ', ' + cmd.client.phone : '') + '.';
+          goView = 'clients';
+        }
       } else if (cmd.intent === 'nav') {
         ns.view = cmd.view; undoable = false; msg = 'Abrindo ' + VIEW_NAMES[cmd.view] + '.';
       } else if (cmd.intent === 'theme') {
@@ -2469,7 +2991,7 @@ class Component extends DCLogic {
       try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
       self.setState({ assistant: null });
     };
-    var EXAMPLES = ['Registrar conta de luz 287 reais dia 25', 'Compromisso dia 20 com João, instalação de som, 450 reais às 14h', 'Vendi alarme para o Pedro 690 reais no Pix', 'Comprar cabos amanhã 300 reais', 'Paguei a internet', 'Quanto falta pagar?'];
+    var EXAMPLES = ['Cadastrar cliente João Silva, carro Gol, placa ABC1D23', 'Registrar conta de luz 287 reais dia 25', 'Compromisso dia 20 com João, instalação de som, 450 reais às 14h', 'Vendi alarme para o Pedro 690 reais no Pix', 'Comprar cabos amanhã 300 reais', 'Paguei a internet', 'Quanto falta pagar?'];
     var panelFresh = !!A && !self._assistShown;
     self._assistShown = !!A;
     var fabFirst = !self._fabShown; self._fabShown = true;
@@ -2496,7 +3018,18 @@ class Component extends DCLogic {
       examples: EXAMPLES.map(function (x) { return { label: x, run: function () { runCommand(x); } }; })
     };
 
+    var filterRows = function (ev) {
+      var el = ev.currentTarget || ev.target; var q = normName(el.value);
+      var box = el.closest('section'); if (!box) return;
+      var rows = box.querySelectorAll('[data-q]'); var shown = 0;
+      for (var i = 0; i < rows.length; i++) { var hit = !q || rows[i].getAttribute('data-q').indexOf(q) > -1; rows[i].style.display = hit ? '' : 'none'; if (hit) shown++; }
+      var none = box.querySelector('[data-role="empty"]'); if (none) none.style.display = shown ? 'none' : '';
+    };
     return {
+      clientsAll: clientsAll, clientStatsTiles: clientStatsTiles, clientCard: clientCard, filterRows: filterRows,
+      newClient: function () { self.setState({ modal: 'client', prefill: null }); },
+      stockRows: stockRows, stockFilters: stockFilters, stockTiles: stockTiles, stockIO: stockIO, stockMsg: st.stockMsg, hasStockMsg: !!st.stockMsg,
+      newProduct: openModal('product'),
       assist: assist,
       capture: capture, scan: scan,
       themeClass: st.theme === 'light' ? 'theme-light' : 'theme-dark',
